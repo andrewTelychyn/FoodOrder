@@ -20,6 +20,7 @@
   }
 
   h3 {
+    font-weight: 300;
     color: gray;
   }
 
@@ -27,7 +28,7 @@
     list-style: none;
     margin: 30px 0px 50px;
 
-    li {
+    .product-list-li {
       min-width: 450px;
       width: 70vw;
       display: flex;
@@ -83,41 +84,63 @@
         }
       }
 
-      .product-select-amount {
+      .product-wrapper {
         display: flex;
         flex-direction: row;
-        flex-grow: 0;
-        // padding-right: 15px;
+        align-items: center;
 
-        .current-choice {
-          width: 65px;
-          font-size: 17px;
-          font-weight: 500;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+        .options-info {
+          list-style: none;
+          margin-right: 70px;
 
-        button {
-          width: 40px;
-          height: 35px;
-          border: none;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 6px;
-          cursor: pointer;
+          li {
+            font-weight: 700;
+            color: #c6141b;
+            padding: 5px;
 
-          mat-icon {
-            width: 15px;
-            height: 15px;
-            font-size: 15px;
+            span {
+              font-weight: 300;
+              color: black;
+            }
           }
         }
 
-        .add-button {
-          background-color: #c6141b;
-          color: white;
+        .product-select-amount {
+          display: flex;
+          flex-direction: row;
+          flex-grow: 0;
+          // padding-right: 15px;
+
+          .current-choice {
+            width: 65px;
+            font-size: 17px;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          button {
+            width: 40px;
+            height: 35px;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            cursor: pointer;
+
+            mat-icon {
+              width: 15px;
+              height: 15px;
+              font-size: 15px;
+            }
+          }
+
+          .add-button {
+            background-color: #c6141b;
+            color: white;
+          }
         }
       }
     }

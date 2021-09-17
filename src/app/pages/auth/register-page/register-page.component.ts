@@ -49,7 +49,12 @@ export class RegisterPageComponent implements OnInit {
     this.loading = true;
 
     this.accountService
-      .register({ ...this.form.value, id: Date.now(), role: 'user' })
+      .register({
+        ...this.form.value,
+        id: Date.now(),
+        role: 'user',
+        token: 'thisisveryrealtoken',
+      })
       .subscribe((data) => {
         this.router.navigate(['menu/burger']);
       });

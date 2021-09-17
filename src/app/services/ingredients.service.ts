@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ProductOptionDb } from '../shared/models/product.model';
+import { Category, Ingredient } from '../shared/models/product.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,11 @@ import { ProductOptionDb } from '../shared/models/product.model';
 export class IngredientService {
   constructor(private http: HttpClient) {}
 
-  public get(key: string): Observable<ProductOptionDb> {
-    return this.http.get<ProductOptionDb>(
-      environment.API + `ingredients/${key}`
-    );
+  public get(category: Category): Observable<Ingredient[]> {
+    return this.http
+      .get<Ingredient[]>(environment.API + 'ingredients/')
+      .pipe(
+        map((data) => data.filter((i) => i.categoryIds.includes(category.id)))
+      );
   }
 }

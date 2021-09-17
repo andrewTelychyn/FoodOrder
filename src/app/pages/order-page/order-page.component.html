@@ -4,7 +4,7 @@
     <h1>My Order</h1>
     <h3>Take Out</h3>
     <ul class="product-list">
-      <li *ngFor="let basketOrder of basket.products">
+      <li *ngFor="let basketOrder of basket.products" class="product-list-li">
         <mat-icon
           aria-hidden="false"
           aria-label="drink icon"
@@ -17,16 +17,27 @@
           <h2>{{ basketOrder.product.name }}</h2>
           <h3>{{ basketOrder.product.cost }}$</h3>
         </div>
-        <div class="product-select-amount">
-          <button class="remove-button">
-            <mat-icon aria-hidden="false" aria-label="drink icon"
-              >remove</mat-icon
-            >
-          </button>
-          <div class="current-choice">x1</div>
-          <button class="add-button">
-            <mat-icon aria-hidden="false" aria-label="drink icon">add</mat-icon>
-          </button>
+
+        <div class="product-wrapper">
+          <ul class="options-info">
+            <li *ngFor="let opt of basketOrder.options">
+              <span>{{ opt.optionName }}</span> X{{ opt.optionAmount }}
+            </li>
+          </ul>
+
+          <div class="product-select-amount">
+            <button class="remove-button" (click)="basketOrder.removeOne()">
+              <mat-icon aria-hidden="false" aria-label="drink icon"
+                >remove</mat-icon
+              >
+            </button>
+            <div class="current-choice">x{{ basketOrder.amount }}</div>
+            <button class="add-button" (click)="basketOrder.addOne()">
+              <mat-icon aria-hidden="false" aria-label="drink icon"
+                >add</mat-icon
+              >
+            </button>
+          </div>
         </div>
       </li>
     </ul>

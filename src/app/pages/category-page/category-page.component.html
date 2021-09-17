@@ -1,10 +1,11 @@
 <div class="container">
-  <app-nav-bar [productType]="productType"></app-nav-bar>
+  <app-nav-bar [chosenCategory]="chosenCategory"></app-nav-bar>
   <div class="main-content">
     <h1>
       {{
-        productType
-          ? productType.charAt(0).toUpperCase() + productType.slice(1)
+        chosenCategory
+          ? chosenCategory.value.charAt(0).toUpperCase() +
+            chosenCategory.value.slice(1)
           : ""
       }}s
     </h1>

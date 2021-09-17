@@ -4,10 +4,40 @@
   margin-right: 20px;
   background-color: #f8f8f7;
   height: 100%;
+  position: relative;
 
-  mat-grid-list {
-    height: 100%;
+  .user-info {
+    max-width: 100%;
+    height: 120px;
+    padding: 10px;
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 300;
+      margin: 0px;
+      padding: 15px 0 10px;
+
+      span {
+        font-weight: 500;
+      }
+    }
+
+    button {
+      cursor: pointer;
+      padding: 8px 15px;
+      border: none;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      background-color: black;
+    }
   }
+
+  // mat-grid-list {}
 
   mat-grid-tile {
     cursor: pointer;

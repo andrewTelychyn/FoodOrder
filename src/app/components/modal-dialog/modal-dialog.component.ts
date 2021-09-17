@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { IngredientService } from '../../services/ingredients.service';
 import { BasketOrder } from '../../shared/models/basket.model';
-import { Product } from '../../shared/models/product.model';
+import { Category, Product } from '../../shared/models/product.model';
 
 @Component({
   selector: 'app-modal-dialog',
@@ -19,16 +19,18 @@ export class ModalDialogComponent implements OnDestroy {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    private data: { prod: Product; func: (prod: BasketOrder) => void },
+    private data: {
+      category: Category;
+      product: Product;
+      func: (prod: BasketOrder) => void;
+    },
     private dialog: MatDialogRef<ModalDialogComponent>,
     private ingredientService: IngredientService
   ) {
     this.subscription = ingredientService
-      .get(data.prod.type)
+      .get(data.category)
       .subscribe((res) => {
-        console.log(res);
-
-        this.basketOrder = new BasketOrder(data.prod, res.options);
+        this.basketOrder = new BasketOrder(data.product, res);
       });
     this.addingFunc = data.func;
   }

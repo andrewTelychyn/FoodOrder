@@ -1,54 +1,73 @@
 <div class="side-menu">
+  <div class="user-info">
+    <h3>
+      Hello, <span>{{ username }}!</span>
+    </h3>
+    <button (click)="logout()">Logout</button>
+  </div>
+
   <mat-grid-list cols="1" rowHeight="120px">
     <mat-grid-tile
-      [style.backgroundColor]="productType == 'drink' ? '#c6141b' : ''"
+      [style.backgroundColor]="
+        chosenCategory?.value == 'drink' ? '#c6141b' : ''
+      "
     >
       <a routerLink="/menu/drink">
         <mat-icon
           aria-hidden="false"
           aria-label="drink icon"
-          [style.color]="productType == 'drink' ? 'white' : ''"
+          [style.color]="chosenCategory?.value == 'drink' ? 'white' : ''"
           >local_drink</mat-icon
         >
         <mat-grid-tile-footer
-          [style.backgroundColor]="productType == 'drink' ? '#c6141b' : ''"
-          [style.color]="productType == 'drink' ? 'white' : ''"
+          [style.backgroundColor]="
+            chosenCategory?.value == 'drink' ? '#c6141b' : ''
+          "
+          [style.color]="chosenCategory?.value == 'drink' ? 'white' : ''"
         >
           Drink
         </mat-grid-tile-footer>
       </a>
     </mat-grid-tile>
     <mat-grid-tile
-      [style.backgroundColor]="productType == 'burger' ? '#c6141b' : ''"
+      [style.backgroundColor]="
+        chosenCategory?.value == 'burger' ? '#c6141b' : ''
+      "
     >
       <a routerLink="/menu/burger">
         <mat-icon
           aria-hidden="false"
           aria-label="drink icon"
-          [style.color]="productType == 'burger' ? 'white' : ''"
+          [style.color]="chosenCategory?.value == 'burger' ? 'white' : ''"
           >lunch_dining</mat-icon
         >
         <mat-grid-tile-footer
-          [style.backgroundColor]="productType == 'burger' ? '#c6141b' : ''"
-          [style.color]="productType == 'burger' ? 'white' : ''"
+          [style.backgroundColor]="
+            chosenCategory?.value == 'burger' ? '#c6141b' : ''
+          "
+          [style.color]="chosenCategory?.value == 'burger' ? 'white' : ''"
         >
           Burger
         </mat-grid-tile-footer>
       </a>
     </mat-grid-tile>
     <mat-grid-tile
-      [style.backgroundColor]="productType == 'desert' ? '#c6141b' : ''"
+      [style.backgroundColor]="
+        chosenCategory?.value == 'desert' ? '#c6141b' : ''
+      "
     >
       <a routerLink="/menu/desert">
         <mat-icon
           aria-hidden="false"
           aria-label="drink icon"
-          [style.color]="productType == 'desert' ? 'white' : ''"
+          [style.color]="chosenCategory?.value == 'desert' ? 'white' : ''"
           >bakery_dining</mat-icon
         >
         <mat-grid-tile-footer
-          [style.backgroundColor]="productType == 'desert' ? '#c6141b' : ''"
-          [style.color]="productType == 'desert' ? 'white' : ''"
+          [style.backgroundColor]="
+            chosenCategory?.value == 'desert' ? '#c6141b' : ''
+          "
+          [style.color]="chosenCategory?.value == 'desert' ? 'white' : ''"
         >
           Desert
         </mat-grid-tile-footer>

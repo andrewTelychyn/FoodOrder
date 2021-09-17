@@ -9,7 +9,7 @@ export enum ProductTypes {
 export interface Product {
   id: string;
   type: ProductTypes;
-  categoryId: string;
+  categoryIds: string[];
   name: string;
   cost: number;
   img: string;
@@ -20,14 +20,10 @@ export interface Category {
   value: ProductTypes;
 }
 
-export interface ProductOptionDb {
-  id: ProductTypes;
-  options: ProductOption[];
-}
-
-export interface ProductOption {
+export interface Ingredient {
   optionName: string;
   optionAmount: number;
   optionCal: number;
+  categoryIds: string[];
   id: string;
 }

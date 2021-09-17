@@ -3,11 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
 import { ProductService } from '../../services/product.service';
-import {
-  Category,
-  Product,
-  ProductTypes,
-} from '../../shared/models/product.model';
+import { Category, Product } from '../../shared/models/product.model';
 import { Basket } from '../../shared/models/basket.model';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
@@ -21,11 +17,10 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   public basket: Basket;
   public products: Product[] = [];
   public chosenProduct: Product | undefined;
-  public productType: ProductTypes | undefined;
-  public category: Category | undefined;
+  public chosenCategory: Category | undefined;
+  public allCategories: Category[] = [];
 
-  private productDbSubscription: Subscription | undefined;
-  private urlParamsSubscription: Subscription | undefined;
+  private subs: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -41,41 +36,52 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
       this.chosenProduct = prod;
     }
     this.dialog.open(ModalDialogComponent, {
-      data: { prod, func: this.basket.addProduct.bind(this.basket) },
+      data: {
+        product: this.chosenProduct,
+        category: this.chosenCategory,
+        func: this.basket.addProduct.bind(this.basket),
+      },
     });
+  };
+
+  subscribeUrl = () => {
+    let sub = this.route.params.subscribe((res) => {
+      let urlParam = res.productId;
+
+      this.chosenCategory =
+        this.allCategories.find((i) => i.value === urlParam) ||
+        this.allCategories[0];
+
+      if (this.allCategories.length > 0)
+        this.loadProducts(this.chosenCategory!);
+      this.chosenProduct = undefined;
+    });
+
+    this.subs.push(sub);
   };
 
   loadProducts = (category: Category) => {
-    this.productDbSubscription = this.productService
+    let sub = this.productService
       .getProducts(category)
       .subscribe((response) => {
-        console.log(response, 'respone');
-
         this.products = response;
       });
+
+    this.subs.push(sub);
   };
 
   ngOnInit(): void {
-    this.urlParamsSubscription = this.route.params.subscribe((res) => {
-      let urlParam = res.productId as ProductTypes;
-
-      this.productType = Object.values(ProductTypes).includes(urlParam)
-        ? urlParam
-        : ProductTypes.drink;
-
-      this.productService
-        .getCategory(urlParam)
-        .subscribe((item) => (this.category = item));
-
-      if (this.category) this.loadProducts(this.category);
-      this.chosenProduct = undefined;
+    let sub = this.productService.getAllCategories().subscribe((data) => {
+      this.allCategories = data;
+      this.subscribeUrl();
     });
+
+    this.subs.push(sub);
   }
 
   ngOnDestroy(): void {
     this.basketService.basket = this.basket;
 
-    if (this.productDbSubscription) this.productDbSubscription.unsubscribe();
-    if (this.urlParamsSubscription) this.urlParamsSubscription.unsubscribe();
+    if (this.subs.length > 0) this.subs.map((i) => i.unsubscribe());
   }
 }
