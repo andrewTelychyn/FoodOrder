@@ -1,0 +1,39 @@
+<div class="modal-dialog-wrapper">
+  <div class="modal-dialog-filler" (click)="close()"></div>
+
+  <div class="modal-dialog-container">
+    <mat-dialog-actions class="close-buttons">
+      <button mat-button mat-dialog-close>
+        <mat-icon aria-hidden="false" aria-label="drink icon">close</mat-icon>
+      </button>
+    </mat-dialog-actions>
+
+    <div class="product-info">
+      <img src="{{ basketOrder?.product?.img }}" alt="" />
+      <div class="product-name">{{ basketOrder?.product?.name }}</div>
+      <div class="product-price">{{ basketOrder?.product?.cost }}$</div>
+    </div>
+    <ul class="product-select">
+      <li *ngFor="let opt of basketOrder?.options">
+        <div class="product-select-info">
+          <div class="product-select-name">{{ opt.optionName }}</div>
+          <div class="product-select-cal">{{ opt.optionCal }} Cal</div>
+        </div>
+        <div class="product-select-options">
+          <button class="remove-button" (click)="decreaseAmount(opt.id)">
+            <mat-icon aria-hidden="false" aria-label="drink icon"
+              >remove</mat-icon
+            >
+          </button>
+          <div class="current-choice">{{ opt.optionAmount }}</div>
+          <button class="add-button" (click)="increaseAmount(opt.id)">
+            <mat-icon aria-hidden="false" aria-label="drink icon">add</mat-icon>
+          </button>
+        </div>
+      </li>
+    </ul>
+    <mat-dialog-actions class="apply-button">
+      <button mat-button (click)="apply()">Apply</button>
+    </mat-dialog-actions>
+  </div>
+</div>

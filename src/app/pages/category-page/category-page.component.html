@@ -1,0 +1,37 @@
+<div class="container">
+  <app-nav-bar [productType]="productType"></app-nav-bar>
+  <div class="main-content">
+    <h1>
+      {{
+        productType
+          ? productType.charAt(0).toUpperCase() + productType.slice(1)
+          : ""
+      }}s
+    </h1>
+    <mat-grid-list cols="3" rowHeight="400px" gutterSize="20px">
+      <mat-grid-tile
+        *ngFor="let prd of products"
+        (click)="selectProduct(prd)"
+        [style.backgroundColor]="
+          chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
+        "
+      >
+        <img src="{{ prd.img }}" alt="burger burger" />
+        <mat-grid-tile-footer
+          [style.backgroundColor]="
+            chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
+          "
+          [style.color]="
+            chosenProduct && chosenProduct.id == prd.id ? 'white' : 'black'
+          "
+        >
+          {{ prd.name }}
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <app-basket
+    *ngIf="basket && basket.products && basket.products.length > 0"
+    [basket]="basket"
+  ></app-basket>
+</div>

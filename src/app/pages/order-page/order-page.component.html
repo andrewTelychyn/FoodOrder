@@ -1,0 +1,41 @@
+<div class="container">
+  <app-nav-bar></app-nav-bar>
+  <div class="order-content">
+    <h1>My Order</h1>
+    <h3>Take Out</h3>
+    <ul class="product-list">
+      <li *ngFor="let basketOrder of basket.products">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="drink icon"
+          id="removeProductButton"
+          (click)="removeProduct(basketOrder.product.id)"
+          >remove</mat-icon
+        >
+        <div class="product-info">
+          <img src="{{ basketOrder.product.img }}" />
+          <h2>{{ basketOrder.product.name }}</h2>
+          <h3>{{ basketOrder.product.cost }}$</h3>
+        </div>
+        <div class="product-select-amount">
+          <button class="remove-button">
+            <mat-icon aria-hidden="false" aria-label="drink icon"
+              >remove</mat-icon
+            >
+          </button>
+          <div class="current-choice">x1</div>
+          <button class="add-button">
+            <mat-icon aria-hidden="false" aria-label="drink icon">add</mat-icon>
+          </button>
+        </div>
+      </li>
+    </ul>
+    <div class="order-purchase">
+      <div class="order-total">
+        <h2>Total</h2>
+        <h1>${{ basket.commonPrice }}</h1>
+      </div>
+      <button>Purchase</button>
+    </div>
+  </div>
+</div>

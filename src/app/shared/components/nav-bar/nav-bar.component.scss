@@ -1,0 +1,41 @@
+.side-menu {
+  flex-grow: 0;
+  width: 150px;
+  margin-right: 20px;
+  background-color: #f8f8f7;
+  height: 100%;
+
+  mat-grid-list {
+    height: 100%;
+  }
+
+  mat-grid-tile {
+    cursor: pointer;
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+
+      mat-icon {
+        height: 53px;
+        width: 45px;
+        font-size: 45px;
+        color: lightslategrey;
+      }
+    }
+  }
+
+  mat-grid-tile-footer {
+    display: block;
+    font-size: 17px;
+    text-align: center;
+    height: 36px;
+    background-color: #f8f8f7;
+    font-weight: 300;
+    color: black;
+  }
+}

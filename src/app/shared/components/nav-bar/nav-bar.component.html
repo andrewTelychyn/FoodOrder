@@ -1,0 +1,58 @@
+<div class="side-menu">
+  <mat-grid-list cols="1" rowHeight="120px">
+    <mat-grid-tile
+      [style.backgroundColor]="productType == 'drink' ? '#c6141b' : ''"
+    >
+      <a routerLink="/menu/drink">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="drink icon"
+          [style.color]="productType == 'drink' ? 'white' : ''"
+          >local_drink</mat-icon
+        >
+        <mat-grid-tile-footer
+          [style.backgroundColor]="productType == 'drink' ? '#c6141b' : ''"
+          [style.color]="productType == 'drink' ? 'white' : ''"
+        >
+          Drink
+        </mat-grid-tile-footer>
+      </a>
+    </mat-grid-tile>
+    <mat-grid-tile
+      [style.backgroundColor]="productType == 'burger' ? '#c6141b' : ''"
+    >
+      <a routerLink="/menu/burger">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="drink icon"
+          [style.color]="productType == 'burger' ? 'white' : ''"
+          >lunch_dining</mat-icon
+        >
+        <mat-grid-tile-footer
+          [style.backgroundColor]="productType == 'burger' ? '#c6141b' : ''"
+          [style.color]="productType == 'burger' ? 'white' : ''"
+        >
+          Burger
+        </mat-grid-tile-footer>
+      </a>
+    </mat-grid-tile>
+    <mat-grid-tile
+      [style.backgroundColor]="productType == 'desert' ? '#c6141b' : ''"
+    >
+      <a routerLink="/menu/desert">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="drink icon"
+          [style.color]="productType == 'desert' ? 'white' : ''"
+          >bakery_dining</mat-icon
+        >
+        <mat-grid-tile-footer
+          [style.backgroundColor]="productType == 'desert' ? '#c6141b' : ''"
+          [style.color]="productType == 'desert' ? 'white' : ''"
+        >
+          Desert
+        </mat-grid-tile-footer>
+      </a>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,188 @@
+{
+  "categories": [
+    {
+      "id": "category1",
+      "value": "burger"
+    },
+    {
+      "id": "category2",
+      "value": "drink"
+    },
+    {
+      "id": "category3",
+      "value": "desert"
+    }
+  ],
+  "products": [
+    {
+      "id": "burger1",
+      "categoryId": "category1",
+      "name": "With becon and cheese",
+      "cost": 70,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Rye_with_chicken_bacon.png?$Category_Desktop$"
+    },
+    {
+      "id": "burger2",
+      "categoryId": "category1",
+      "name": "Big Mac",
+      "cost": 100,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/thumb.Sdwch_BigMac.png?$Category_Desktop$"
+    },
+    {
+      "id": "burger3",
+      "categoryId": "category1",
+      "name": "Premier",
+      "cost": 80,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_McChicken.png?$Category_Desktop$"
+    },
+    {
+      "id": "burger4",
+      "categoryId": "category1",
+      "name": "Hamburger",
+      "cost": 60,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_Hamburger.png?$Category_Desktop$"
+    },
+    {
+      "id": "burger5",
+      "categoryId": "category1",
+      "name": "Double Cheeseburger",
+      "cost": 60,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/SdwchDoubleCheeseburger.png?$Category_Desktop$"
+    },
+    {
+      "id": "burger6",
+      "categoryId": "category1",
+      "name": "Royal Cheeseburger",
+      "cost": 60,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Royal_Cheese.png?$Category_Desktop$"
+    },
+    {
+      "id": "drink1",
+      "categoryId": "category2",
+      "type": "drink",
+      "name": "Ice Latte",
+      "cost": 40,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McCafe_IceLatte.png?$Category_Desktop$"
+    },
+    {
+      "id": "drink2",
+      "categoryId": "category2",
+      "type": "drink",
+      "name": "Ice Americano",
+      "cost": 35,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McCafe_Ice-Americano.png?$Category_Desktop$"
+    },
+    {
+      "id": "drink3",
+      "categoryId": "category2",
+      "name": "Black Tea",
+      "cost": 20,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/TeaBlackCurtis.png?$Category_Desktop$"
+    },
+    {
+      "id": "desert1",
+      "categoryId": "category3",
+      "name": "Donut Heart",
+      "cost": 50,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/DonutHeart.png?$Category_Desktop$"
+    },
+    {
+      "id": "desert2",
+      "categoryId": "category3",
+      "name": "Ice Cream",
+      "cost": 40,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/IceCone.png?$Category_Desktop$"
+    },
+    {
+      "id": "desert3",
+      "categoryId": "category3",
+      "name": "Mac Shake",
+      "cost": 45,
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McShakeVanillaMedium.png?$Category_Desktop$"
+    }
+  ],
+  "ingredients": [
+    {
+      "categoryId": "category1",
+      "optionAmount": 2,
+      "optionName": "Bread",
+      "optionCal": 200,
+      "id": "1"
+    },
+    {
+      "categoryId": "category1",
+      "optionAmount": 1,
+      "optionName": "Meat",
+      "optionCal": 400,
+      "id": "2"
+    },
+    {
+      "categoryId": "category1",
+      "optionAmount": 2,
+      "optionName": "Cheese",
+      "optionCal": 100,
+      "id": "3"
+    },
+    {
+      "categoryId": "category2",
+      "optionAmount": 0,
+      "optionName": "Caramel",
+      "optionCal": 200,
+      "id": "1"
+    },
+    {
+      "categoryId": "category2",
+      "optionAmount": 2,
+      "optionName": "Sugar",
+      "optionCal": 100,
+      "id": "2"
+    },
+    {
+      "categoryId": "category2",
+      "optionAmount": 3,
+      "optionName": "Water",
+      "optionCal": 0,
+      "id": "3"
+    },
+    {
+      "categoryId": "category3",
+      "optionAmount": 2,
+      "optionName": "Caramel",
+      "optionCal": 200,
+      "id": "1"
+    },
+    {
+      "categoryId": "category3",
+      "optionAmount": 2,
+      "optionName": "Sugar",
+      "optionCal": 100,
+      "id": "2"
+    },
+    {
+      "categoryId": "category3",
+      "optionAmount": 0,
+      "optionName": "Chocolate",
+      "optionCal": 200,
+      "id": "3"
+    }
+  ],
+  "orders": {},
+  "users": [
+    {
+      "firstName": "andrew",
+      "lastName": "telychyn",
+      "username": "andrewww",
+      "password": "12345678",
+      "id": 1631799759081,
+      "role": "user"
+    },
+    {
+      "firstName": "bogdan",
+      "lastName": "layer",
+      "username": "bolay",
+      "password": "12345678",
+      "id": 1631799781933,
+      "role": "user"
+    }
+  ]
+}
