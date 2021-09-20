@@ -8,6 +8,6 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 @NgModule({
   imports: [CommonModule, MatIconModule, MatGridListModule, AppRoutingModule],
   declarations: [NavBarComponent],
-  exports: [NavBarComponent],
+  exports: [NavBarComponent, MatIconModule, MatGridListModule],
 })
-export class SharedComponentsModule {}
+export class SharedModule {}

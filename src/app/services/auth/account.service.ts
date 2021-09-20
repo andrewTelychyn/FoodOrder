@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { environment } from 'src/environments/environment';
 import { filter, map, tap, mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class AccountService {
           console.log(data[0].token);
 
           localStorage.setItem('token', data[0].token);
-          localStorage.setItem('username', JSON.stringify(data[0]));
+          localStorage.setItem('user', JSON.stringify(data[0]));
 
           this.user = data[0];
         }

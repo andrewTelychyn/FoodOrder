@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { BasketService } from 'src/app/services/basket.service';
 import { Basket } from '../../shared/models/basket.model';
 
 @Component({
@@ -7,13 +9,15 @@ import { Basket } from '../../shared/models/basket.model';
   styleUrls: ['./basket.component.scss'],
 })
 export class BasketComponent {
-  @Input() basket: Basket;
+  // @Input() basket: Basket;
+  public basket$: BehaviorSubject<Basket>;
 
-  constructor() {
-    this.basket = new Basket();
+  constructor(private basketService: BasketService) {
+    // this.basket = new Basket();
+    this.basket$ = basketService.basket$;
   }
 
   closeWindow = () => {
-    this.basket.products = [];
+    // this.basket.products = [];
   };
 }

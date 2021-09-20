@@ -10,6 +10,7 @@ export interface Product {
   id: string;
   type: ProductTypes;
   categoryIds: string[];
+  ingredientIds: string[];
   name: string;
   cost: number;
   img: string;
@@ -26,4 +27,10 @@ export interface Ingredient {
   optionCal: number;
   categoryIds: string[];
   id: string;
+}
+
+export interface ProductsState {
+  products: Product[];
+  categories: Category[];
+  ingredients: Ingredient[];
 }

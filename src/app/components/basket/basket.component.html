@@ -1,4 +1,4 @@
-<div class="main-basket">
+<div class="main-basket" *ngIf="basket$ | async as basket">
   <div class="basket-info">
     <h2>My Order</h2>
     <h3>Take Out</h3>

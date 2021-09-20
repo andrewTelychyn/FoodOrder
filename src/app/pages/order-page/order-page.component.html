@@ -1,6 +1,6 @@
 <div class="container">
   <app-nav-bar></app-nav-bar>
-  <div class="order-content">
+  <div class="order-content" *ngIf="basket$ | async as basket">
     <h1>My Order</h1>
     <h3>Take Out</h3>
     <ul class="product-list">
@@ -26,13 +26,13 @@
           </ul>
 
           <div class="product-select-amount">
-            <button class="remove-button" (click)="basketOrder.removeOne()">
+            <button class="remove-button" (click)="decrease(basketOrder)">
               <mat-icon aria-hidden="false" aria-label="drink icon"
                 >remove</mat-icon
               >
             </button>
             <div class="current-choice">x{{ basketOrder.amount }}</div>
-            <button class="add-button" (click)="basketOrder.addOne()">
+            <button class="add-button" (click)="increase(basketOrder)">
               <mat-icon aria-hidden="false" aria-label="drink icon"
                 >add</mat-icon
               >
@@ -46,7 +46,7 @@
         <h2>Total</h2>
         <h1>${{ basket.commonPrice }}</h1>
       </div>
-      <button>Purchase</button>
+      <button (click)="clear()">Purchase</button>
     </div>
   </div>
 </div>

@@ -21,29 +21,23 @@ export class BasketOrder {
 
     return value.length === 0;
   }
-
-  public removeOne() {
-    if (this.amount - 1 >= 1) this.amount -= 1;
-  }
-
-  public addOne() {
-    this.amount += 1;
-  }
 }
 
 export class Basket {
   public products: BasketOrder[];
+  public commonPrice: number;
 
   constructor() {
     this.products = [];
+    this.commonPrice = 0;
   }
 
-  public get commonPrice() {
-    return this.products.reduce(
-      (acc, item) => (acc += item.product.cost * item.amount),
-      0
-    );
-  }
+  // public get commonPrice() {
+  //   return this.products.reduce(
+  //     (acc, item) => (acc += item.product.cost * item.amount),
+  //     0
+  //   );
+  // }
 
   public addProduct(prod: BasketOrder) {
     let found = false;
@@ -57,16 +51,39 @@ export class Basket {
     });
 
     found ? (this.products = value) : this.products.push(prod);
+
+    this.calculatePrice();
+  }
+
+  public increaseOne(item: BasketOrder) {
+    this.products.map((elem) => {
+      if (item === elem) elem.amount += 1;
+    });
+
+    this.calculatePrice();
+  }
+
+  public decreaseOne(item: BasketOrder) {
+    this.products.map((elem) => {
+      if (item === elem) {
+        if (elem.amount - 1 >= 1) elem.amount -= 1;
+        else this.removeProduct(elem.product.id);
+      }
+      // if (item === elem && elem.amount - 1 >= 1) elem.amount -= 1;
+    });
+
+    this.calculatePrice();
   }
 
   public removeProduct(id: string) {
     this.products = this.products.filter((item) => item.product.id !== id);
+    this.calculatePrice();
   }
 
-  // private calculatePrice() {
-  //   this.commonPrice = this.products.reduce(
-  //     (acc, item) => (acc += item.product.cost),
-  //     0
-  //   );
-  // }
+  private calculatePrice() {
+    this.commonPrice = this.products.reduce(
+      (acc, item) => (acc += item.product.cost * item.amount),
+      0
+    );
+  }
 }

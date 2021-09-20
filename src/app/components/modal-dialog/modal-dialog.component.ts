@@ -1,9 +1,15 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { BasketService } from 'src/app/services/basket.service';
 import { IngredientService } from '../../services/ingredients.service';
 import { BasketOrder } from '../../shared/models/basket.model';
-import { Category, Product } from '../../shared/models/product.model';
+import {
+  Category,
+  Product,
+  ProductsState,
+} from '../../shared/models/product.model';
 
 @Component({
   selector: 'app-modal-dialog',
@@ -14,7 +20,7 @@ export class ModalDialogComponent implements OnDestroy {
   public basketOrder: BasketOrder | undefined;
   // dialog: MatDialogRef<ModalDialogComponent>;
 
-  private addingFunc: (prod: BasketOrder) => void;
+  // private addingFunc: (prod: BasketOrder) => void;
   private subscription: Subscription | undefined;
 
   constructor(
@@ -22,17 +28,28 @@ export class ModalDialogComponent implements OnDestroy {
     private data: {
       category: Category;
       product: Product;
-      func: (prod: BasketOrder) => void;
+      // func: (prod: BasketOrder) => void;
     },
     private dialog: MatDialogRef<ModalDialogComponent>,
-    private ingredientService: IngredientService
+    // private productService: IngredientService,
+    private store: Store<{ main: ProductsState }>,
+    private basketService: BasketService
   ) {
-    this.subscription = ingredientService
-      .get(data.category)
-      .subscribe((res) => {
-        this.basketOrder = new BasketOrder(data.product, res);
-      });
-    this.addingFunc = data.func;
+    // this.subscription = ingredientService
+    //   .get(data.category)
+    //   .subscribe((res) => {
+    //     this.basketOrder = new BasketOrder(data.product, res);
+    //   });
+    store.subscribe(
+      (res) =>
+        (this.basketOrder = new BasketOrder(
+          data.product,
+          res.main.ingredients.filter((i) =>
+            // i.categoryIds.includes(data.category.id)
+            data.product.ingredientIds.includes(i.id)
+          )
+        ))
+    );
   }
 
   decreaseAmount = (chosenId: string) => {
@@ -56,7 +73,7 @@ export class ModalDialogComponent implements OnDestroy {
   };
 
   apply = () => {
-    if (this.basketOrder) this.addingFunc(this.basketOrder);
+    if (this.basketOrder) this.basketService.addProduct(this.basketOrder);
     this.dialog.close();
   };
 

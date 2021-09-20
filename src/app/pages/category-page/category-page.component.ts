@@ -1,12 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
 import { ProductService } from '../../services/product.service';
-import { Category, Product } from '../../shared/models/product.model';
+import {
+  Category,
+  Ingredient,
+  Product,
+  ProductsState,
+} from '../../shared/models/product.model';
 import { Basket } from '../../shared/models/basket.model';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-category-page',
@@ -14,7 +20,10 @@ import { BasketService } from '../../services/basket.service';
   styleUrls: ['./category-page.component.scss'],
 })
 export class CategoryPageComponent implements OnInit, OnDestroy {
-  public basket: Basket;
+  // public basket: Basket;
+  public basket$: BehaviorSubject<Basket>;
+  public state$: Observable<{ main: ProductsState }>;
+
   public products: Product[] = [];
   public chosenProduct: Product | undefined;
   public chosenCategory: Category | undefined;
@@ -25,10 +34,12 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private productService: ProductService,
-    private basketService: BasketService
+    // private productService: ProductService,
+    private basketService: BasketService,
+    private store: Store<{ main: ProductsState }>
   ) {
-    this.basket = new Basket();
+    this.basket$ = basketService.basket$;
+    this.state$ = store;
   }
 
   selectProduct = (prod: Product) => {
@@ -39,7 +50,6 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
       data: {
         product: this.chosenProduct,
         category: this.chosenCategory,
-        func: this.basket.addProduct.bind(this.basket),
       },
     });
   };
@@ -48,40 +58,33 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
     let sub = this.route.params.subscribe((res) => {
       let urlParam = res.productId;
 
-      this.chosenCategory =
-        this.allCategories.find((i) => i.value === urlParam) ||
-        this.allCategories[0];
+      this.store.subscribe((data) => {
+        this.chosenCategory =
+          data.main.categories.find((i) => i.value === urlParam) ||
+          data.main.categories[0];
 
-      if (this.allCategories.length > 0)
-        this.loadProducts(this.chosenCategory!);
+        this.loadProducts();
+      });
       this.chosenProduct = undefined;
     });
 
     this.subs.push(sub);
   };
 
-  loadProducts = (category: Category) => {
-    let sub = this.productService
-      .getProducts(category)
-      .subscribe((response) => {
-        this.products = response;
-      });
-
-    this.subs.push(sub);
+  loadProducts = () => {
+    this.store.subscribe(
+      (data) =>
+        (this.products = data.main.products.filter((i) =>
+          i.categoryIds.includes(this.chosenCategory?.id!)
+        ))
+    );
   };
 
   ngOnInit(): void {
-    let sub = this.productService.getAllCategories().subscribe((data) => {
-      this.allCategories = data;
-      this.subscribeUrl();
-    });
-
-    this.subs.push(sub);
+    this.subscribeUrl();
   }
 
   ngOnDestroy(): void {
-    this.basketService.basket = this.basket;
-
     if (this.subs.length > 0) this.subs.map((i) => i.unsubscribe());
   }
 }

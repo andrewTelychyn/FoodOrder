@@ -1,1 +1,69 @@
-<p>admin-page works!</p>
+<div class="container">
+  <app-nav-bar></app-nav-bar>
+  <div class="admin-main" *ngIf="store$ | async as store">
+    <h1>Admin Page</h1>
+    <h3>Products</h3>
+    <mat-grid-list cols="4" rowHeight="200px" gutterSize="20px">
+      <mat-grid-tile
+        *ngFor="let product of store.main.products"
+        (click)="chooseProduct(product)"
+      >
+        <img src="{{ product.img }}" alt="" />
+        <mat-grid-tile-footer
+          [style.backgroundColor]="chosenProduct === product ? '#c6141b' : ''"
+          >{{ product.name }}</mat-grid-tile-footer
+        >
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list
+      cols="3"
+      rowHeight="300px"
+      gutterSize="20px"
+      *ngIf="chosenProduct"
+    >
+      <mat-grid-tile>
+        <img src="{{ chosenProduct.img }}" alt="" />
+        <mat-grid-tile-footer>
+          {{ chosenProduct.name }}
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label>Categories</label>
+            <input
+              type="text"
+              formControlName="categories"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Ingredients</label>
+            <input
+              type="text"
+              formControlName="ingredients"
+              class="form-control"
+            />
+          </div>
+          <button>Submit</button>
+        </form>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <h3>Ingredients</h3>
+    <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
+      <mat-grid-tile *ngFor="let ingredient of store.main.ingredients">
+        {{ ingredient.id }}
+        <mat-grid-tile-footer
+          >{{ ingredient.optionName }}
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <h3>Categories</h3>
+    <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
+      <mat-grid-tile *ngFor="let category of store.main.categories">
+        {{ category.id }}
+        <mat-grid-tile-footer>{{ category.value }}</mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

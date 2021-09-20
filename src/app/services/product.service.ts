@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Category, Product } from '../shared/models/product.model';
+import { Category, Ingredient, Product } from '../shared/models/product.model';
 import { map, filter, first, scan } from 'rxjs/operators';
 
 @Injectable({
@@ -32,5 +32,13 @@ export class ProductService {
 
   public getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(environment.API + 'categories');
+  }
+
+  public getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(environment.API + 'products');
+  }
+
+  public getAllIngredients(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(environment.API + 'ingredients');
   }
 }

@@ -18,6 +18,6 @@ export class NavBarComponent {
 
   public logout() {
     this.accountService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['account/login']);
   }
 }
