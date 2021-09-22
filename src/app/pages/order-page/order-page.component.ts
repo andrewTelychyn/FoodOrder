@@ -32,7 +32,6 @@ export class OrderPageComponent implements OnInit {
   }
 
   public purchase() {
-    // this.basketService.clearAll();
     this.orderService
       .saveOrder(this.basket$.getValue())
       .subscribe((data) => console.log(data));

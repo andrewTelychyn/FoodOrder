@@ -1,34 +1,15 @@
 <div class="container">
   <app-nav-bar [chosenCategory]="chosenCategory"></app-nav-bar>
   <div class="main-content">
-    <h1>
-      {{
-        chosenCategory
-          ? chosenCategory.value.charAt(0).toUpperCase() +
-            chosenCategory.value.slice(1)
-          : ""
-      }}s
-    </h1>
+    <h1>{{ chosenCategory?.value }}s</h1>
     <mat-grid-list cols="3" rowHeight="400px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let prd of products"
         (click)="selectProduct(prd)"
-        [class]
-        [style.backgroundColor]="
-          chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
-        "
+        [class.tile-selected]="prd.id == chosenProduct?.id"
       >
         <img [src]="prd.img" alt="burger burger" />
-        <mat-grid-tile-footer
-          [style.backgroundColor]="
-            chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
-          "
-          [style.color]="
-            chosenProduct && chosenProduct.id == prd.id ? 'white' : 'black'
-          "
-        >
-          {{ prd.name }}
-        </mat-grid-tile-footer>
+        <mat-grid-tile-footer> {{ prd.name }} </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Basket, BasketOrder } from '../shared/models/basket.model';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,9 +9,9 @@ import { Basket, BasketOrder } from '../shared/models/basket.model';
 export class BasketService {
   public basket$: BehaviorSubject<Basket>;
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.basket$ = new BehaviorSubject<Basket>(
-      new Basket(localStorage.getItem('userId')!)
+      new Basket(userService.user?.id)
     );
   }
 
@@ -43,6 +44,6 @@ export class BasketService {
   }
 
   public clearAll() {
-    this.basket$.next(new Basket(localStorage.getItem('userId')!));
+    this.basket$.next(new Basket(this.userService.user?.id));
   }
 }

@@ -106,6 +106,10 @@
           align-items: center;
         }
 
+        .remove-button {
+          background-color: #c2aaab;
+        }
+
         button {
           width: 30px;
           height: 30px;
@@ -115,6 +119,7 @@
           align-items: center;
           border-radius: 6px;
           cursor: pointer;
+          color: white;
 
           mat-icon {
             width: 15px;
@@ -125,7 +130,6 @@
 
         .add-button {
           background-color: #c6141b;
-          color: white;
         }
       }
     }

@@ -65,6 +65,7 @@ export class ModalDialogComponent {
   }
 
   public close() {
+    this.data.unSelect();
     this.dialog.close();
   }
 }

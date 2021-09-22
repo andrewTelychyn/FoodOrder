@@ -19,14 +19,13 @@ export interface Product {
 export interface Category {
   id: string;
   value: ProductTypes;
+  icon: string;
 }
 
 export interface Ingredient {
   id: string;
   optionName: string;
   optionCal: number;
-  // optionAmount: number;
-  // categoryIds: string[];
 }
 
 export interface IngredientSet {
@@ -36,9 +35,13 @@ export interface IngredientSet {
 }
 
 export interface IngredientSetDTO {
-  id: string;
-  ingredientId: string;
   amount: number;
+  //
+  // id: string;
+  // ingredientId: string;
+  //
+  price: number;
+  name: string;
 }
 
 export interface ProductsState {

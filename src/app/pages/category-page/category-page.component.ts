@@ -7,6 +7,7 @@ import {
   zip,
   combineLatest,
   Subscription,
+  of,
 } from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
 import {
@@ -23,7 +24,7 @@ import {
   selectChosenCategory,
   getProductsByCategory,
 } from 'src/app/store/product/product.selectors';
-import { tap, map, switchMap, mapTo, mergeMap, mergeAll } from 'rxjs/operators';
+import { tap, map, switchMap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-category-page',
@@ -53,6 +54,7 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
 
   public selectProduct(prod: Product) {
     this.chosenProduct = prod;
+
     this.dialog.open(ModalDialogComponent, {
       data: {
         product: this.chosenProduct,
@@ -61,26 +63,68 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public isColored(prod: Product) {
+    return { 'tile-selected': prod == this.chosenProduct };
+  } //changedetection
+
   ngOnInit(): void {
-    this.subscription = combineLatest(this.route.params, this.store$).subscribe(
-      // SWITCHMAP
-      (data) => {
-        if (data[0].productId && data[1].categories.length > 0) {
-          this.store$
-            .pipe(
-              select(selectChosenCategory, data[0].productId),
-              tap((c) => {
-                this.chosenCategory = c;
-              }),
-              map((c) => c.id),
-              switchMap((i) =>
-                this.store$.pipe(select(getProductsByCategory, i))
-              )
-            )
-            .subscribe((data) => (this.products = data));
-        }
-      }
-    );
+    this.route.params
+      .pipe(
+        filter((i) => i.productId),
+        switchMap((param) =>
+          this.store$.pipe(
+            filter((i) => i.categories.length > 0),
+            select(selectChosenCategory, param.productId)
+          )
+        ),
+        tap((c) => (this.chosenCategory = c)),
+        map((c) => c.id),
+        switchMap((id) => this.store$.pipe(select(getProductsByCategory, id)))
+      )
+      .subscribe((data) => (this.products = data));
+    // .subscribe((data) => console.log(data));
+
+    // this.route.params
+    //   .pipe(
+    //     switchMap((i) =>
+    //       this.store$.pipe(
+    //         switchMap((el) => {
+    //           //filter
+    //           if (i.productId && el.categories.length > 0)
+    //             return this.store$.pipe(
+    //               select(selectChosenCategory, i.productId),
+    //               tap((c) => (this.chosenCategory = c)),
+    //               map((c) => c.id),
+    //               switchMap((id) =>
+    //                 this.store$.pipe(select(getProductsByCategory, id))
+    //               )
+    //             );
+    //           else return of([]);
+    //         })
+    //       )
+    //     )
+    //   )
+    //   .subscribe((data) => (this.products = data));
+
+    // this.subscription = combineLatest(this.route.params, this.store$).subscribe(
+    //   // SWITCHMAP
+    //   (data) => {
+    //     if (data[0].productId && data[1].categories.length > 0) {
+    //       this.store$
+    //         .pipe(
+    //           select(selectChosenCategory, data[0].productId),
+    //           tap((c) => {
+    //             this.chosenCategory = c;
+    //           }),
+    //           map((c) => c.id),
+    //           switchMap((i) =>
+    //             this.store$.pipe(select(getProductsByCategory, i))
+    //           )
+    //         )
+    //         .subscribe((data) => (this.products = data));
+    //     }
+    //   }
+    // );
   }
 
   ngOnDestroy() {

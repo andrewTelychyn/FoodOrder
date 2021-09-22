@@ -1,106 +1,195 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { merge, Observable, zip } from 'rxjs';
+import { merge, Observable, of, zip } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
-  Category,
-  Ingredient,
   IngredientSet,
   IngredientSetDTO,
-  Product,
   ProductsState,
 } from '../shared/models/product.model';
-import { map, switchMap } from 'rxjs/operators';
+import {
+  concatAll,
+  filter,
+  map,
+  mergeAll,
+  mergeMap,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import {
   Basket,
   BasketDTO,
   BasketOrder,
   BasketOrderDTO,
 } from '../shared/models/basket.model';
-import { User } from '../shared/models/user.model';
+import { User, UserDTO } from '../shared/models/user.model';
+import { select, Store } from '@ngrx/store';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  constructor(private http: HttpClient) {}
+  private store$: Observable<ProductsState>;
+
+  constructor(
+    private http: HttpClient,
+    private store: Store<{ main: ProductsState }>,
+    private userService: UserService
+  ) {
+    this.store$ = this.store.select('main');
+  }
+
+  public loadOrders() {
+    let userId = this.userService.user?.id;
+
+    return this.http
+      .get<BasketDTO[]>(environment.API + 'baskets')
+      .pipe(
+        map((baskets) => baskets.filter((basket) => basket.user.id == userId))
+      );
+  }
 
   public saveOrder(basket: Basket) {
-    this.http.post<Basket>(environment.API + 'orders/', basket).pipe();
-    // this.updateUser(basket.id).subscribe((data) => console.log(data));
-    // this.saveBasketOrders(basket.products);
-
-    let ingredients: IngredientSet[] = basket.products.reduce(
-      (acc: IngredientSet[], bo: BasketOrder) => acc.concat(bo.options),
-      []
-    );
-
-    return merge(
-      this.saveBasketOrders(basket.products),
-      this.saveIngredientSets(ingredients),
-      this.updateUser(basket.id),
-      this.saveBasket(basket)
-    );
+    return merge(this.saveBasket(basket), this.updateUser(basket.id));
   }
 
   private saveBasket(basket: Basket) {
+    let user: User = this.userService.user!;
+
     let dto: BasketDTO = {
       id: basket.id,
+      user: {
+        id: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+      } as UserDTO,
       commonPrice: basket.commonPrice,
-      userId: basket.userId,
-      basketOrderIds: basket.products.map((i) => i.id),
-    } as BasketDTO;
+      timestamp: new Date(Date.now()).getTime(),
+      basketOrders: basket.products.map((basketOrder) => {
+        return {
+          amount: basketOrder.amount,
+          name: basketOrder.product.name,
+          price: basketOrder.product.cost,
+          totalPrice: basketOrder.product.cost, //!!!!!!!!!!!!!!
+          ingredients: basketOrder.options.map((ingredientset) => {
+            return {
+              amount: ingredientset.amount,
+              price: 1,
+              name: ingredientset.ingredient.optionName,
+            } as IngredientSetDTO;
+          }),
+        } as BasketOrderDTO;
+      }),
+    };
 
-    return this.http.post<BasketDTO>(environment.API + 'orders', dto);
+    return this.http.post<BasketDTO>(environment.API + 'baskets', dto);
+
+    // let dto: BasketDTO = {
+    //   id: basket.id,
+    //   commonPrice: basket.commonPrice,
+    //   userId: basket.userId,
+    //   basketOrderIds: basket.products.map((i) => i.id),
+    // } as BasketDTO;
   }
 
   private saveIngredientSets(ingredientSets: IngredientSet[]) {
-    let dtos: IngredientSetDTO[] = ingredientSets.map(
-      (i) =>
-        ({
-          amount: i.amount,
-          id: i.id,
-          ingredientId: i.ingredient.id,
-        } as IngredientSetDTO)
-    );
-
-    return this.http.post<IngredientSetDTO[]>(
-      environment.API + 'ingredientsets',
-      dtos
-    );
+    // let dtos: IngredientSetDTO[] = ingredientSets.map(
+    //   (i) =>
+    //     ({
+    //       amount: i.amount,
+    //       id: i.id,
+    //       ingredientId: i.ingredient.id,
+    //     } as IngredientSetDTO)
+    // );
+    // return of(...dtos).pipe(
+    //   mergeMap((i) =>
+    //     this.http.post<IngredientSetDTO>(environment.API + 'ingredientsets', i)
+    //   )
+    // );
   }
 
   private saveBasketOrders(basketOrders: BasketOrder[]) {
-    let dtos: BasketOrderDTO[] = basketOrders.map(
-      (i) =>
-        ({
-          amount: i.amount,
-          ingredientIds: i.options.map((el) => el.id),
-          productId: i.product.id,
-          id: i.id,
-        } as BasketOrderDTO)
-    );
-
-    return this.http.post<BasketOrderDTO[]>(
-      environment.API + 'basketorders',
-      dtos
-    );
+    // let dtos: BasketOrderDTO[] = basketOrders.map(
+    //   (i) =>
+    //     ({
+    //       amount: i.amount,
+    //       ingredientIds: i.options.map((el) => el.id),
+    //       productId: i.product.id,
+    //       id: i.id,
+    //     } as BasketOrderDTO)
+    // );
+    // return of(...dtos).pipe(
+    //   mergeMap((i) =>
+    //     this.http.post<BasketOrderDTO>(environment.API + 'basketorders', i)
+    //   )
+    // );
   }
 
   private updateUser(basketId: string) {
-    let user: User = JSON.parse(localStorage.getItem('user')!);
-    user.ordersList.push(basketId);
+    this.userService.user?.ordersList.push(basketId);
+    localStorage.setItem('user', JSON.stringify(this.userService.user));
 
-    return this.http.put<User>(environment.API + `users/${user.id}`, user);
-
-    // return this.http
-    //   .delete(environment.API + `users/${user.id}`)
-    //   .pipe(
-    //     switchMap((i) => this.http.post<User>(environment.API + 'users/', user))
-    //   );
-
-    // this.http
-    //   .post<User>(environment.API + `users/${user.id}`, user)
-    //   .subscribe((data) => console.log(data));
+    return this.http.put<User>(
+      environment.API + `users/${this.userService.user?.id}`,
+      this.userService.user
+    );
   }
+
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // public loadOrders() {
+  // let userId = localStorage.getItem('userId');
+  // let ingredients: IngredientSet[] = [];
+  // let basketOrdersArray: BasketOrder[] = [];
+  // this.http
+  //   .get<BasketDTO[]>(environment.API + `baskets?userId=${userId}`)
+  //   .pipe(
+  //     switchMap((baskets) => of(...baskets)),
+  //     switchMap((basket) =>
+  //       this.http
+  //         .get<BasketOrderDTO[]>(
+  //           environment.API +
+  //             `basketorders?${basket.basketOrderIds
+  //               .map((id) => `id=${id}`)
+  //               .join('&')}`
+  //         )
+  //         .pipe(
+  //           switchMap((basketOrders) => of(...basketOrders)),
+  //           mergeMap((basketOrder) =>
+  //             this.http
+  //               .get<IngredientSetDTO[]>(
+  //                 environment.API +
+  //                   `ingredientsets?${basketOrder.ingredientIds
+  //                     .map((el) => `id=${el}`)
+  //                     .join('&')}`
+  //               )
+  //               .pipe(
+  //                 switchMap((ingredientsets) =>
+  //                   this.store$.pipe(
+  //                     select(convertIngredientSetDTO, ingredientsets)
+  //                   )
+  //                 ),
+  //                 switchMap((ingredientsets) =>
+  //                   this.store$.pipe(
+  //                     select(convertBasketOrderDTO, {
+  //                       basketOrder,
+  //                       ingredientsets,
+  //                     })
+  //                   )
+  //                 )
+  //               )
+  //           )
+  //           // tap((i) => console.log(i))
+  //         )
+  //     )
+  //   )
+  // mergeMap(baskets => baskets.map(basket =>))
+  // .subscribe((data) => console.log(data, 'end'));
+  // }
 }

@@ -14,8 +14,8 @@ export class IngredientService {
   public get(category: Category): Observable<Ingredient[]> {
     return this.http
       .get<Ingredient[]>(environment.API + 'ingredients/')
-      .pipe(
-        map((data) => data.filter((i) => i.categoryIds.includes(category.id)))
-      );
+      .pipe
+      // map((data) => data.filter((i) => i.))
+      ();
   }
 }

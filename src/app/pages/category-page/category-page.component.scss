@@ -21,12 +21,23 @@
     font-weight: 300;
     font-size: 50px;
     padding: 25px 0px;
+    text-transform: capitalize;
+  }
+
+  .tile-selected {
+    background-color: #c6141b;
+
+    mat-grid-tile-footer {
+      background-color: #c6141b;
+      color: white;
+    }
   }
 
   mat-grid-tile {
     cursor: pointer;
     border-radius: 25px;
-
+    background-color: #f8f8f7;
+    color: black;
     img {
       width: 210px;
       height: 210px;

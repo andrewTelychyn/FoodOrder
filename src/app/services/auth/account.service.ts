@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { environment } from 'src/environments/environment';
 import { filter, map, tap, mergeMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class AccountService {
   public user: User | undefined;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
     let value = localStorage.getItem('username');
     if (value) this.user = JSON.parse(value);
   }
@@ -27,11 +28,7 @@ export class AccountService {
         if (data.length > 1) throw new Error('Smth went wrong');
 
         if (data[0].token) {
-          console.log(data[0].token);
-
-          localStorage.setItem('userId', data[0].id);
-          localStorage.setItem('token', data[0].token);
-          localStorage.setItem('user', JSON.stringify(data[0]));
+          this.userService.setUser(data[0]);
 
           this.user = data[0];
         }
@@ -43,15 +40,12 @@ export class AccountService {
 
   logout() {
     this.user = undefined;
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('userId');
+    this.userService.clearUser();
   }
 
   register(user: User) {
     this.user = user;
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('userId', user.id);
+    this.userService.setUser(user);
     return this.http.post<User>(environment.API + `users`, user);
   }
 }

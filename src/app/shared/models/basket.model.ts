@@ -1,17 +1,35 @@
-import { Product, Ingredient, IngredientSet } from './product.model';
+import {
+  Product,
+  Ingredient,
+  IngredientSet,
+  IngredientSetDTO,
+} from './product.model';
+import { v4 as uuid } from 'uuid';
+import { User, UserDTO } from './user.model';
 
 export interface BasketOrderDTO {
-  id: string;
-  productId: string;
-  ingredientIds: string[];
   amount: number;
+  //
+  // id: string;
+  // productId: string;
+  // ingredientIds: string[];
+  //
+  name: string;
+  price: number;
+  totalPrice: number;
+  ingredients: IngredientSetDTO[];
 }
 
 export interface BasketDTO {
   id: string;
-  basketOrderIds: string[];
   commonPrice: number;
-  userId: string;
+  //
+  // basketOrderIds: string[];
+  // userId: string;
+  //
+  user: UserDTO;
+  basketOrders: BasketOrderDTO[];
+  timestamp: number;
 }
 
 export class BasketOrder {
@@ -24,16 +42,11 @@ export class BasketOrder {
     this.product = prod;
     this.options = opt.map((item) => Object.assign({}, item));
     this.amount = 1;
-    this.id = String(Date.now());
+    this.id = uuid();
   }
 
   public compareIngredient(order: BasketOrder): boolean {
     if (order.product.id !== this.product.id) return false;
-
-    // let value = this.options.filter((thisProduct) => {
-    //   let opt = order.options.find((i) => i.id == thisProduct.id);
-    //   return thisProduct.optionAmount !== opt?.optionAmount;
-    // });
 
     let value = this.options.filter((thisProduct) => {
       let opt = order.options.find(
@@ -51,18 +64,11 @@ export class Basket {
   public products: BasketOrder[];
   public commonPrice: number;
 
-  constructor(public userId: string) {
+  constructor(public userId: string | undefined) {
     this.products = [];
     this.commonPrice = 0;
-    this.id = String(Date.now());
+    this.id = uuid();
   }
-
-  // public get commonPrice() {
-  //   return this.products.reduce(
-  //     (acc, item) => (acc += item.product.cost * item.amount),
-  //     0
-  //   );
-  // }
 
   public addProduct(prod: BasketOrder) {
     let found = false;

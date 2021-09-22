@@ -4,51 +4,110 @@
   margin-right: 20px;
   background-color: #f8f8f7;
   height: 100%;
+  min-height: 100vh;
   position: relative;
 
-  .user-info {
-    max-width: 100%;
-    height: 120px;
-    padding: 10px;
-    background-color: pink;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .up-group {
+    .user-info {
+      max-width: 100%;
+      height: 120px;
+      padding: 10px;
+      background-color: pink;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    h3 {
-      font-size: 18px;
-      font-weight: 300;
-      margin: 0px;
-      padding: 15px 0 10px;
+      h3 {
+        font-size: 18px;
+        font-weight: 300;
+        margin: 0px;
+        padding: 15px 0 10px;
 
-      span {
-        font-weight: 500;
+        span {
+          font-weight: 500;
+        }
+      }
+
+      button {
+        cursor: pointer;
+        padding: 8px 15px;
+        border: none;
+        font-size: 18px;
+        font-weight: 700;
+        color: white;
+        background-color: black;
       }
     }
 
-    button {
+    // mat-grid-list {}
+
+    .tile-selected {
+      background-color: #c6141b;
+
+      mat-grid-tile-footer {
+        background-color: #c6141b;
+        color: white;
+      }
+
+      a mat-icon {
+        color: white;
+      }
+    }
+
+    mat-grid-tile {
       cursor: pointer;
-      padding: 8px 15px;
-      border: none;
-      font-size: 18px;
-      font-weight: 700;
-      color: white;
-      background-color: black;
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+
+        mat-icon {
+          height: 53px;
+          width: 45px;
+          font-size: 45px;
+          color: lightslategrey;
+        }
+      }
+    }
+
+    mat-grid-tile-footer {
+      display: block;
+      text-align: center;
+      height: 36px;
+      background-color: #f8f8f7;
+      font-size: 17px;
+      font-weight: 300;
+      color: black;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
     }
   }
 
-  // mat-grid-list {}
-
-  mat-grid-tile {
+  .user-history {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 120px;
+    width: 100%;
     cursor: pointer;
 
     a {
       display: flex;
       justify-content: center;
+      flex-direction: column;
       align-items: center;
       width: 100%;
       height: 100%;
       text-decoration: none;
+      font-size: 17px;
+      font-weight: 300;
+      color: black;
 
       mat-icon {
         height: 53px;
@@ -57,15 +116,5 @@
         color: lightslategrey;
       }
     }
-  }
-
-  mat-grid-tile-footer {
-    display: block;
-    font-size: 17px;
-    text-align: center;
-    height: 36px;
-    background-color: #f8f8f7;
-    font-weight: 300;
-    color: black;
   }
 }

@@ -6,11 +6,22 @@ import { OrderPageComponent } from './order-page/order-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HistoryPageComponent } from './history-page/history-page.component';
 // import { ServicesModule } from '../services/services.module';
 
 @NgModule({
-  declarations: [AdminPageComponent, CategoryPageComponent, OrderPageComponent],
+  declarations: [
+    AdminPageComponent,
+    CategoryPageComponent,
+    OrderPageComponent,
+    HistoryPageComponent,
+  ],
   imports: [CommonModule, SharedModule, ComponentsModule, ReactiveFormsModule],
-  exports: [AdminPageComponent, CategoryPageComponent, OrderPageComponent],
+  exports: [
+    AdminPageComponent,
+    CategoryPageComponent,
+    OrderPageComponent,
+    HistoryPageComponent,
+  ],
 })
 export class PagesModule {}
