@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { AccountService } from 'src/app/services/auth/account.service';
 
 @Component({
@@ -33,7 +34,7 @@ export class LoginPageComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = true;
 
     if (this.form.invalid) {
@@ -44,6 +45,7 @@ export class LoginPageComponent implements OnInit {
 
     this.accountService
       .login(this.f.username.value, this.f.password.value)
+      .pipe(take(1))
       .subscribe(
         (data) => {
           this.router.navigate(['menu/burger']);

@@ -17,7 +17,7 @@ export class BasketComponent {
     this.basket$ = basketService.basket$;
   }
 
-  closeWindow = () => {
+  public closeWindow() {
     // this.basket.products = [];
-  };
+  }
 }

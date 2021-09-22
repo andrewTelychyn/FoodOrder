@@ -1,8 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  merge,
+  zip,
+  combineLatest,
+  Subscription,
+} from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
-import { ProductService } from '../../services/product.service';
 import {
   Category,
   Ingredient,
@@ -12,7 +18,12 @@ import {
 import { Basket } from '../../shared/models/basket.model';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import {
+  selectChosenCategory,
+  getProductsByCategory,
+} from 'src/app/store/product/product.selectors';
+import { tap, map, switchMap, mapTo, mergeMap, mergeAll } from 'rxjs/operators';
 
 @Component({
   selector: 'app-category-page',
@@ -20,71 +31,59 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./category-page.component.scss'],
 })
 export class CategoryPageComponent implements OnInit, OnDestroy {
-  // public basket: Basket;
   public basket$: BehaviorSubject<Basket>;
-  public state$: Observable<{ main: ProductsState }>;
+  public store$: Observable<ProductsState>;
 
   public products: Product[] = [];
   public chosenProduct: Product | undefined;
   public chosenCategory: Category | undefined;
   public allCategories: Category[] = [];
 
-  private subs: Subscription[] = [];
+  public subscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    // private productService: ProductService,
     private basketService: BasketService,
     private store: Store<{ main: ProductsState }>
   ) {
-    this.basket$ = basketService.basket$;
-    this.state$ = store;
+    this.basket$ = this.basketService.basket$;
+    this.store$ = this.store.select('main');
   }
 
-  selectProduct = (prod: Product) => {
-    if (this.chosenProduct?.id !== prod.id) {
-      this.chosenProduct = prod;
-    }
+  public selectProduct(prod: Product) {
+    this.chosenProduct = prod;
     this.dialog.open(ModalDialogComponent, {
       data: {
         product: this.chosenProduct,
-        category: this.chosenCategory,
+        unSelect: () => (this.chosenProduct = undefined),
       },
     });
-  };
-
-  subscribeUrl = () => {
-    let sub = this.route.params.subscribe((res) => {
-      let urlParam = res.productId;
-
-      this.store.subscribe((data) => {
-        this.chosenCategory =
-          data.main.categories.find((i) => i.value === urlParam) ||
-          data.main.categories[0];
-
-        this.loadProducts();
-      });
-      this.chosenProduct = undefined;
-    });
-
-    this.subs.push(sub);
-  };
-
-  loadProducts = () => {
-    this.store.subscribe(
-      (data) =>
-        (this.products = data.main.products.filter((i) =>
-          i.categoryIds.includes(this.chosenCategory?.id!)
-        ))
-    );
-  };
-
-  ngOnInit(): void {
-    this.subscribeUrl();
   }
 
-  ngOnDestroy(): void {
-    if (this.subs.length > 0) this.subs.map((i) => i.unsubscribe());
+  ngOnInit(): void {
+    this.subscription = combineLatest(this.route.params, this.store$).subscribe(
+      // SWITCHMAP
+      (data) => {
+        if (data[0].productId && data[1].categories.length > 0) {
+          this.store$
+            .pipe(
+              select(selectChosenCategory, data[0].productId),
+              tap((c) => {
+                this.chosenCategory = c;
+              }),
+              map((c) => c.id),
+              switchMap((i) =>
+                this.store$.pipe(select(getProductsByCategory, i))
+              )
+            )
+            .subscribe((data) => (this.products = data));
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

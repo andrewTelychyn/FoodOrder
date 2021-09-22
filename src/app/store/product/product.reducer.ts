@@ -38,6 +38,10 @@ const _productReducer = createReducer(
     categories,
   })),
   on(StoreActions.removeCatogories, (state) => ({ ...state, products: [] })),
+  on(
+    StoreActions.loadAll,
+    (state: ProductsState, newState: ProductsState) => newState
+  ),
   on(StoreActions.reset, (state) => initialState)
 );
 

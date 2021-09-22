@@ -22,11 +22,23 @@ export interface Category {
 }
 
 export interface Ingredient {
-  optionName: string;
-  optionAmount: number;
-  optionCal: number;
-  categoryIds: string[];
   id: string;
+  optionName: string;
+  optionCal: number;
+  // optionAmount: number;
+  // categoryIds: string[];
+}
+
+export interface IngredientSet {
+  id: string;
+  ingredient: Ingredient;
+  amount: number;
+}
+
+export interface IngredientSetDTO {
+  id: string;
+  ingredientId: string;
+  amount: number;
 }
 
 export interface ProductsState {

@@ -29,6 +29,7 @@ export class AccountService {
         if (data[0].token) {
           console.log(data[0].token);
 
+          localStorage.setItem('userId', data[0].id);
           localStorage.setItem('token', data[0].token);
           localStorage.setItem('user', JSON.stringify(data[0]));
 
@@ -44,11 +45,13 @@ export class AccountService {
     this.user = undefined;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   }
 
   register(user: User) {
     this.user = user;
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('userId', user.id);
     return this.http.post<User>(environment.API + `users`, user);
   }
 }

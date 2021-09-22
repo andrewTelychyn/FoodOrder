@@ -3,6 +3,7 @@ import {
   Category,
   Ingredient,
   Product,
+  ProductsState,
 } from '../../shared/models/product.model';
 
 export const addProducts = createAction(
@@ -14,19 +15,24 @@ export const removeProducts = createAction(
 );
 
 export const addCategories = createAction(
-  '[Product Component] AddCatogories',
+  '[Category Component] AddCatogories',
   props<{ categories: Category[] }>()
 );
 export const removeCatogories = createAction(
-  '[Product Component] RemoveCatogories'
+  '[Category Component] RemoveCatogories'
 );
 
 export const addIngredients = createAction(
-  '[Product Component] AddIngredients',
+  '[Ingredient Component] AddIngredients',
   props<{ ingredients: Ingredient[] }>()
 );
 export const removeIngredients = createAction(
-  '[Product Component] RemoveIngredients'
+  '[Ingredient Component] RemoveIngredients'
+);
+
+export const loadAll = createAction(
+  '[All Component] LoadingAll',
+  props<ProductsState>()
 );
 
 export const reset = createAction('[Product Component] Reset');

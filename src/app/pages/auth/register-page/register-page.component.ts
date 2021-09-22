@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { AccountService } from 'src/app/services/auth/account.service';
 
 @Component({
@@ -35,13 +36,9 @@ export class RegisterPageComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
-    // this.alertService.clear();
-
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
@@ -55,23 +52,9 @@ export class RegisterPageComponent implements OnInit {
         role: 'user',
         token: 'thisisveryrealtoken',
       })
+      .pipe(take(1))
       .subscribe((data) => {
         this.router.navigate(['menu/burger']);
       });
-    // this.accountService
-    //   .register(this.form.value)
-    //   .pipe(first())
-    //   .subscribe(
-    //     (data) => {
-    //       this.alertService.success('Registration successful', {
-    //         keepAfterRouteChange: true,
-    //       });
-    //       this.router.navigate(['../login'], { relativeTo: this.route });
-    //     },
-    //     (error) => {
-    //       this.alertService.error(error);
-    //       this.loading = false;
-    //     }
-    //   );
   }
 }

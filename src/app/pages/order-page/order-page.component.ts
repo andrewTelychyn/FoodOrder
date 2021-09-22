@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { OrderService } from 'src/app/services/order.service';
 import { BasketService } from '../../services/basket.service';
 import { Basket, BasketOrder } from '../../shared/models/basket.model';
 
@@ -11,34 +12,30 @@ import { Basket, BasketOrder } from '../../shared/models/basket.model';
 export class OrderPageComponent implements OnInit {
   public basket$: BehaviorSubject<Basket>;
 
-  // public basket: Basket;
-  // public basketOrderView: [[order :BasketOrder], number]= [];
-
-  constructor(private basketService: BasketService) {
+  constructor(
+    private basketService: BasketService,
+    private orderService: OrderService
+  ) {
     this.basket$ = this.basketService.basket$;
-
-    // this.basket = basketService.basket;
-
-    // basketService.basket.products.map((item) => {
-    //   this.basketOrderView
-    // })
   }
 
-  removeProduct(id: string) {
-    // this.basket.removeProduct(id);
+  public removeProduct(id: string) {
     this.basketService.removeProduct(id);
   }
 
-  increase(prod: BasketOrder) {
+  public increase(prod: BasketOrder) {
     this.basketService.increaseOne(prod);
   }
 
-  decrease(prod: BasketOrder) {
+  public decrease(prod: BasketOrder) {
     this.basketService.decreaseOne(prod);
   }
 
-  clear() {
-    this.basketService.clearAll();
+  public purchase() {
+    // this.basketService.clearAll();
+    this.orderService
+      .saveOrder(this.basket$.getValue())
+      .subscribe((data) => console.log(data));
   }
 
   ngOnInit(): void {}

@@ -16,8 +16,10 @@
     <ul class="product-select">
       <li *ngFor="let opt of basketOrder?.options">
         <div class="product-select-info">
-          <div class="product-select-name">{{ opt.optionName }}</div>
-          <div class="product-select-cal">{{ opt.optionCal }} Cal</div>
+          <div class="product-select-name">{{ opt.ingredient.optionName }}</div>
+          <div class="product-select-cal">
+            {{ opt.ingredient.optionCal }} Cal
+          </div>
         </div>
         <div class="product-select-options">
           <button class="remove-button" (click)="decreaseAmount(opt.id)">
@@ -25,7 +27,7 @@
               >remove</mat-icon
             >
           </button>
-          <div class="current-choice">{{ opt.optionAmount }}</div>
+          <div class="current-choice">{{ opt.amount }}</div>
           <button class="add-button" (click)="increaseAmount(opt.id)">
             <mat-icon aria-hidden="false" aria-label="drink icon">add</mat-icon>
           </button>

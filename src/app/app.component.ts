@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 import { ProductService } from './services/product.service';
 import {
   Category,
@@ -11,6 +12,7 @@ import {
   addCategories,
   addIngredients,
   addProducts,
+  loadAll,
 } from './store/product/product.actions';
 
 @Component({
@@ -27,16 +29,9 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.productService.getAllProducts().subscribe((data: Product[]) => {
-      this.store.dispatch(addProducts({ products: data }));
-    });
-
-    this.productService.getAllIngredients().subscribe((data: Ingredient[]) => {
-      this.store.dispatch(addIngredients({ ingredients: data }));
-    });
-
-    this.productService.getAllCategories().subscribe((data: Category[]) => {
-      this.store.dispatch(addCategories({ categories: data }));
-    });
+    this.productService
+      .getAll()
+      .pipe(take(1))
+      .subscribe((store: ProductsState) => this.store.dispatch(loadAll(store)));
   }
 }

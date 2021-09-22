@@ -6,12 +6,12 @@ import { Basket, BasketOrder } from '../shared/models/basket.model';
   providedIn: 'root',
 })
 export class BasketService {
-  // public basket: Basket;
   public basket$: BehaviorSubject<Basket>;
 
   constructor() {
-    // this.basket = new Basket();
-    this.basket$ = new BehaviorSubject<Basket>(new Basket());
+    this.basket$ = new BehaviorSubject<Basket>(
+      new Basket(localStorage.getItem('userId')!)
+    );
   }
 
   public addProduct(item: BasketOrder) {
@@ -43,6 +43,6 @@ export class BasketService {
   }
 
   public clearAll() {
-    this.basket$.next(new Basket());
+    this.basket$.next(new Basket(localStorage.getItem('userId')!));
   }
 }

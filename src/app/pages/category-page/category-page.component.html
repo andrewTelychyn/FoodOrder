@@ -13,11 +13,12 @@
       <mat-grid-tile
         *ngFor="let prd of products"
         (click)="selectProduct(prd)"
+        [class]
         [style.backgroundColor]="
           chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
         "
       >
-        <img src="{{ prd.img }}" alt="burger burger" />
+        <img [src]="prd.img" alt="burger burger" />
         <mat-grid-tile-footer
           [style.backgroundColor]="
             chosenProduct && chosenProduct.id == prd.id ? '#C6141B' : '#f8f8f7'
@@ -32,7 +33,7 @@
     </mat-grid-list>
   </div>
   <div *ngIf="basket$ | async as basket">
+    <!-- !!!!!!!!!!!! -->
     <app-basket *ngIf="basket.products.length > 0"></app-basket>
   </div>
 </div>
-<!-- *ngIf="basket && basket.products && basket.products.length > 0" -->

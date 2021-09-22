@@ -16,62 +16,98 @@
   "products": [
     {
       "id": "burger1",
-      "categoryIds": ["category1"],
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
+      "categoryIds": [
+        "category1"
+      ],
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "name": "With becon and cheese",
       "cost": 70,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Rye_with_chicken_bacon.png?$Category_Desktop$"
     },
     {
       "id": "burger2",
-      "categoryIds": ["category1"],
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
-
+      "categoryIds": [
+        "category1"
+      ],
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "name": "Big Mac",
       "cost": 100,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/thumb.Sdwch_BigMac.png?$Category_Desktop$"
     },
     {
       "id": "burger3",
-      "categoryIds": ["category1"],
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
-
+      "categoryIds": [
+        "category1"
+      ],
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "name": "Premier",
       "cost": 80,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_McChicken.png?$Category_Desktop$"
     },
     {
       "id": "burger4",
-      "categoryIds": ["category1"],
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
-
+      "categoryIds": [
+        "category1"
+      ],
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "name": "Hamburger",
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_Hamburger.png?$Category_Desktop$"
     },
     {
       "id": "burger5",
-      "categoryIds": ["category1"],
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
-
+      "categoryIds": [
+        "category1"
+      ],
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "name": "Double Cheeseburger",
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/SdwchDoubleCheeseburger.png?$Category_Desktop$"
     },
     {
       "id": "burger6",
-      "categoryIds": ["category1"],
+      "categoryIds": [
+        "category1"
+      ],
       "name": "Royal Cheeseburger",
-      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
-
+      "ingredientIds": [
+        "ingredient1",
+        "ingredient2",
+        "ingredient3"
+      ],
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Royal_Cheese.png?$Category_Desktop$"
     },
     {
       "id": "drink1",
-      "categoryIds": ["category2"],
-      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
-
+      "categoryIds": [
+        "category2"
+      ],
+      "ingredientIds": [
+        "ingredient4",
+        "ingredient5",
+        "ingredient6"
+      ],
       "type": "drink",
       "name": "Ice Latte",
       "cost": 40,
@@ -79,9 +115,14 @@
     },
     {
       "id": "drink2",
-      "categoryIds": ["category2"],
-      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
-
+      "categoryIds": [
+        "category2"
+      ],
+      "ingredientIds": [
+        "ingredient4",
+        "ingredient5",
+        "ingredient6"
+      ],
       "type": "drink",
       "name": "Ice Americano",
       "cost": 35,
@@ -89,36 +130,56 @@
     },
     {
       "id": "drink3",
-      "categoryIds": ["category2"],
-      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
-
+      "categoryIds": [
+        "category2"
+      ],
+      "ingredientIds": [
+        "ingredient4",
+        "ingredient5",
+        "ingredient6"
+      ],
       "name": "Black Tea",
       "cost": 20,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/TeaBlackCurtis.png?$Category_Desktop$"
     },
     {
       "id": "desert1",
-      "categoryIds": ["category3"],
-      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
-
+      "categoryIds": [
+        "category3"
+      ],
+      "ingredientIds": [
+        "ingredient7",
+        "ingredient8",
+        "ingredient9"
+      ],
       "name": "Donut Heart",
       "cost": 50,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/DonutHeart.png?$Category_Desktop$"
     },
     {
       "id": "desert2",
-      "categoryIds": ["category3"],
-      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
-
+      "categoryIds": [
+        "category3"
+      ],
+      "ingredientIds": [
+        "ingredient7",
+        "ingredient8",
+        "ingredient9"
+      ],
       "name": "Ice Cream",
       "cost": 40,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/IceCone.png?$Category_Desktop$"
     },
     {
       "id": "desert3",
-      "categoryIds": ["category3"],
-      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
-
+      "categoryIds": [
+        "category3"
+      ],
+      "ingredientIds": [
+        "ingredient7",
+        "ingredient8",
+        "ingredient9"
+      ],
       "name": "Mac Shake",
       "cost": 45,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McShakeVanillaMedium.png?$Category_Desktop$"
@@ -126,93 +187,180 @@
   ],
   "ingredients": [
     {
-      "categoryIds": ["category1"],
+      "categoryIds": [
+        "category1"
+      ],
       "optionAmount": 2,
       "optionName": "Bread",
       "optionCal": 200,
       "id": "ingredient1"
     },
     {
-      "categoryIds": ["category1"],
+      "categoryIds": [
+        "category1"
+      ],
       "optionAmount": 1,
       "optionName": "Meat",
       "optionCal": 400,
       "id": "ingredient2"
     },
     {
-      "categoryIds": ["category1"],
+      "categoryIds": [
+        "category1"
+      ],
       "optionAmount": 2,
       "optionName": "Cheese",
       "optionCal": 100,
       "id": "ingredient3"
     },
     {
-      "categoryIds": ["category2"],
+      "categoryIds": [
+        "category2"
+      ],
       "optionAmount": 0,
       "optionName": "Caramel",
       "optionCal": 200,
       "id": "ingredient4"
     },
     {
-      "categoryIds": ["category2"],
+      "categoryIds": [
+        "category2"
+      ],
       "optionAmount": 2,
       "optionName": "Sugar",
       "optionCal": 100,
       "id": "ingredient5"
     },
     {
-      "categoryIds": ["category2"],
+      "categoryIds": [
+        "category2"
+      ],
       "optionAmount": 3,
       "optionName": "Water",
       "optionCal": 0,
       "id": "ingredient6"
     },
     {
-      "categoryIds": ["category3"],
+      "categoryIds": [
+        "category3"
+      ],
       "optionAmount": 2,
       "optionName": "Caramel",
       "optionCal": 200,
       "id": "ingredient7"
     },
     {
-      "categoryIds": ["category3"],
+      "categoryIds": [
+        "category3"
+      ],
       "optionAmount": 2,
       "optionName": "Sugar",
       "optionCal": 100,
       "id": "ingredient8"
     },
     {
-      "categoryIds": ["category3"],
+      "categoryIds": [
+        "category3"
+      ],
       "optionAmount": 0,
       "optionName": "Chocolate",
       "optionCal": 200,
       "id": "ingredient9"
     }
   ],
-  "orders": {},
+  "ingredientsets": [
+    {
+      "amount": 0,
+      "id": "1632239642611",
+      "ingredientId": "ingredient4"
+    },
+    {
+      "amount": 0,
+      "id": "1632239642611",
+      "ingredientId": "ingredient5"
+    },
+    {
+      "amount": 0,
+      "id": "1632239642611",
+      "ingredientId": "ingredient6"
+    },
+    {
+      "amount": 0,
+      "id": "1632239643792",
+      "ingredientId": "ingredient4"
+    },
+    {
+      "amount": 0,
+      "id": "1632239643792",
+      "ingredientId": "ingredient5"
+    },
+    {
+      "amount": 0,
+      "id": "1632239643792",
+      "ingredientId": "ingredient6"
+    }
+  ],
+  "basketorders": [
+    {
+      "amount": 1,
+      "ingredientIds": [
+        "1632239642611",
+        "1632239642611",
+        "1632239642611"
+      ],
+      "productId": "drink1",
+      "id": "1632239642611"
+    },
+    {
+      "amount": 1,
+      "ingredientIds": [
+        "1632239643792",
+        "1632239643792",
+        "1632239643792"
+      ],
+      "productId": "drink2",
+      "id": "1632239643792"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1632239587067",
+      "commonPrice": 75,
+      "userId": "1631799759081",
+      "basketOrderIds": [
+        "1632239642611",
+        "1632239643792"
+      ]
+    }
+  ],
   "users": [
     {
+      "ordersList": [
+        "1632239587067"
+      ],
       "firstName": "andrew",
       "lastName": "telychyn",
       "username": "andrewww",
       "password": "12345678",
-      "id": 1631799759081,
+      "id": "1631799759081",
       "role": "user",
       "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJibGRyIiwiaWF0IjoxNjMxODcxNDk0LCJleHAiOjE2NjM0MDc0OTQsImF1ZCI6InRoZXNwYWNlIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiMTYzMTc5OTc1OTA4MSJ9.foMXBk1a6jbpsOOlpsT2VJHYnH1AjlSy2u98GxFjDEY"
     },
     {
+      "ordersList": [],
       "firstName": "bogdan",
       "lastName": "layer",
       "username": "bolay",
       "password": "12345678",
-      "id": 1631799781933,
+      "id": "1631799781933",
       "role": "user",
       "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJibGRyIiwiaWF0IjoxNjMxODcxNDk0LCJleHAiOjE2NjM0MDc0OTQsImF1ZCI6InRoZXNwYWNlIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiMTYzMTc5OTc4MTkzMyJ9.9EohL8OVJkqA1IqcFoawbGE_CvADYmYGx8X-oo_BrtA"
     },
     {
+      "ordersList": [],
       "token": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiYWRtaW4iLCJJc3N1ZXIiOiJzb21lc2l0ZSIsIlVzZXJuYW1lIjoibWVnYWRtaW4iLCJleHAiOjE2NjM2ODQzNTMsImlhdCI6MTYzMjE0ODM1M30.o-L-Ve64X1egWfDSF1WcdEnLzq5x2B96UbKgJAyTSL0",
       "role": "admin",
-      "id": 1631799231933,
+      "id": "1631799231933",
       "firstName": "megadmin",
       "lastName": "2.0",
       "username": "admin2000",

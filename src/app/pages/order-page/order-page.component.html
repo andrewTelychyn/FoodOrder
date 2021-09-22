@@ -3,7 +3,10 @@
   <div class="order-content" *ngIf="basket$ | async as basket">
     <h1>My Order</h1>
     <h3>Take Out</h3>
-    <ul class="product-list">
+    <ul
+      class="product-list"
+      *ngIf="basket.products.length > 0; else noProducts"
+    >
       <li *ngFor="let basketOrder of basket.products" class="product-list-li">
         <mat-icon
           aria-hidden="false"
@@ -21,7 +24,7 @@
         <div class="product-wrapper">
           <ul class="options-info">
             <li *ngFor="let opt of basketOrder.options">
-              <span>{{ opt.optionName }}</span> X{{ opt.optionAmount }}
+              <span>{{ opt.ingredient.optionName }}</span> X{{ opt.amount }}
             </li>
           </ul>
 
@@ -41,12 +44,15 @@
         </div>
       </li>
     </ul>
+    <ng-template #noProducts>
+      <div id="noProducts">There are no products in the basket yet :(</div>
+    </ng-template>
     <div class="order-purchase">
       <div class="order-total">
         <h2>Total</h2>
         <h1>${{ basket.commonPrice }}</h1>
       </div>
-      <button (click)="clear()">Purchase</button>
+      <button (click)="purchase()">Purchase</button>
     </div>
   </div>
 </div>
