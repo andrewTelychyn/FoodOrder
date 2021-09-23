@@ -47,6 +47,7 @@ export const getProductIngredients = createSelector(
             ingredient: elem,
             amount: 0,
             id: getid(),
+            totalPrice: 0,
           } as IngredientSet)
       )
 );

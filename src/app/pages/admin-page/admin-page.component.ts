@@ -1,43 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   Category,
   Ingredient,
   Product,
   ProductsState,
 } from 'src/app/shared/models/product.model';
-import { tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { AdminService } from 'src/app/services/ingredients.service';
 
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.scss'],
 })
-export class AdminPageComponent implements OnInit {
-  public store$: Observable<{ main: ProductsState }>;
+export class AdminPageComponent implements OnInit, OnDestroy {
+  public store$: Observable<ProductsState>;
+
+  public product$: BehaviorSubject<Product | undefined>;
 
   public chosenProduct: Product | undefined;
   public chosenCategory: Category | undefined;
   public chosenIngredient: Ingredient | undefined;
 
+  public subscription: Subscription;
   public form: FormGroup;
-
-  get f() {
-    return this.form.controls;
-  }
 
   constructor(
     private store: Store<{ main: ProductsState }>,
-    private formBuiler: FormBuilder
+    private formBuiler: FormBuilder,
+    private adminService: AdminService
   ) {
-    this.store$ = store;
+    this.store$ = store.select('main');
 
     this.form = this.formBuiler.group({
       categories: [[], Validators.required],
       ingredients: [[], Validators.required],
+      name: ['', Validators.required],
+      image: ['', Validators.required],
+      cost: [0, Validators.required],
     });
+
+    this.product$ = new BehaviorSubject<Product | undefined>(undefined);
+
+    this.subscription = this.product$
+      .pipe(
+        filter((i) => i != undefined),
+        tap((p) => (this.chosenProduct = p)),
+        switchMap((p) =>
+          this.store$.pipe(
+            map((s) => ({
+              ingredients: s.ingredients,
+              categories: s.categories,
+            })),
+            tap((obj) => {
+              this.form.controls.ingredients.setValue(
+                obj.ingredients
+                  .filter((i) => p?.ingredientIds.includes(i.id))
+                  .map((i) => i.optionName)
+                  .join(', ')
+              );
+
+              this.form.controls.categories.setValue(
+                obj.categories
+                  .filter((i) => p?.categoryIds.includes(i.id))
+                  .map((i) => i.value)
+                  .join(', ')
+              );
+              this.form.controls.image.setValue(p?.img);
+              this.form.controls.name.setValue(p?.name);
+              this.form.controls.cost.setValue(p?.cost);
+            })
+          )
+        )
+      )
+      .subscribe((data) => {});
   }
 
   public chooseProduct(item: Product) {
@@ -47,47 +87,87 @@ export class AdminPageComponent implements OnInit {
     }
 
     this.chosenProduct = Object.assign({}, item, { selected: false });
-
-    this.store$.subscribe((data) => {
-      console.log('hello');
-      this.form.controls.ingredients.setValue(
-        data.main.ingredients
-          .filter((i) => this.chosenProduct?.ingredientIds.includes(i.id))
-          .map((i) => i.optionName)
-          .join(', ')
-      );
-      this.form.controls.categories.setValue(
-        data.main.categories
-          .filter((i) => this.chosenProduct?.categoryIds.includes(i.id))
-          .map((i) => i.value)
-          .join(', ')
-      );
-    });
+    this.product$.next(item);
   }
 
   public clickOnIngredient(ingredient: Ingredient) {
     if (this.chosenProduct) {
-      if (this.chosenProduct.ingredientIds.includes(ingredient.id)) {
-        this.chosenProduct.ingredientIds =
-          this.chosenProduct.ingredientIds.filter((i) => i !== ingredient.id);
-      } else
-        this.chosenProduct.ingredientIds =
-          this.chosenProduct.ingredientIds.concat(ingredient.id);
+      let value: Product = Object.assign(
+        Object.assign({}, this.chosenProduct, {
+          selected: false,
+        }),
+        {
+          name: this.form.controls.name.value,
+          img: this.form.controls.image.value,
+          cost: this.form.controls.cost.value,
+        }
+      );
+
+      if (value.ingredientIds.includes(ingredient.id)) {
+        value.ingredientIds = value.ingredientIds.filter(
+          (i) => i !== ingredient.id
+        );
+      } else value.ingredientIds = value.ingredientIds.concat(ingredient.id);
+
+      this.product$.next(value);
     }
   }
 
   public clickOnCategory(category: Category) {
     if (this.chosenProduct) {
-      if (this.chosenProduct.categoryIds.includes(category.id))
-        this.chosenProduct.categoryIds = this.chosenProduct.categoryIds.filter(
-          (i) => i !== category.id
-        );
-      else
-        this.chosenProduct.categoryIds = this.chosenProduct.categoryIds.concat(
-          category.id
-        );
+      let value: Product = Object.assign(
+        Object.assign({}, this.chosenProduct, {
+          selected: false,
+        }),
+        {
+          name: this.form.controls.name.value,
+          img: this.form.controls.image.value,
+          cost: this.form.controls.cost.value,
+        }
+      );
+
+      if (value.categoryIds.includes(category.id)) {
+        value.categoryIds = value.categoryIds.filter((i) => i !== category.id);
+      } else value.categoryIds = value.categoryIds.concat(category.id);
+
+      this.product$.next(value);
     }
   }
 
+  public createNewProduct() {
+    let value: Product = {
+      name: '',
+      img: '',
+      cost: 0,
+      ingredientIds: [],
+      categoryIds: [],
+      id: uuid(),
+    } as Product;
+
+    this.chosenProduct = value;
+    this.product$.next(value);
+  }
+
+  public submit() {
+    let product: Product = this.product$.getValue()!;
+
+    if (this.form.invalid) return;
+
+    this.store$
+      .pipe(
+        switchMap((store) => {
+          if (store.products.includes(product)) {
+            return this.adminService.updateProduct(product);
+          } else {
+            return this.adminService.saveNewProduct(product);
+          }
+        }),
+        take(1)
+      )
+      .subscribe((data) => console.log(data));
+  }
+
   ngOnInit(): void {}
+
+  ngOnDestroy() {}
 }

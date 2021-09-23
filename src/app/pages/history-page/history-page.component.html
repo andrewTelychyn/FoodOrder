@@ -4,22 +4,27 @@
     <h1>User orders history</h1>
     <ul class="basket-list">
       <li *ngFor="let basket of baskets">
-        <h2>
-          {{ basket.commonPrice }} <span>{{ basket.timestamp }}</span>
-        </h2>
-        <mat-grid-list cols="3" rowHeight="170px" gutterSize="20px">
+        <div class="basket-header">
+          <h3>{{ basket.commonPrice }}$</h3>
+          <h4>
+            {{ basket.timestamp | date: "dd.LL.YYYY HH:mm " }}
+          </h4>
+        </div>
+        <mat-grid-list cols="3" rowHeight="220px" gutterSize="20px">
           <mat-grid-tile *ngFor="let basketOrder of basket.basketOrders">
-            <ul>
+            <ul class="ingredient-list">
               <li *ngFor="let ingredient of basketOrder.ingredients">
-                <h4>{{ ingredient.name }} x {{ ingredient.amount }}</h4>
+                <h4>
+                  {{ ingredient.name }} <span>x {{ ingredient.amount }}</span>
+                </h4>
               </li>
             </ul>
             <mat-grid-tile-footer>
-              <h3>
-                {{ basketOrder.name }} <span>{{ basketOrder.price }}</span>
-              </h3>
-              <ul>
-                <li>amount: {{ basketOrder.amount }}</li>
+              <h2>
+                {{ basketOrder.name }} <span>{{ basketOrder.price }}$</span>
+              </h2>
+              <ul class="footer-list">
+                <li>Amount: {{ basketOrder.amount }}</li>
               </ul>
             </mat-grid-tile-footer>
           </mat-grid-tile>

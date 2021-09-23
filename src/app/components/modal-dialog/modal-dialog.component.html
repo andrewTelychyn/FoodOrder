@@ -11,7 +11,7 @@
     <div class="product-info">
       <img src="{{ basketOrder?.product?.img }}" alt="" />
       <div class="product-name">{{ basketOrder?.product?.name }}</div>
-      <div class="product-price">{{ basketOrder?.product?.cost }}$</div>
+      <div class="product-price">{{ basketOrder?.totalPrice }}$</div>
     </div>
     <ul class="product-select">
       <li *ngFor="let opt of basketOrder?.options">

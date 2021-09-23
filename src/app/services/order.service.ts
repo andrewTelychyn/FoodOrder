@@ -50,20 +50,14 @@ export class OrderService {
       );
   }
 
-  public saveOrder(basket: Basket) {
-    return merge(this.saveBasket(basket), this.updateUser(basket.id));
+  public saveOrder(basket: Basket, user: UserDTO) {
+    return merge(this.saveBasket(basket, user), this.updateUser(basket.id));
   }
 
-  private saveBasket(basket: Basket) {
-    let user: User = this.userService.user!;
-
+  private saveBasket(basket: Basket, user: UserDTO) {
     let dto: BasketDTO = {
       id: basket.id,
-      user: {
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-      } as UserDTO,
+      user,
       commonPrice: basket.commonPrice,
       timestamp: new Date(Date.now()).getTime(),
       basketOrders: basket.products.map((basketOrder) => {
@@ -71,11 +65,11 @@ export class OrderService {
           amount: basketOrder.amount,
           name: basketOrder.product.name,
           price: basketOrder.product.cost,
-          totalPrice: basketOrder.product.cost, //!!!!!!!!!!!!!!
+          totalPrice: basketOrder.totalPrice,
           ingredients: basketOrder.options.map((ingredientset) => {
             return {
               amount: ingredientset.amount,
-              price: 1,
+              price: ingredientset.totalPrice,
               name: ingredientset.ingredient.optionName,
             } as IngredientSetDTO;
           }),

@@ -8,7 +8,7 @@ export enum ProductTypes {
 
 export interface Product {
   id: string;
-  type: ProductTypes;
+  type?: ProductTypes;
   categoryIds: string[];
   ingredientIds: string[];
   name: string;
@@ -26,12 +26,16 @@ export interface Ingredient {
   id: string;
   optionName: string;
   optionCal: number;
+  //
+  cost: number;
 }
 
 export interface IngredientSet {
   id: string;
   ingredient: Ingredient;
   amount: number;
+  //
+  totalPrice: number;
 }
 
 export interface IngredientSetDTO {

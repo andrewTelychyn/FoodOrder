@@ -6,14 +6,12 @@
     <h3>Products</h3>
     <mat-grid-list cols="4" rowHeight="200px" gutterSize="20px">
       <mat-grid-tile
-        *ngFor="let product of store.main.products"
+        *ngFor="let product of store.products"
         (click)="chooseProduct(product)"
       >
         <img src="{{ product.img }}" alt="" />
         <mat-grid-tile-footer
-          [style.backgroundColor]="
-            chosenProduct?.id === product.id ? '#c6141b' : ''
-          "
+          [class.selected]="chosenProduct?.id === product.id"
           >{{ product.name }}</mat-grid-tile-footer
         >
       </mat-grid-tile>
@@ -22,13 +20,30 @@
       cols="3"
       rowHeight="300px"
       gutterSize="20px"
-      *ngIf="chosenProduct"
+      *ngIf="chosenProduct; else createProduct"
+      class="creation-grid-list"
     >
       <mat-grid-tile>
-        <img src="{{ chosenProduct.img }}" alt="" />
+        <img [src]="form.controls.image.value" alt="" />
         <mat-grid-tile-footer>
-          {{ chosenProduct.name }}
+          {{ form.controls.name.value }}
         </mat-grid-tile-footer>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Image</label>
+            <input type="text" formControlName="image" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Cost</label>
+            <input type="text" formControlName="cost" class="form-control" />
+          </div>
+        </form>
       </mat-grid-tile>
       <mat-grid-tile>
         <form [formGroup]="form">
@@ -50,22 +65,25 @@
               readonly
             />
           </div>
-          <button>Submit</button>
+          <button (click)="submit()">Submit</button>
         </form>
       </mat-grid-tile>
     </mat-grid-list>
+    <ng-template #createProduct>
+      <button class="create-product-button" (click)="createNewProduct()">
+        Create New
+      </button>
+    </ng-template>
     <h3>Ingredients</h3>
     <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
       <mat-grid-tile
-        *ngFor="let ingredient of store.main.ingredients"
+        *ngFor="let ingredient of store.ingredients"
         (click)="clickOnIngredient(ingredient)"
       >
         {{ ingredient.id }}
         <mat-grid-tile-footer
-          [style.backgroundColor]="
+          [class.selected]="
             chosenProduct?.ingredientIds?.includes(ingredient.id)
-              ? '#c6141b'
-              : ''
           "
           >{{ ingredient.optionName }}
         </mat-grid-tile-footer>
@@ -74,14 +92,12 @@
     <h3>Categories</h3>
     <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
       <mat-grid-tile
-        *ngFor="let category of store.main.categories"
+        *ngFor="let category of store.categories"
         (click)="clickOnCategory(category)"
       >
         {{ category.id }}
         <mat-grid-tile-footer
-          [style.backgroundColor]="
-            chosenProduct?.categoryIds?.includes(category.id) ? '#c6141b' : ''
-          "
+          [class.selected]="chosenProduct?.categoryIds?.includes(category.id)"
           >{{ category.value }}</mat-grid-tile-footer
         >
       </mat-grid-tile>

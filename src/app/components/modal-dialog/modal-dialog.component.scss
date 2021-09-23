@@ -9,18 +9,14 @@
 }
 
 .modal-dialog-container {
-  //   position: absolute;
-  //   right: 0;
-  //   top: 0;
   width: 20%;
   height: 100%;
   min-width: 200px;
   display: flex;
   flex-direction: column;
   flex-grow: 0;
-  //background-color: #c6141b;
   background-color: white;
-  padding-top: 30px;
+  padding: 30px 20px;
 
   .close-buttons {
     position: absolute;
@@ -66,6 +62,7 @@
 
   .product-select {
     list-style: none;
+    padding: 0px;
     margin-top: 40px;
 
     li {
@@ -107,7 +104,7 @@
         }
 
         .remove-button {
-          background-color: #c2aaab;
+          background-color: #cebcbd;
         }
 
         button {

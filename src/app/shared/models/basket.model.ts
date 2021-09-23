@@ -37,12 +37,14 @@ export class BasketOrder {
   public product: Product;
   public options: IngredientSet[];
   public amount: number;
+  public totalPrice: number;
 
   constructor(prod: Product, opt: IngredientSet[]) {
     this.product = prod;
     this.options = opt.map((item) => Object.assign({}, item));
     this.amount = 1;
     this.id = uuid();
+    this.totalPrice = prod.cost;
   }
 
   public compareIngredient(order: BasketOrder): boolean {
@@ -106,13 +108,13 @@ export class Basket {
   }
 
   public removeProduct(id: string) {
-    this.products = this.products.filter((item) => item.product.id !== id);
+    this.products = this.products.filter((item) => item.id !== id);
     this.calculatePrice();
   }
 
   private calculatePrice() {
     this.commonPrice = this.products.reduce(
-      (acc, item) => (acc += item.product.cost * item.amount),
+      (acc, item) => (acc += item.totalPrice * item.amount),
       0
     );
   }

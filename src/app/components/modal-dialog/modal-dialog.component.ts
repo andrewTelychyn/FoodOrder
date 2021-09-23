@@ -43,6 +43,8 @@ export class ModalDialogComponent {
       this.basketOrder.options.map((item) => {
         if (item.id == chosenId && item.amount - 1 >= 0) {
           item.amount -= 1;
+          item.totalPrice -= item.ingredient.cost;
+          this.basketOrder!.totalPrice -= item.ingredient.cost;
         }
       });
     }
@@ -53,6 +55,8 @@ export class ModalDialogComponent {
       this.basketOrder.options.map((item) => {
         if (item.id == chosenId) {
           item.amount += 1;
+          item.totalPrice += item.ingredient.cost;
+          this.basketOrder!.totalPrice += item.ingredient.cost;
         }
       });
     }

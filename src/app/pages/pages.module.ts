@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HistoryPageComponent } from './history-page/history-page.component';
-// import { ServicesModule } from '../services/services.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,13 @@ import { HistoryPageComponent } from './history-page/history-page.component';
     OrderPageComponent,
     HistoryPageComponent,
   ],
-  imports: [CommonModule, SharedModule, ComponentsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ComponentsModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
+  ],
   exports: [
     AdminPageComponent,
     CategoryPageComponent,

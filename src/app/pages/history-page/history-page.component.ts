@@ -12,7 +12,9 @@ export class HistoryPageComponent implements OnInit {
 
   constructor(private orderService: OrderService) {
     this.baskets = [];
-    this.orderService.loadOrders().subscribe((data) => (this.baskets = data));
+    this.orderService
+      .loadOrders()
+      .subscribe((data) => (this.baskets = data.reverse()));
   }
 
   ngOnInit(): void {}

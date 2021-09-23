@@ -1,24 +1,26 @@
-<div class="main-basket" *ngIf="basket$ | async as basket">
-  <div class="basket-info">
-    <h2>My Order</h2>
-    <h3>Take Out</h3>
-  </div>
-  <ul class="order-list">
-    <li *ngFor="let order of basket.products">
-      <img src="{{ order.product.img }}" alt="" />
-      <h2>{{ order.product.name }}</h2>
-      <h3>
-        {{ order.product.cost }}$ <span>x{{ order.amount }}</span>
-      </h3>
-    </li>
-  </ul>
-  <div class="basket-result">
-    <div class="result-info">
-      <h2>Total</h2>
-      <h1>${{ basket.commonPrice }}</h1>
+<ng-container *ngIf="basket$ | async as basket">
+  <div class="main-basket" *ngIf="basket.products.length > 0">
+    <div class="basket-info">
+      <h2>My Order</h2>
+      <h3>Take Out</h3>
     </div>
-    <button class="basket-done-button" (click)="closeWindow()">
-      <a routerLink="/basket">Done</a>
-    </button>
+    <ul class="order-list">
+      <li *ngFor="let order of basket.products">
+        <img src="{{ order.product.img }}" alt="" />
+        <h2>{{ order.product.name }}</h2>
+        <h3>
+          {{ order.totalPrice }}$ <span>x{{ order.amount }}</span>
+        </h3>
+      </li>
+    </ul>
+    <div class="basket-result">
+      <div class="result-info">
+        <h2>Total</h2>
+        <h1>${{ basket.commonPrice }}</h1>
+      </div>
+      <button class="basket-done-button" (click)="closeWindow()">
+        <a routerLink="/basket">Done</a>
+      </button>
+    </div>
   </div>
-</div>
+</ng-container>

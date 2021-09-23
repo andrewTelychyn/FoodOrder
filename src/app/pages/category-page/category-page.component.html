@@ -13,8 +13,5 @@
       </mat-grid-tile>
     </mat-grid-list>
   </div>
-  <div *ngIf="basket$ | async as basket">
-    <!-- !!!!!!!!!!!! -->
-    <app-basket *ngIf="basket.products.length > 0"></app-basket>
-  </div>
+  <app-basket></app-basket>
 </div>
