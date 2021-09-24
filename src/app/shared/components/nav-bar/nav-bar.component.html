@@ -22,10 +22,20 @@
     </mat-grid-list>
   </div>
 
-  <div class="user-history">
-    <a routerLink="/history">
-      <mat-icon aria-hidden="false" aria-label="drink icon">history</mat-icon>
-      <mat-grid-tile-footer> history </mat-grid-tile-footer>
-    </a>
-  </div>
+  <ul class="lower-bar">
+    <li class="admin-page" *ngIf="roleGuard.isAdmin()">
+      <a routerLink="/admin">
+        <mat-icon aria-hidden="false" aria-label="drink icon"
+          >admin_panel_settings</mat-icon
+        >
+        <mat-grid-tile-footer> admin </mat-grid-tile-footer>
+      </a>
+    </li>
+    <li class="user-history">
+      <a routerLink="/history">
+        <mat-icon aria-hidden="false" aria-label="drink icon">history</mat-icon>
+        <mat-grid-tile-footer> history </mat-grid-tile-footer>
+      </a>
+    </li>
+  </ul>
 </div>

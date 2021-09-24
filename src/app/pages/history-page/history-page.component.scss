@@ -19,6 +19,21 @@
     font-weight: 300;
   }
 
+  #noBaskets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 100;
+    font-size: 30px;
+    margin: 70px 0px;
+    width: 100%;
+    background-color: #c6141b;
+    padding: 40px 0;
+    border-radius: 25px;
+    color: white;
+    width: 97%;
+  }
+
   .basket-list {
     list-style: none;
     padding: 0px 20px 0px 0px;

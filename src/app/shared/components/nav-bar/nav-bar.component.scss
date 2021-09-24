@@ -90,31 +90,36 @@
     }
   }
 
-  .user-history {
+  .lower-bar {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 120px;
+    list-style: none;
     width: 100%;
-    cursor: pointer;
+    padding: 0px;
 
-    a {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
+    li {
+      cursor: pointer;
+      height: 120px;
       width: 100%;
-      height: 100%;
-      text-decoration: none;
-      font-size: 17px;
-      font-weight: 300;
-      color: black;
+      a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 300;
+        color: black;
 
-      mat-icon {
-        height: 53px;
-        width: 45px;
-        font-size: 45px;
-        color: lightslategrey;
+        mat-icon {
+          height: 53px;
+          width: 45px;
+          font-size: 45px;
+          color: lightslategrey;
+        }
       }
     }
   }

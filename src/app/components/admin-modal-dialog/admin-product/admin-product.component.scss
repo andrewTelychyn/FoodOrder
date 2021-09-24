@@ -1,54 +1,26 @@
-.container {
-  min-height: 100vh;
+.modal-dialog-wrapper {
   width: 100vw;
-  max-width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
   display: flex;
-  flex-direction: row;
-  font-family: "Roboto", sans-serif;
+  align-items: center;
+  justify-content: center;
 }
 
-.admin-main {
-  flex-grow: 1;
-  max-width: 100%;
-  padding-right: 30px;
-
-  h1 {
-    margin: 25px 0;
-    font-size: 30px;
-    font-weight: 300;
-  }
-
-  h3 {
-    padding: 15px 20px;
-    background-color: #c6141b;
-    color: white;
-    border-radius: 25px;
-    max-width: 100%;
-  }
-
-  .create-button {
-    padding: 20px 40px;
-    // background-color: #cebcbd;
-    background-color: white;
-    cursor: pointer;
-    border: none;
-    border: 1px solid black;
-    font-weight: 500;
-    margin-bottom: 25px;
-  }
-
-  .creation-grid-list {
-    mat-grid-tile {
-      cursor: default;
-    }
-  }
+.modal-dialog-container {
+  width: 1000px;
+  height: 325px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 25px;
 
   .mat-grid-list {
-    padding-top: 30px;
-
     mat-grid-tile {
-      cursor: pointer;
+      background-color: white;
       border: 1px solid black;
+      border-radius: 5px;
 
       .selected {
         background-color: #c6141b;
@@ -77,21 +49,30 @@
       }
 
       mat-grid-tile-footer {
+        line-height: 35px;
+        height: 65px;
+        font-weight: 300;
+        // background-color: #c6141b;
         background-color: #cebcbd;
+        // color: white;
         color: black;
+        font-size: 30px;
       }
 
       form {
         display: flex;
         flex-direction: column;
         width: 100%;
+        height: 100%;
         justify-content: center;
         align-items: center;
 
-        .form-group {
+        .form-group-margin {
           margin: 10px 0px;
+        }
+
+        .form-group {
           width: 85%;
-          // padding: 10px 200px;
 
           label {
             display: block;
@@ -109,8 +90,11 @@
         button {
           margin-top: 30px;
           padding: 10px 15px;
-          background-color: #c6141b;
-          color: white;
+          cursor: pointer;
+          // background-color: #c6141b;
+          background-color: #cebcbd;
+          color: black;
+          // color: white;
           border: none;
           width: 40%;
           font-weight: 500;
@@ -118,7 +102,4 @@
       }
     }
   }
-  //   .mat-grid-tile-content {
-  //     flex-direction: column;
-  //   }
 }

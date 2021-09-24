@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/services/auth/account.service';
+import { RoleGuardService } from 'src/app/services/auth/roleguard.service';
 import { Category, ProductsState } from '../../models/product.model';
 
 @Component({
@@ -18,7 +19,8 @@ export class NavBarComponent {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private store: Store<{ main: ProductsState }>
+    private store: Store<{ main: ProductsState }>,
+    public roleGuard: RoleGuardService
   ) {
     this.username = accountService.user?.username || '';
     this.store$ = this.store.select('main');

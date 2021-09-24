@@ -4,103 +4,54 @@
   <div class="admin-main" *ngIf="store$ | async as store">
     <h1>Admin Page</h1>
     <h3>Products</h3>
-    <mat-grid-list cols="4" rowHeight="200px" gutterSize="20px">
+    <mat-grid-list cols="4" rowHeight="225px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let product of store.products"
         (click)="chooseProduct(product)"
       >
         <img src="{{ product.img }}" alt="" />
-        <mat-grid-tile-footer
-          [class.selected]="chosenProduct?.id === product.id"
-          >{{ product.name }}</mat-grid-tile-footer
-        >
+        <mat-grid-tile-footer>{{ product.name }}</mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
-    <mat-grid-list
-      cols="3"
-      rowHeight="300px"
-      gutterSize="20px"
-      *ngIf="chosenProduct; else createProduct"
-      class="creation-grid-list"
-    >
-      <mat-grid-tile>
-        <img [src]="form.controls.image.value" alt="" />
-        <mat-grid-tile-footer>
-          {{ form.controls.name.value }}
-        </mat-grid-tile-footer>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <form [formGroup]="form">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" formControlName="name" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>Image</label>
-            <input type="text" formControlName="image" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label>Cost</label>
-            <input type="text" formControlName="cost" class="form-control" />
-          </div>
-        </form>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <form [formGroup]="form">
-          <div class="form-group">
-            <label>Categories</label>
-            <input
-              type="text"
-              formControlName="categories"
-              class="form-control"
-              readonly
-            />
-          </div>
-          <div class="form-group">
-            <label>Ingredients</label>
-            <input
-              type="text"
-              formControlName="ingredients"
-              class="form-control"
-              readonly
-            />
-          </div>
-          <button (click)="submit()">Submit</button>
-        </form>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <ng-template #createProduct>
-      <button class="create-product-button" (click)="createNewProduct()">
-        Create New
-      </button>
-    </ng-template>
+    <button class="create-button" (click)="createNewProduct()">
+      Create New
+    </button>
     <h3>Ingredients</h3>
-    <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
+    <mat-grid-list cols="5" rowHeight="120px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let ingredient of store.ingredients"
-        (click)="clickOnIngredient(ingredient)"
+        (click)="chooseIngredient(ingredient)"
       >
-        {{ ingredient.id }}
+        <ul>
+          <li>
+            Cost: <span>{{ ingredient.cost }}$</span>
+          </li>
+          <li>
+            Cal: <span>{{ ingredient.optionCal }}</span>
+          </li>
+        </ul>
         <mat-grid-tile-footer
-          [class.selected]="
-            chosenProduct?.ingredientIds?.includes(ingredient.id)
-          "
           >{{ ingredient.optionName }}
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
+    <button class="create-button" (click)="createNewIngredient()">
+      Create New
+    </button>
     <h3>Categories</h3>
-    <mat-grid-list cols="5" rowHeight="150px" gutterSize="20px">
+    <mat-grid-list cols="5" rowHeight="140px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let category of store.categories"
-        (click)="clickOnCategory(category)"
+        (click)="chooseCategory(category)"
       >
-        {{ category.id }}
-        <mat-grid-tile-footer
-          [class.selected]="chosenProduct?.categoryIds?.includes(category.id)"
-          >{{ category.value }}</mat-grid-tile-footer
-        >
+        <mat-icon aria-hidden="false" aria-label="drink icon">{{
+          category.icon
+        }}</mat-icon>
+        <mat-grid-tile-footer>{{ category.value }}</mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
+    <button class="create-button" (click)="createNewCategory()">
+      Create New
+    </button>
   </div>
 </div>

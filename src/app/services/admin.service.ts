@@ -21,4 +21,29 @@ export class AdminService {
       product
     );
   }
+
+  public saveNewIngredient(ingredient: Ingredient) {
+    return this.http.post<Ingredient>(
+      environment.API + 'ingredients',
+      ingredient
+    );
+  }
+
+  public updateIngredient(ingredient: Ingredient) {
+    return this.http.put<Ingredient>(
+      environment.API + `ingredients/${ingredient.id}`,
+      ingredient
+    );
+  }
+
+  public saveNewCategory(category: Category) {
+    return this.http.post<Category>(environment.API + 'categories', category);
+  }
+
+  public updateCategory(category: Category) {
+    return this.http.put<Category>(
+      environment.API + `categories/${category.id}`,
+      category
+    );
+  }
 }

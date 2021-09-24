@@ -14,6 +14,17 @@ export const removeProducts = createAction(
   '[Product Component] RemoveProducts'
 );
 
+export const changeProduct = createAction(
+  '[Product Component] AddNewProduct',
+  props<{ product: Product }>()
+);
+
+//
+//
+//
+//
+//
+
 export const addCategories = createAction(
   '[Category Component] AddCatogories',
   props<{ categories: Category[] }>()
@@ -22,6 +33,17 @@ export const removeCatogories = createAction(
   '[Category Component] RemoveCatogories'
 );
 
+export const changeCategory = createAction(
+  '[Product Component] AddNewCategory',
+  props<{ category: Category }>()
+);
+
+//
+//
+//
+//
+//
+
 export const addIngredients = createAction(
   '[Ingredient Component] AddIngredients',
   props<{ ingredients: Ingredient[] }>()
@@ -29,6 +51,16 @@ export const addIngredients = createAction(
 export const removeIngredients = createAction(
   '[Ingredient Component] RemoveIngredients'
 );
+
+export const changeIngredient = createAction(
+  '[Product Component] AddNewCategory',
+  props<{ ingredient: Ingredient }>()
+);
+//
+//
+//
+//
+//
 
 export const loadAll = createAction(
   '[All Component] LoadingAll',

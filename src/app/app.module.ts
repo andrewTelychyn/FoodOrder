@@ -24,6 +24,7 @@ import { productReducer } from './store/product/product.reducer';
     PagesModule,
     SharedModule,
     HttpClientModule,
+
     StoreModule.forRoot({ main: productReducer }, {}),
   ],
   providers: [

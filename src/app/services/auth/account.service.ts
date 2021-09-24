@@ -13,7 +13,7 @@ export class AccountService {
   public user: User | undefined;
 
   constructor(private http: HttpClient, private userService: UserService) {
-    let value = localStorage.getItem('username');
+    let value = localStorage.getItem('user');
     if (value) this.user = JSON.parse(value);
   }
 

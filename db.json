@@ -19,98 +19,56 @@
   "products": [
     {
       "id": "burger1",
-      "categoryIds": [
-        "category1"
-      ],
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "categoryIds": ["category1"],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "name": "With becon and cheese",
       "cost": 70,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Rye_with_chicken_bacon.png?$Category_Desktop$"
     },
     {
       "id": "burger2",
-      "categoryIds": [
-        "category1"
-      ],
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "categoryIds": ["category1"],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "name": "Big Mac",
       "cost": 100,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/thumb.Sdwch_BigMac.png?$Category_Desktop$"
     },
     {
       "id": "burger3",
-      "categoryIds": [
-        "category1"
-      ],
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "categoryIds": ["category1"],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "name": "Premier",
       "cost": 80,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_McChicken.png?$Category_Desktop$"
     },
     {
       "id": "burger4",
-      "categoryIds": [
-        "category1"
-      ],
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "categoryIds": ["category1"],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "name": "Hamburger",
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Sdwch_Hamburger.png?$Category_Desktop$"
     },
     {
       "id": "burger5",
-      "categoryIds": [
-        "category1"
-      ],
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "categoryIds": ["category1"],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "name": "Double Cheeseburger",
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/SdwchDoubleCheeseburger.png?$Category_Desktop$"
     },
     {
       "id": "burger6",
-      "categoryIds": [
-        "category1"
-      ],
+      "categoryIds": ["category1"],
       "name": "Royal Cheeseburger",
-      "ingredientIds": [
-        "ingredient1",
-        "ingredient2",
-        "ingredient3"
-      ],
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
       "cost": 60,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/Royal_Cheese.png?$Category_Desktop$"
     },
     {
       "id": "drink1",
-      "categoryIds": [
-        "category2"
-      ],
-      "ingredientIds": [
-        "ingredient4",
-        "ingredient5",
-        "ingredient6"
-      ],
+      "categoryIds": ["category2"],
+      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
       "type": "drink",
       "name": "Ice Latte",
       "cost": 40,
@@ -118,14 +76,8 @@
     },
     {
       "id": "drink2",
-      "categoryIds": [
-        "category2"
-      ],
-      "ingredientIds": [
-        "ingredient4",
-        "ingredient5",
-        "ingredient6"
-      ],
+      "categoryIds": ["category2"],
+      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
       "type": "drink",
       "name": "Ice Americano",
       "cost": 35,
@@ -133,56 +85,32 @@
     },
     {
       "id": "drink3",
-      "categoryIds": [
-        "category2"
-      ],
-      "ingredientIds": [
-        "ingredient4",
-        "ingredient5",
-        "ingredient6"
-      ],
+      "categoryIds": ["category2"],
+      "ingredientIds": ["ingredient4", "ingredient5", "ingredient6"],
       "name": "Black Tea",
       "cost": 20,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/TeaBlackCurtis.png?$Category_Desktop$"
     },
     {
       "id": "desert1",
-      "categoryIds": [
-        "category3"
-      ],
-      "ingredientIds": [
-        "ingredient7",
-        "ingredient8",
-        "ingredient9"
-      ],
+      "categoryIds": ["category3"],
+      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
       "name": "Donut Heart",
       "cost": 50,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/DonutHeart.png?$Category_Desktop$"
     },
     {
       "id": "desert2",
-      "categoryIds": [
-        "category3"
-      ],
-      "ingredientIds": [
-        "ingredient7",
-        "ingredient8",
-        "ingredient9"
-      ],
+      "categoryIds": ["category3"],
+      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
       "name": "Ice Cream",
       "cost": 40,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/IceCone.png?$Category_Desktop$"
     },
     {
       "id": "desert3",
-      "categoryIds": [
-        "category3"
-      ],
-      "ingredientIds": [
-        "ingredient7",
-        "ingredient8",
-        "ingredient9"
-      ],
+      "categoryIds": ["category3"],
+      "ingredientIds": ["ingredient7", "ingredient8", "ingredient9"],
       "name": "Mac Shake",
       "cost": 45,
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McShakeVanillaMedium.png?$Category_Desktop$"
@@ -190,16 +118,35 @@
     {
       "name": "Flat White",
       "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McC_CoffeeFlatWhite.png?$Category_Desktop$",
-      "cost": "30",
-      "ingredientIds": [
-        "ingredient8",
-        "ingredient7"
-      ],
-      "categoryIds": [
-        "category2"
-      ],
+      "cost": 30,
+      "ingredientIds": ["ingredient8", "ingredient7"],
+      "categoryIds": ["category2"],
       "id": "557f6932-d69f-4a8a-b4c8-dba2d791206d",
       "selected": false
+    },
+    {
+      "id": "87f33883-f082-45f1-a7ed-a3cdc417cea3",
+      "name": "Some Burger 3.0",
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/SdwchDoubleCheeseburger.png?$Category_Desktop$",
+      "cost": 20,
+      "ingredientIds": ["ingredient1", "ingredient2", "ingredient3"],
+      "categoryIds": ["category1"]
+    },
+    {
+      "name": "MacFlurry",
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/McFlurry_KitKatCaramel.png?$Category_Desktop$",
+      "cost": 60,
+      "ingredientIds": ["ingredient9", "ingredient7"],
+      "categoryIds": ["category3"],
+      "id": "f99eb012-1f7b-40fa-a48f-c4fa0e20b625"
+    },
+    {
+      "id": "5b9d188e-e4bb-4841-89c3-00d0fc24007e",
+      "name": "Chicken Roll",
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/RollChicken.png?$Category_Desktop$",
+      "cost": 70,
+      "ingredientIds": ["ingredient2", "ingredient3"],
+      "categoryIds": ["category1"]
     }
   ],
   "ingredients": [
@@ -256,6 +203,12 @@
       "optionName": "Chocolate",
       "optionCal": 200,
       "id": "ingredient9"
+    },
+    {
+      "id": "c2389f8b-0b3c-4d11-81a8-ef01859ba2f7",
+      "optionName": "Honey",
+      "optionCal": 7,
+      "cost": 7
     }
   ],
   "ingredientsets": [],

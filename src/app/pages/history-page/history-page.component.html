@@ -2,7 +2,7 @@
   <app-nav-bar [chosenCategory]="chosenCategory"></app-nav-bar>
   <div class="main">
     <h1>User orders history</h1>
-    <ul class="basket-list">
+    <ul class="basket-list" *ngIf="baskets.length > 0; else noBaskets">
       <li *ngFor="let basket of baskets">
         <div class="basket-header">
           <h3>{{ basket.commonPrice }}$</h3>
@@ -31,5 +31,8 @@
         </mat-grid-list>
       </li>
     </ul>
+    <ng-template #noBaskets>
+      <div id="noBaskets">There are no order history yet :(</div>
+    </ng-template>
   </div>
 </div>
