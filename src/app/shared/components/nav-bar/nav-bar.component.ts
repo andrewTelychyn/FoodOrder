@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { RoleGuardService } from 'src/app/services/auth/roleguard.service';
-import { Category, ProductsState } from '../../models/product.model';
+import { CategoriesState, MainState } from 'src/app/store/shared/store.model';
+import { Category } from '../../models/product.model';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,16 +15,18 @@ import { Category, ProductsState } from '../../models/product.model';
 export class NavBarComponent {
   @Input() chosenCategory: Category | undefined;
   public username: string;
-  public store$: Observable<ProductsState>;
+  public store$: Observable<MainState>;
+  public isAdmin: boolean;
 
   constructor(
     private accountService: AccountService,
-    private router: Router,
-    private store: Store<{ main: ProductsState }>,
+    public router: Router,
+    private store: Store<{ main: MainState }>,
     public roleGuard: RoleGuardService
   ) {
     this.username = accountService.user?.username || '';
     this.store$ = this.store.select('main');
+    this.isAdmin = roleGuard.checkRole('admin');
   }
 
   public isSelected(category: Category) {

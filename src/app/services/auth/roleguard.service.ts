@@ -24,11 +24,11 @@ export class RoleGuardService implements CanActivate {
     return true;
   }
 
-  public isAdmin(): boolean {
+  public checkRole(role: string): boolean {
     const token = localStorage.getItem('token')!;
     const tokenPayload: any = decode(token);
 
-    if (!this.auth.isAuthenticated() || tokenPayload.Role !== 'admin') {
+    if (!this.auth.isAuthenticated() || tokenPayload.Role !== role) {
       return false;
     }
     return true;

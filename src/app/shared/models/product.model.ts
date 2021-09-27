@@ -8,7 +8,7 @@ export enum ProductTypes {
 
 export interface Product {
   id: string;
-  type?: ProductTypes;
+  type?: string;
   categoryIds: string[];
   ingredientIds: string[];
   name: string;
@@ -18,7 +18,7 @@ export interface Product {
 
 export interface Category {
   id: string;
-  value: ProductTypes;
+  value: string;
   icon: string;
 }
 
@@ -26,7 +26,6 @@ export interface Ingredient {
   id: string;
   optionName: string;
   optionCal: number;
-  //
   cost: number;
 }
 
@@ -34,22 +33,11 @@ export interface IngredientSet {
   id: string;
   ingredient: Ingredient;
   amount: number;
-  //
   totalPrice: number;
 }
 
 export interface IngredientSetDTO {
   amount: number;
-  //
-  // id: string;
-  // ingredientId: string;
-  //
   price: number;
   name: string;
-}
-
-export interface ProductsState {
-  products: Product[];
-  categories: Category[];
-  ingredients: Ingredient[];
 }

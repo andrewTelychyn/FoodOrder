@@ -5,13 +5,12 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { AdminService } from 'src/app/services/admin.service';
+import { Ingredient } from 'src/app/shared/models/product.model';
 import {
-  Category,
-  Ingredient,
-  Product,
-  ProductsState,
-} from 'src/app/shared/models/product.model';
-import { changeIngredient } from 'src/app/store/product/product.actions';
+  changeIngredient,
+  deleteIngredient,
+} from 'src/app/store/ingredient/ingredient.actions';
+import { MainState } from 'src/app/store/shared/store.model';
 
 @Component({
   selector: 'app-admin-ingredient',
@@ -22,7 +21,7 @@ export class AdminIngredientComponent implements OnInit {
   public chosenIngredient: Ingredient;
   public form: FormGroup;
 
-  public store$: Observable<ProductsState>;
+  public store$: Observable<MainState>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -31,7 +30,7 @@ export class AdminIngredientComponent implements OnInit {
     },
     private formBuilder: FormBuilder,
     private dialog: MatDialogRef<AdminIngredientComponent>,
-    private store: Store<{ main: ProductsState }>,
+    private store: Store<{ main: MainState }>,
     private adminService: AdminService
   ) {
     this.chosenIngredient = this.data.ingredient;
@@ -51,14 +50,18 @@ export class AdminIngredientComponent implements OnInit {
     let ingredient: Ingredient = {
       id: this.chosenIngredient.id,
       optionName: this.form.controls.name.value,
-      optionCal: Number(this.form.controls.cost.value),
-      cost: this.form.controls.cost.value,
+      optionCal: Number(this.form.controls.cal.value),
+      cost: Number(this.form.controls.cost.value),
     };
 
     this.store$
       .pipe(
         switchMap((store) => {
-          if (store.ingredients.findIndex((p) => p.id == ingredient.id) >= 0) {
+          if (
+            store.ingredients.ingredients.findIndex(
+              (p) => p.id == ingredient.id
+            ) >= 0
+          ) {
             return this.adminService.updateIngredient(ingredient);
           } else {
             return this.adminService.saveNewIngredient(ingredient);
@@ -68,8 +71,20 @@ export class AdminIngredientComponent implements OnInit {
       )
       .subscribe((data) => {
         this.store.dispatch(changeIngredient({ ingredient }));
+        console.log(ingredient);
         this.dialog.close();
       });
+  }
+
+  public delete() {
+    if (this.form.invalid) return;
+
+    this.adminService
+      .deleteIngredient(this.chosenIngredient.id)
+      .subscribe((data) => {});
+    this.store.dispatch(deleteIngredient({ id: this.chosenIngredient.id }));
+
+    this.close();
   }
 
   public close() {

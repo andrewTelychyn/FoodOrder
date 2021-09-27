@@ -9,11 +9,6 @@ import { User, UserDTO } from './user.model';
 
 export interface BasketOrderDTO {
   amount: number;
-  //
-  // id: string;
-  // productId: string;
-  // ingredientIds: string[];
-  //
   name: string;
   price: number;
   totalPrice: number;
@@ -23,10 +18,6 @@ export interface BasketOrderDTO {
 export interface BasketDTO {
   id: string;
   commonPrice: number;
-  //
-  // basketOrderIds: string[];
-  // userId: string;
-  //
   user: UserDTO;
   basketOrders: BasketOrderDTO[];
   timestamp: number;
@@ -100,7 +91,9 @@ export class Basket {
     this.products.map((elem) => {
       if (item === elem) {
         if (elem.amount - 1 >= 1) elem.amount -= 1;
-        else this.removeProduct(elem.product.id);
+        else {
+          this.removeProduct(item.id);
+        }
       }
     });
 

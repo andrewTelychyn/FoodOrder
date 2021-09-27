@@ -3,23 +3,54 @@
   <!-- *ngIf="chosenProduct$ | async as chosenProduct" -->
   <div class="admin-main" *ngIf="store$ | async as store">
     <h1>Admin Page</h1>
-    <h3>Products</h3>
-    <mat-grid-list cols="4" rowHeight="225px" gutterSize="20px">
+    <div
+      class="type-header"
+      (click)="openCloseProd()"
+      [class.rotated]="isProductsOpen"
+    >
+      <h3>Products</h3>
+      <mat-icon aria-hidden="false" aria-label="drink icon"
+        >chevron_right</mat-icon
+      >
+    </div>
+    <mat-grid-list
+      cols="4"
+      rowHeight="225px"
+      gutterSize="20px"
+      *ngIf="isProductsOpen"
+    >
       <mat-grid-tile
-        *ngFor="let product of store.products"
+        *ngFor="let product of store.products.products"
         (click)="chooseProduct(product)"
       >
         <img src="{{ product.img }}" alt="" />
-        <mat-grid-tile-footer>{{ product.name }}</mat-grid-tile-footer>
+        <mat-grid-tile-footer
+          >{{ product.name }}&nbsp;
+          <span> {{ product.cost }}$</span></mat-grid-tile-footer
+        >
       </mat-grid-tile>
     </mat-grid-list>
     <button class="create-button" (click)="createNewProduct()">
       Create New
     </button>
-    <h3>Ingredients</h3>
-    <mat-grid-list cols="5" rowHeight="120px" gutterSize="20px">
+    <div
+      class="type-header"
+      (click)="openCloseIng()"
+      [class.rotated]="isIngredientsOpen"
+    >
+      <h3>Ingrediens</h3>
+      <mat-icon aria-hidden="false" aria-label="drink icon"
+        >chevron_right</mat-icon
+      >
+    </div>
+    <mat-grid-list
+      cols="5"
+      rowHeight="120px"
+      gutterSize="20px"
+      *ngIf="isIngredientsOpen"
+    >
       <mat-grid-tile
-        *ngFor="let ingredient of store.ingredients"
+        *ngFor="let ingredient of store.ingredients.ingredients"
         (click)="chooseIngredient(ingredient)"
       >
         <ul>
@@ -38,10 +69,24 @@
     <button class="create-button" (click)="createNewIngredient()">
       Create New
     </button>
-    <h3>Categories</h3>
-    <mat-grid-list cols="5" rowHeight="140px" gutterSize="20px">
+    <div
+      class="type-header"
+      (click)="openCloseCat()"
+      [class.rotated]="isCategoriesOpen"
+    >
+      <h3>Categories</h3>
+      <mat-icon aria-hidden="false" aria-label="drink icon"
+        >chevron_right</mat-icon
+      >
+    </div>
+    <mat-grid-list
+      cols="5"
+      rowHeight="140px"
+      gutterSize="20px"
+      *ngIf="isCategoriesOpen"
+    >
       <mat-grid-tile
-        *ngFor="let category of store.categories"
+        *ngFor="let category of store.categories.categories"
         (click)="chooseCategory(category)"
       >
         <mat-icon aria-hidden="false" aria-label="drink icon">{{

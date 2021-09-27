@@ -1,19 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
-import { ProductService } from './services/product.service';
-import {
-  Category,
-  Ingredient,
-  Product,
-  ProductsState,
-} from './shared/models/product.model';
-import {
-  addCategories,
-  addIngredients,
-  addProducts,
-  loadAll,
-} from './store/product/product.actions';
+import { addCategories } from './store/category/category.actions';
+import { addIngredients } from './store/ingredient/ingredient.actions';
+import { addProducts } from './store/product/product.actions';
+import { MainState } from './store/shared/store.model';
 
 @Component({
   selector: 'app-root',
@@ -23,15 +13,11 @@ import {
 export class AppComponent implements OnInit {
   title = 'angular-job-test';
 
-  constructor(
-    private store: Store<{ main: ProductsState }>,
-    private productService: ProductService
-  ) {}
+  constructor(private store: Store<{ main: MainState }>) {}
 
   ngOnInit() {
-    this.productService
-      .getAll()
-      .pipe(take(1))
-      .subscribe((store: ProductsState) => this.store.dispatch(loadAll(store)));
+    this.store.dispatch(addCategories());
+    this.store.dispatch(addIngredients());
+    this.store.dispatch(addProducts());
   }
 }

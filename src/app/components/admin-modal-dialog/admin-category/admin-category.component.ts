@@ -5,15 +5,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { AdminService } from 'src/app/services/admin.service';
-import {
-  Category,
-  Product,
-  ProductsState,
-} from 'src/app/shared/models/product.model';
+import { Category, Product } from 'src/app/shared/models/product.model';
 import {
   changeCategory,
-  changeProduct,
-} from 'src/app/store/product/product.actions';
+  deleteCategory,
+} from 'src/app/store/category/category.actions';
+
+import { MainState } from 'src/app/store/shared/store.model';
 
 @Component({
   selector: 'app-admin-category',
@@ -24,7 +22,7 @@ export class AdminCategoryComponent implements OnInit {
   public chosenCategory: Category;
   public form: FormGroup;
 
-  public store$: Observable<ProductsState>;
+  public store$: Observable<MainState>;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -33,7 +31,7 @@ export class AdminCategoryComponent implements OnInit {
     },
     private formBuilder: FormBuilder,
     private dialog: MatDialogRef<AdminCategoryComponent>,
-    private store: Store<{ main: ProductsState }>,
+    private store: Store<{ main: MainState }>,
     private adminService: AdminService
   ) {
     this.chosenCategory = this.data.category;
@@ -53,14 +51,17 @@ export class AdminCategoryComponent implements OnInit {
 
     let category: Category = {
       id: this.chosenCategory.id,
-      value: this.form.controls.value.value,
+      value: String(this.form.controls.value.value).toLowerCase(),
       icon: this.form.controls.icon.value,
     };
 
     this.store$
       .pipe(
         switchMap((store) => {
-          if (store.categories.findIndex((p) => p.id == category.id) >= 0) {
+          if (
+            store.categories.categories.findIndex((p) => p.id == category.id) >=
+            0
+          ) {
             return this.adminService.updateCategory(category);
           } else {
             return this.adminService.saveNewCategory(category);
@@ -72,6 +73,17 @@ export class AdminCategoryComponent implements OnInit {
         this.store.dispatch(changeCategory({ category }));
         this.dialog.close();
       });
+  }
+
+  public delete() {
+    if (this.form.invalid) return;
+
+    this.adminService
+      .deleteCategory(this.chosenCategory.id)
+      .subscribe((data) => {});
+    this.store.dispatch(deleteCategory({ id: this.chosenCategory.id }));
+
+    this.close();
   }
 
   public close() {

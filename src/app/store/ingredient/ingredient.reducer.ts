@@ -1,36 +1,47 @@
-// import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
-// import * as StoreActions from './product.actions';
-// import { ProductsState } from '../../shared/models/product.model';
+import { Action, createReducer, on } from '@ngrx/store';
+import * as StoreActions from './ingredient.actions';
+import { IngredientsState } from '../shared/store.model';
+import { addOrUpdate } from '../shared/store.func';
 
-// export const initialState: ProductsState = {
-//   products: [],
-//   ingredients: [],
-//   categories: [],
-// };
+const initialState: IngredientsState = {
+  ingredients: [],
+};
 
-// const _productReducer = createReducer(
-//   initialState,
-//   on(StoreActions.addProducts, (state: ProductsState, { products }) => ({
-//     ...state,
-//     products,
-//   })),
-//   on(StoreActions.removeProducts, (state) => ({ ...state, products: [] })),
-//   on(StoreActions.addIngredients, (state: ProductsState, { ingredients }) => ({
-//     ...state,
-//     ingredients,
-//   })),
-//   on(StoreActions.removeIngredients, (state) => ({ ...state, products: [] })),
-//   on(StoreActions.addCategories, (state: ProductsState, { categories }) => ({
-//     ...state,
-//     categories,
-//   })),
-//   on(StoreActions.removeCatogories, (state) => ({ ...state, products: [] })),
-//   on(StoreActions.reset, (state) => initialState)
-// );
+const _ingredientReducer = createReducer(
+  initialState,
+  on(StoreActions.addIngredients, (state) => ({
+    ...state,
+    loading: true,
+    error: '',
+  })),
+  on(
+    StoreActions.addIngredientsSuccess,
+    (state: IngredientsState, { ingredients }) => ({
+      ingredients,
+      loading: false,
+      error: '',
+    })
+  ),
+  on(StoreActions.addIngredientsFail, (state: IngredientsState, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(StoreActions.removeIngredients, (state) => ({ ingredients: [] })),
+  on(
+    StoreActions.changeIngredient,
+    (state: IngredientsState, { ingredient }) => ({
+      ingredients: addOrUpdate(state.ingredients, ingredient),
+    })
+  ),
+  on(StoreActions.deleteIngredient, (state: IngredientsState, { id }) => ({
+    ingredients: state.ingredients.filter((i) => i.id != id),
+  }))
+);
 
-// export function productReducer(
-//   state: ProductsState | undefined,
-//   action: Action
-// ): ProductsState {
-//   return _productReducer(state, action);
-// }
+export function ingredientReducer(
+  state: IngredientsState | undefined,
+  action: Action
+): IngredientsState {
+  return _ingredientReducer(state, action);
+}

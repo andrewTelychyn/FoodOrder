@@ -14,17 +14,17 @@ import {
   Category,
   Ingredient,
   Product,
-  ProductsState,
 } from '../../shared/models/product.model';
 import { Basket } from '../../shared/models/basket.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
 import { select, Store } from '@ngrx/store';
 import {
   selectChosenCategory,
   getProductsByCategory,
-} from 'src/app/store/product/product.selectors';
+} from 'src/app/store/main.selectors';
 import { tap, map, switchMap, filter } from 'rxjs/operators';
+import { MainState } from 'src/app/store/shared/store.model';
 
 @Component({
   selector: 'app-category-page',
@@ -33,7 +33,7 @@ import { tap, map, switchMap, filter } from 'rxjs/operators';
 })
 export class CategoryPageComponent implements OnInit, OnDestroy {
   public basket$: BehaviorSubject<Basket>;
-  public store$: Observable<ProductsState>;
+  public store$: Observable<MainState>;
 
   public products: Product[] = [];
   public chosenProduct: Product | undefined;
@@ -44,9 +44,10 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dialog: MatDialog,
     private basketService: BasketService,
-    private store: Store<{ main: ProductsState }>
+    private store: Store<{ main: MainState }>
   ) {
     this.basket$ = this.basketService.basket$;
     this.store$ = this.store.select('main');
@@ -73,7 +74,18 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
         filter((i) => i.productId),
         switchMap((param) =>
           this.store$.pipe(
-            filter((i) => i.categories.length > 0),
+            filter((i) => i.categories.categories.length > 0),
+            filter((i) => {
+              if (
+                i.categories.categories.findIndex(
+                  (p) => p.value == param.productId
+                ) < 0
+              ) {
+                this.router.navigate(['menu/burger']);
+                return false;
+              }
+              return true;
+            }),
             select(selectChosenCategory, param.productId)
           )
         ),

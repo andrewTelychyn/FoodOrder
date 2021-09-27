@@ -23,6 +23,7 @@
     "@angular/router": "~12.2.0",
     "@auth0/angular-jwt": "^5.0.2",
     "@ng-select/ng-select": "^7.3.0",
+    "@ngrx/effects": "^12.4.0",
     "@ngrx/store": "^12.4.0",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",

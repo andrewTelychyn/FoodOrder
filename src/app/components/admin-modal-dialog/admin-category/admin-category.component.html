@@ -4,6 +4,11 @@
   *ngIf="store$ | async as store"
 >
   <div class="modal-dialog-container" onclick="event.stopPropagation()">
+    <div class="close-button">
+      <button (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <form [formGroup]="form">
       <h1>{{ form.controls.value.value }}</h1>
       <div class="form-group form-group-margin">
@@ -15,7 +20,10 @@
         <input type="text" formControlName="icon" class="form-control" />
       </div>
 
-      <button (click)="submit()">Submit</button>
+      <div class="buttons">
+        <button (click)="submit()">Submit</button>
+        <button id="delete" (click)="delete()">Delete</button>
+      </div>
     </form>
   </div>
 </div>

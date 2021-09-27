@@ -18,12 +18,35 @@
     font-weight: 300;
   }
 
-  h3 {
+  .rotated {
+    mat-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  .type-header {
     padding: 15px 20px;
     background-color: #c6141b;
-    color: white;
     border-radius: 25px;
     max-width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    user-select: none;
+
+    h3 {
+      color: white;
+      margin: 0px;
+    }
+    mat-icon {
+      color: white;
+      font-size: 35px;
+      width: 35px;
+      height: 35px;
+    }
   }
 
   .create-button {
@@ -79,6 +102,10 @@
       mat-grid-tile-footer {
         background-color: #cebcbd;
         color: black;
+
+        span {
+          font-weight: 700;
+        }
       }
 
       form {

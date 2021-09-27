@@ -9,7 +9,7 @@
 
     <mat-grid-list cols="1" rowHeight="120px" *ngIf="store$ | async as store">
       <mat-grid-tile
-        *ngFor="let category of store.categories"
+        *ngFor="let category of store.categories.categories"
         [class.tile-selected]="category.id == chosenCategory?.id"
       >
         <a routerLink="/menu/{{ category.value }}">
@@ -23,7 +23,11 @@
   </div>
 
   <ul class="lower-bar">
-    <li class="admin-page" *ngIf="roleGuard.isAdmin()">
+    <li
+      class="admin-page"
+      *ngIf="isAdmin; else history"
+      [class.selected]="router.url === '/admin'"
+    >
       <a routerLink="/admin">
         <mat-icon aria-hidden="false" aria-label="drink icon"
           >admin_panel_settings</mat-icon
@@ -31,11 +35,15 @@
         <mat-grid-tile-footer> admin </mat-grid-tile-footer>
       </a>
     </li>
-    <li class="user-history">
-      <a routerLink="/history">
-        <mat-icon aria-hidden="false" aria-label="drink icon">history</mat-icon>
-        <mat-grid-tile-footer> history </mat-grid-tile-footer>
-      </a>
-    </li>
+    <ng-template #history>
+      <li class="user-history" [class.selected]="router.url === '/history'">
+        <a routerLink="/history">
+          <mat-icon aria-hidden="false" aria-label="drink icon"
+            >history</mat-icon
+          >
+          <mat-grid-tile-footer> history </mat-grid-tile-footer>
+        </a>
+      </li>
+    </ng-template>
   </ul>
 </div>

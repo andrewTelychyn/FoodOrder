@@ -11,7 +11,11 @@ import { SharedModule } from './shared/shared.module';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { productReducer } from './store/product/product.reducer';
+import { reducer } from './store/main.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductEffects } from './store/product/product.effects';
+import { CategoriesEffects } from './store/category/category.effects';
+import { IngredientEffects } from './store/ingredient/ingredient.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +29,13 @@ import { productReducer } from './store/product/product.reducer';
     SharedModule,
     HttpClientModule,
 
-    StoreModule.forRoot({ main: productReducer }, {}),
+    StoreModule.forRoot({ main: reducer }, {}),
+
+    EffectsModule.forRoot([
+      ProductEffects,
+      CategoriesEffects,
+      IngredientEffects,
+    ]),
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
