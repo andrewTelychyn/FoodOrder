@@ -1,7 +1,7 @@
 <div class="container">
   <app-nav-bar [chosenCategory]="chosenCategory"></app-nav-bar>
   <div class="main-content">
-    <h1>{{ chosenCategory?.value }}s</h1>
+    <h1>{{ chosenCategory?.name }}s</h1>
     <mat-grid-list cols="3" rowHeight="400px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let prd of products"

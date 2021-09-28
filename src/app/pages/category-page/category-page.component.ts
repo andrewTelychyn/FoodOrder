@@ -1,20 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  BehaviorSubject,
-  Observable,
-  merge,
-  zip,
-  combineLatest,
-  Subscription,
-  of,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
-import {
-  Category,
-  Ingredient,
-  Product,
-} from '../../shared/models/product.model';
+import { Category, Product } from '../../shared/models/product.model';
 import { Basket } from '../../shared/models/basket.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
@@ -64,22 +52,17 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  public isColored(prod: Product) {
-    return { 'tile-selected': prod == this.chosenProduct };
-  } //changedetection
-
   ngOnInit(): void {
     this.subscription = this.route.params
       .pipe(
         filter((i) => i.productId),
         switchMap((param) =>
           this.store$.pipe(
-            filter((i) => i.categories.categories.length > 0),
+            filter((i) => i.categories.items.length > 0),
             filter((i) => {
               if (
-                i.categories.categories.findIndex(
-                  (p) => p.value == param.productId
-                ) < 0
+                i.categories.items.findIndex((p) => p.name == param.productId) <
+                0
               ) {
                 this.router.navigate(['menu/burger']);
                 return false;

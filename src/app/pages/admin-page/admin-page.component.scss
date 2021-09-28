@@ -14,39 +14,8 @@
 
   h1 {
     margin: 25px 0;
-    font-size: 30px;
     font-weight: 300;
-  }
-
-  .rotated {
-    mat-icon {
-      transform: rotate(90deg);
-    }
-  }
-
-  .type-header {
-    padding: 15px 20px;
-    background-color: #c6141b;
-    border-radius: 25px;
-    max-width: 100%;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    user-select: none;
-
-    h3 {
-      color: white;
-      margin: 0px;
-    }
-    mat-icon {
-      color: white;
-      font-size: 35px;
-      width: 35px;
-      height: 35px;
-    }
+    font-size: 50px;
   }
 
   .create-button {
@@ -73,9 +42,17 @@
       cursor: pointer;
       border: 1px solid black;
 
-      .selected {
-        background-color: #c6141b;
-        color: white;
+      app-admin-item-component {
+        width: 100%;
+        height: 100%;
+      }
+
+      a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       mat-icon {

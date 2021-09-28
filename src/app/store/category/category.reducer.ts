@@ -1,11 +1,11 @@
-import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
-import { Category } from 'src/app/shared/models/product.model';
-import { addOrUpdate } from '../shared/store.func';
+import { Action, createReducer, on } from '@ngrx/store';
 import { CategoriesState } from '../shared/store.model';
 import * as StoreActions from './category.actions';
 
 const initialState: CategoriesState = {
-  categories: [],
+  items: [],
+  loading: false,
+  error: '',
 };
 
 const _categoryReducer = createReducer(
@@ -18,7 +18,7 @@ const _categoryReducer = createReducer(
   on(
     StoreActions.addCategoriesSuccess,
     (state: CategoriesState, { categories }) => ({
-      categories,
+      items: categories,
       loading: false,
       error: '',
     })
@@ -28,12 +28,58 @@ const _categoryReducer = createReducer(
     loading: false,
     error,
   })),
-  on(StoreActions.removeCatogories, (state) => ({ categories: [] })),
-  on(StoreActions.changeCategory, (state: CategoriesState, { category }) => ({
-    categories: addOrUpdate(state.categories, category),
+  //
+  //
+  on(StoreActions.updateCategory, (state: CategoriesState, { category }) => ({
+    ...state,
+    loading: true,
+    error: '',
   })),
+  on(
+    StoreActions.updateCategorySuccess,
+    (state: CategoriesState, { category }) => ({
+      ...state,
+      items: state.items.map((i) => (i.id == category.id ? category : i)),
+      loading: false,
+    })
+  ),
+  on(StoreActions.updateCategoryFail, (state: CategoriesState, { error }) => ({
+    ...state,
+    error,
+  })),
+  //
+  //
+  on(StoreActions.addNewCategory, (state: CategoriesState, { category }) => ({
+    ...state,
+    loading: true,
+    error: '',
+  })),
+  on(
+    StoreActions.addNewCategorySuccess,
+    (state: CategoriesState, { category }) => ({
+      ...state,
+      items: [...state.items, category],
+      loading: false,
+    })
+  ),
+  on(StoreActions.addNewCategoryFail, (state: CategoriesState, { error }) => ({
+    ...state,
+    error,
+  })),
+  //
+  //
   on(StoreActions.deleteCategory, (state: CategoriesState, { id }) => ({
-    categories: state.categories.filter((c) => c.id != id),
+    ...state,
+    loading: true,
+  })),
+  on(StoreActions.deleteCategorySuccess, (state: CategoriesState, { id }) => ({
+    items: state.items.filter((c) => c.id != id),
+    loading: false,
+  })),
+  on(StoreActions.deleteCategoryFail, (state: CategoriesState, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   }))
 );
 

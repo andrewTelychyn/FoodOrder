@@ -8,17 +8,16 @@ import {
 import { v4 as getid } from 'uuid';
 import { MainState } from './shared/store.model';
 
-const selectAllCategories = (state: MainState) => state.categories.categories;
+const selectAllCategories = (state: MainState) => state.categories.items;
 
-const selectAllProducts = (state: MainState) => state.products.products;
+const selectAllProducts = (state: MainState) => state.products.items;
 
-const selectAllIngredients = (state: MainState) =>
-  state.ingredients.ingredients;
+const selectAllIngredients = (state: MainState) => state.ingredients.items;
 
 export const selectChosenCategory = createSelector(
   selectAllCategories,
   (allCategories: Category[], url: string) => {
-    return allCategories.find((i) => i.value === url) || allCategories[0];
+    return allCategories.find((i) => i.name === url) || allCategories[0];
   }
 );
 
@@ -44,3 +43,26 @@ export const getProductIngredients = createSelector(
           } as IngredientSet)
       )
 );
+
+export const isCategoryNew = createSelector(
+  selectAllCategories,
+  (allCategories: Category[], id: string) =>
+    allCategories.findIndex((c) => c.id == id) < 0
+);
+
+export const isProductNew = createSelector(
+  selectAllProducts,
+  (allProducts: Product[], id: string) =>
+    allProducts.findIndex((c) => c.id == id) < 0
+);
+
+export const isIngredientNew = createSelector(
+  selectAllIngredients,
+  (allIngredients: Ingredient[], id: string) =>
+    allIngredients.findIndex((c) => c.id == id) < 0
+);
+
+// export const filterAdminTypes = createSelector(
+//   (state: MainState) => state,
+//   (state: MainState, data: {type: string, prod: })
+// )

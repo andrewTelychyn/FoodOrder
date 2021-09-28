@@ -144,6 +144,11 @@
       border-radius: 15px;
       color: white;
     }
+
+    button:disabled {
+      cursor: default;
+      background-color: #cebcbd;
+    }
   }
 }
 

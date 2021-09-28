@@ -4,24 +4,58 @@ import { Category } from '../../shared/models/product.model';
 export const addCategories = createAction('[Category Component] AddCatogories');
 //
 export const addCategoriesSuccess = createAction(
-  '[Product Component] AddCategoriesSuccess',
+  '[Category Component] AddCategoriesSuccess',
   props<{ categories: Category[] }>()
 );
 export const addCategoriesFail = createAction(
-  '[Product Component] AddCategoriesFail',
+  '[Category Component] AddCategoriesFail',
   props<{ error: string }>()
 );
 //
-export const removeCatogories = createAction(
-  '[Category Component] RemoveCatogories'
-);
-
-export const changeCategory = createAction(
-  '[Product Component] AddNewCategory',
+//
+export const updateCategory = createAction(
+  '[Category Component] UpdateCategory',
   props<{ category: Category }>()
 );
 
+export const updateCategorySuccess = createAction(
+  '[Category Component] UpdateCategorySuccess',
+  props<{ category: Category }>()
+);
+
+export const updateCategoryFail = createAction(
+  '[Category Component] UpdateCategoryFail',
+  props<{ error: string }>()
+);
+//
+//
+export const addNewCategory = createAction(
+  '[Category Component] AddNewCategory',
+  props<{ category: Category }>()
+);
+
+export const addNewCategorySuccess = createAction(
+  '[Category Component] AddNewCategorySuccess',
+  props<{ category: Category }>()
+);
+
+export const addNewCategoryFail = createAction(
+  '[Category Component] AddNewCategoryFail',
+  props<{ error: string }>()
+);
+//
+//
 export const deleteCategory = createAction(
-  '[Product Component] DeleteCategory',
+  '[Category Component] DeleteCategory',
   props<{ id: string }>()
+);
+
+export const deleteCategorySuccess = createAction(
+  '[Category Component] DeleteCategorySuccess',
+  props<{ id: string }>()
+);
+
+export const deleteCategoryFail = createAction(
+  '[Category Component] DeleteCategoryFail',
+  props<{ error: string }>()
 );

@@ -5,19 +5,19 @@ import {
 } from 'src/app/shared/models/product.model';
 
 export interface ProductsState {
-  products: Product[];
+  items: Product[];
   loading?: boolean;
   error?: string;
 }
 
 export interface IngredientsState {
-  ingredients: Ingredient[];
+  items: Ingredient[];
   loading?: boolean;
   error?: string;
 }
 
 export interface CategoriesState {
-  categories: Category[];
+  items: Category[];
   loading?: boolean;
   error?: string;
 }

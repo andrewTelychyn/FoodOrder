@@ -1,10 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as StoreActions from './ingredient.actions';
 import { IngredientsState } from '../shared/store.model';
-import { addOrUpdate } from '../shared/store.func';
 
 const initialState: IngredientsState = {
-  ingredients: [],
+  items: [],
 };
 
 const _ingredientReducer = createReducer(
@@ -17,7 +16,7 @@ const _ingredientReducer = createReducer(
   on(
     StoreActions.addIngredientsSuccess,
     (state: IngredientsState, { ingredients }) => ({
-      ingredients,
+      items: ingredients,
       loading: false,
       error: '',
     })
@@ -27,16 +26,77 @@ const _ingredientReducer = createReducer(
     loading: false,
     error,
   })),
-  on(StoreActions.removeIngredients, (state) => ({ ingredients: [] })),
+  //
+  //
   on(
-    StoreActions.changeIngredient,
+    StoreActions.updateIngredient,
     (state: IngredientsState, { ingredient }) => ({
-      ingredients: addOrUpdate(state.ingredients, ingredient),
+      ...state,
+      loading: true,
+      error: '',
     })
   ),
+  on(
+    StoreActions.updateIngredientSuccess,
+    (state: IngredientsState, { ingredient }) => ({
+      ...state,
+      items: state.items.map((i) => (i.id == ingredient.id ? ingredient : i)),
+      loading: false,
+    })
+  ),
+  on(
+    StoreActions.updateIngredientFail,
+    (state: IngredientsState, { error }) => ({
+      ...state,
+      error,
+    })
+  ),
+  //
+  //
+  on(
+    StoreActions.addNewIngredient,
+    (state: IngredientsState, { ingredient }) => ({
+      ...state,
+      loading: true,
+      error: '',
+    })
+  ),
+  on(
+    StoreActions.addNewIngredientSuccess,
+    (state: IngredientsState, { ingredient }) => ({
+      ...state,
+      items: [...state.items, ingredient],
+      loading: false,
+    })
+  ),
+  on(
+    StoreActions.addNewIngredientFail,
+    (state: IngredientsState, { error }) => ({
+      ...state,
+      error,
+    })
+  ),
+  //
+  //
   on(StoreActions.deleteIngredient, (state: IngredientsState, { id }) => ({
-    ingredients: state.ingredients.filter((i) => i.id != id),
-  }))
+    ...state,
+    loading: true,
+  })),
+  on(
+    StoreActions.deleteIngredientSuccess,
+    (state: IngredientsState, { id }) => ({
+      items: state.items.filter((c) => c.id != id),
+      loading: false,
+    })
+  ),
+  on(
+    StoreActions.deleteIngredientFail,
+    (state: IngredientsState, { error }) => ({
+      ...state,
+      loading: false,
+      error,
+    })
+  )
 );
 
 export function ingredientReducer(

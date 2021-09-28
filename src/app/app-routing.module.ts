@@ -21,17 +21,34 @@ const routes: Routes = [
     component: CategoryPageComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'basket', component: OrderPageComponent, canActivate: [AuthGuard] }, //
   {
-    path: 'admin',
+    path: 'admin/:typeId',
     component: AdminPageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'admin' },
   },
   {
+    path: 'admin/history/:userId',
+    component: HistoryPageComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'admin' },
+  },
+  {
+    path: 'basket',
+    component: OrderPageComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'user' },
+  }, //
+  // {
+  //   path: 'admin',
+  //   component: AdminPageComponent,
+  //   canActivate: [RoleGuard],
+  // },
+  {
     path: 'history',
     component: HistoryPageComponent,
-    canActivate: [AuthGuard],
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'user' },
   },
   {
     path: '**',

@@ -1,101 +1,19 @@
 <div class="container">
   <app-nav-bar></app-nav-bar>
-  <!-- *ngIf="chosenProduct$ | async as chosenProduct" -->
-  <div class="admin-main" *ngIf="store$ | async as store">
+  <div class="admin-main">
     <h1>Admin Page</h1>
-    <div
-      class="type-header"
-      (click)="openCloseProd()"
-      [class.rotated]="isProductsOpen"
-    >
-      <h3>Products</h3>
-      <mat-icon aria-hidden="false" aria-label="drink icon"
-        >chevron_right</mat-icon
-      >
-    </div>
     <mat-grid-list
       cols="4"
       rowHeight="225px"
       gutterSize="20px"
-      *ngIf="isProductsOpen"
+      *ngIf="items.length > 0"
     >
-      <mat-grid-tile
-        *ngFor="let product of store.products.products"
-        (click)="chooseProduct(product)"
-      >
-        <img src="{{ product.img }}" alt="" />
-        <mat-grid-tile-footer
-          >{{ product.name }}&nbsp;
-          <span> {{ product.cost }}$</span></mat-grid-tile-footer
-        >
+      <mat-grid-tile *ngFor="let item of items">
+        <app-admin-item-component [item]="item" [func]="chooseItem.bind(this)">
+        </app-admin-item-component>
       </mat-grid-tile>
     </mat-grid-list>
-    <button class="create-button" (click)="createNewProduct()">
-      Create New
-    </button>
-    <div
-      class="type-header"
-      (click)="openCloseIng()"
-      [class.rotated]="isIngredientsOpen"
-    >
-      <h3>Ingrediens</h3>
-      <mat-icon aria-hidden="false" aria-label="drink icon"
-        >chevron_right</mat-icon
-      >
-    </div>
-    <mat-grid-list
-      cols="5"
-      rowHeight="120px"
-      gutterSize="20px"
-      *ngIf="isIngredientsOpen"
-    >
-      <mat-grid-tile
-        *ngFor="let ingredient of store.ingredients.ingredients"
-        (click)="chooseIngredient(ingredient)"
-      >
-        <ul>
-          <li>
-            Cost: <span>{{ ingredient.cost }}$</span>
-          </li>
-          <li>
-            Cal: <span>{{ ingredient.optionCal }}</span>
-          </li>
-        </ul>
-        <mat-grid-tile-footer
-          >{{ ingredient.optionName }}
-        </mat-grid-tile-footer>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <button class="create-button" (click)="createNewIngredient()">
-      Create New
-    </button>
-    <div
-      class="type-header"
-      (click)="openCloseCat()"
-      [class.rotated]="isCategoriesOpen"
-    >
-      <h3>Categories</h3>
-      <mat-icon aria-hidden="false" aria-label="drink icon"
-        >chevron_right</mat-icon
-      >
-    </div>
-    <mat-grid-list
-      cols="5"
-      rowHeight="140px"
-      gutterSize="20px"
-      *ngIf="isCategoriesOpen"
-    >
-      <mat-grid-tile
-        *ngFor="let category of store.categories.categories"
-        (click)="chooseCategory(category)"
-      >
-        <mat-icon aria-hidden="false" aria-label="drink icon">{{
-          category.icon
-        }}</mat-icon>
-        <mat-grid-tile-footer>{{ category.value }}</mat-grid-tile-footer>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <button class="create-button" (click)="createNewCategory()">
+    <button *ngIf="true" class="create-button" (click)="createNewItem()">
       Create New
     </button>
   </div>

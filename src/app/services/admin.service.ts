@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category, Ingredient, Product } from '../shared/models/product.model';
 import { map } from 'rxjs/operators';
+import { UserDTO } from '../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,9 @@ export class AdminService {
 
   public deleteIngredient(id: string): Observable<Ingredient> {
     return this.http.delete<Ingredient>(environment.API + `ingredients/${id}`);
+  }
+
+  public getUsers(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(environment.API + 'users/');
   }
 }

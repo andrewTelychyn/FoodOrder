@@ -8,6 +8,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NgxMaskModule } from 'ngx-mask';
     HistoryPageComponent,
   ],
   imports: [
+    AppRoutingModule,
     CommonModule,
     SharedModule,
     ComponentsModule,

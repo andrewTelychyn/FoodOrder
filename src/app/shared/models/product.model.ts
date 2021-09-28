@@ -6,25 +6,24 @@ export enum ProductTypes {
   drink = 'drink',
 }
 
-export interface Product {
+export interface MainType {
   id: string;
+  name: string;
+}
+
+export interface Product extends MainType {
   type?: string;
   categoryIds: string[];
   ingredientIds: string[];
-  name: string;
   cost: number;
   img: string;
 }
 
-export interface Category {
-  id: string;
-  value: string;
+export interface Category extends MainType {
   icon: string;
 }
 
-export interface Ingredient {
-  id: string;
-  optionName: string;
+export interface Ingredient extends MainType {
   optionCal: number;
   cost: number;
 }

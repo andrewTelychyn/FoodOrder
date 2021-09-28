@@ -1,27 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { merge, Observable, of, zip } from 'rxjs';
+import { merge } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IngredientSetDTO } from '../shared/models/product.model';
-import {
-  concatAll,
-  filter,
-  map,
-  mergeAll,
-  mergeMap,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   Basket,
   BasketDTO,
-  BasketOrder,
   BasketOrderDTO,
 } from '../shared/models/basket.model';
 import { User, UserDTO } from '../shared/models/user.model';
-import { select, Store } from '@ngrx/store';
 import { UserService } from './user.service';
-import { MainState } from '../store/shared/store.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +18,8 @@ import { MainState } from '../store/shared/store.model';
 export class OrderService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
-  public loadOrders() {
-    let userId = this.userService.user?.id;
+  public loadOrders(userId: string) {
+    // let userId = this.userService.user?.id;
 
     return this.http
       .get<BasketDTO[]>(environment.API + 'baskets')
@@ -59,7 +48,7 @@ export class OrderService {
             return {
               amount: ingredientset.amount,
               price: ingredientset.totalPrice,
-              name: ingredientset.ingredient.optionName,
+              name: ingredientset.ingredient.name,
             } as IngredientSetDTO;
           }),
         } as BasketOrderDTO;

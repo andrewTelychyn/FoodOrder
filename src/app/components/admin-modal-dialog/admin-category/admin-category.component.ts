@@ -1,15 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
-import { AdminService } from 'src/app/services/admin.service';
-import { Category, Product } from 'src/app/shared/models/product.model';
+import { take } from 'rxjs/operators';
+import { Category } from 'src/app/shared/models/product.model';
 import {
-  changeCategory,
+  addNewCategory,
   deleteCategory,
+  updateCategory,
 } from 'src/app/store/category/category.actions';
+import { isCategoryNew } from 'src/app/store/main.selectors';
 
 import { MainState } from 'src/app/store/shared/store.model';
 
@@ -31,17 +32,14 @@ export class AdminCategoryComponent implements OnInit {
     },
     private formBuilder: FormBuilder,
     private dialog: MatDialogRef<AdminCategoryComponent>,
-    private store: Store<{ main: MainState }>,
-    private adminService: AdminService
+    private store: Store<{ main: MainState }>
   ) {
     this.chosenCategory = this.data.category;
 
     this.store$ = this.store.select('main');
 
-    console.log(data.category);
-
     this.form = this.formBuilder.group({
-      value: [data.category.value, Validators.required],
+      value: [data.category.name, Validators.required],
       icon: [data.category.icon, Validators.required],
     });
   }
@@ -51,38 +49,25 @@ export class AdminCategoryComponent implements OnInit {
 
     let category: Category = {
       id: this.chosenCategory.id,
-      value: String(this.form.controls.value.value).toLowerCase(),
+      name: String(this.form.controls.value.value).toLowerCase(),
       icon: this.form.controls.icon.value,
     };
 
     this.store$
-      .pipe(
-        switchMap((store) => {
-          if (
-            store.categories.categories.findIndex((p) => p.id == category.id) >=
-            0
-          ) {
-            return this.adminService.updateCategory(category);
-          } else {
-            return this.adminService.saveNewCategory(category);
-          }
-        }),
-        take(1)
-      )
-      .subscribe((data) => {
-        this.store.dispatch(changeCategory({ category }));
-        this.dialog.close();
-      });
+      .pipe(select(isCategoryNew, this.chosenCategory.id), take(1))
+      .subscribe((bool) =>
+        bool
+          ? this.store.dispatch(addNewCategory({ category }))
+          : this.store.dispatch(updateCategory({ category }))
+      );
+
+    this.close();
   }
 
   public delete() {
     if (this.form.invalid) return;
 
-    this.adminService
-      .deleteCategory(this.chosenCategory.id)
-      .subscribe((data) => {});
     this.store.dispatch(deleteCategory({ id: this.chosenCategory.id }));
-
     this.close();
   }
 

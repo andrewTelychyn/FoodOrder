@@ -49,9 +49,9 @@
             <label>Ingredients</label>
             <ng-select [multiple]="true" formControlName="ingredients">
               <ng-option
-                *ngFor="let ingredient of store.ingredients.ingredients"
+                *ngFor="let ingredient of store.ingredients.items"
                 [value]="ingredient.id"
-                >{{ ingredient.optionName }}</ng-option
+                >{{ ingredient.name }}</ng-option
               >
             </ng-select>
           </div>
@@ -59,9 +59,9 @@
             <label>Categories</label>
             <ng-select [multiple]="true" formControlName="categories">
               <ng-option
-                *ngFor="let category of store.categories.categories"
+                *ngFor="let category of store.categories.items"
                 [value]="category.id"
-                >{{ category.value }}</ng-option
+                >{{ category.name }}</ng-option
               >
             </ng-select>
           </div>

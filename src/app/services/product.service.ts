@@ -31,9 +31,9 @@ export class ProductService {
       this.getAllProducts()
     ).pipe(
       map(([categories, ingredients, products]) => ({
-        categories: { categories },
-        ingredients: { ingredients },
-        products: { products, error: '', loading: false },
+        categories: { items: categories },
+        ingredients: { items: ingredients },
+        products: { items: products },
       }))
     );
   }

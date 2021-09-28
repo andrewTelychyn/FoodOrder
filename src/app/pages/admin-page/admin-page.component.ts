@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   Category,
   Ingredient,
+  MainType,
   Product,
-  ProductTypes,
 } from 'src/app/shared/models/product.model';
 import { v4 as uuid } from 'uuid';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,80 +13,113 @@ import { AdminProductComponent } from 'src/app/components/admin-modal-dialog/adm
 import { AdminIngredientComponent } from 'src/app/components/admin-modal-dialog/admin-ingredient/admin-ingredient.component';
 import { AdminCategoryComponent } from 'src/app/components/admin-modal-dialog/admin-category/admin-category.component';
 import { MainState } from 'src/app/store/shared/store.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { filter, switchMap, tap } from 'rxjs/operators';
+import { UserDTO } from 'src/app/shared/models/user.model';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.scss'],
 })
-export class AdminPageComponent implements OnInit, OnDestroy {
+export class AdminPageComponent {
   public store$: Observable<MainState>;
+  public users: UserDTO[] = [];
 
-  public isProductsOpen = true;
-  public isIngredientsOpen = true;
-  public isCategoriesOpen = true;
+  public items: any[] = [];
+
+  private readonly typeToStoreMap: { [key: string]: keyof MainState } = {
+    category: 'categories',
+    ingredient: 'ingredients',
+    product: 'products',
+  };
 
   constructor(
     private matDialog: MatDialog,
-    private store: Store<{ main: MainState }>
+    private store: Store<{ main: MainState }>,
+    private route: ActivatedRoute,
+    private router: Router,
+    private adminService: AdminService
   ) {
     this.store$ = this.store.select('main');
-  }
-  public chooseProduct(item: Product) {
-    this.matDialog.open(AdminProductComponent, { data: { product: item } });
+
+    this.route.params
+      .pipe(
+        filter((i) => i.typeId),
+        switchMap((i) => {
+          switch (i.typeId) {
+            case 'category':
+            case 'ingredient':
+            case 'product':
+              return this.store$.pipe(
+                tap((store) => this.storeSelectHandler(store, i.typeId))
+              );
+            case 'user':
+              return this.adminService.getUsers().pipe(
+                tap((users) => {
+                  this.items = users;
+                })
+              );
+            default:
+              this.router.navigate(['/admin/product']);
+              return of(i);
+          }
+        })
+      )
+      .subscribe(() => {});
   }
 
-  public chooseIngredient(ingredient: Ingredient) {
-    this.matDialog.open(AdminIngredientComponent, { data: { ingredient } });
+  private storeSelectHandler(store: MainState, typeId: string): void {
+    const key = this.typeToStoreMap[typeId];
+    this.items = store[key]['items'];
   }
 
-  public chooseCategory(category: Category) {
-    this.matDialog.open(AdminCategoryComponent, { data: { category } });
+  public chooseItem(item: any): void {
+    if ('img' in item) this.chooseProduct(item as Product);
+    if ('icon' in item) this.chooseCategory(item as Category);
+    if ('optionCal' in item) this.chooseIngredient(item as Ingredient);
   }
 
-  public openCloseIng() {
-    this.isIngredientsOpen = !this.isIngredientsOpen;
+  public createNewItem(): void {
+    let item = this.items[0];
+
+    if ('img' in item) this.createNewProduct();
+    if ('icon' in item) this.createNewCategory();
+    if ('optionCal' in item) this.createNewIngredient();
   }
 
-  public openCloseProd() {
-    this.isProductsOpen = !this.isProductsOpen;
-  }
-
-  public openCloseCat() {
-    this.isCategoriesOpen = !this.isCategoriesOpen;
-  }
-
-  public createNewProduct() {
-    let value: Product = {
+  private createNewProduct(): void {
+    const value: Product = {
       name: '',
       img: '',
       cost: 0,
       ingredientIds: [],
       categoryIds: [],
       id: uuid(),
-    } as Product;
+    };
 
     this.matDialog.open(AdminProductComponent, {
       data: { product: value },
     });
   }
 
-  public createNewIngredient() {
+  private createNewIngredient(): void {
     let value: Ingredient = {
       optionCal: 0,
-      optionName: '',
+      name: '',
       cost: 0,
       id: uuid(),
-    } as Ingredient;
+    };
 
     this.matDialog.open(AdminIngredientComponent, {
       data: { ingredient: value },
     });
   }
 
-  public createNewCategory() {
+  private createNewCategory(): void {
     let value: Category = {
-      value: ProductTypes.burger,
+      name: '',
       icon: '',
       id: uuid(),
     };
@@ -96,9 +129,15 @@ export class AdminPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  public submit() {}
+  private chooseProduct(product: Product): void {
+    this.matDialog.open(AdminProductComponent, { data: { product } });
+  }
 
-  ngOnInit(): void {}
+  private chooseIngredient(ingredient: Ingredient): void {
+    this.matDialog.open(AdminIngredientComponent, { data: { ingredient } });
+  }
 
-  ngOnDestroy(): void {}
+  private chooseCategory(category: Category): void {
+    this.matDialog.open(AdminCategoryComponent, { data: { category } });
+  }
 }

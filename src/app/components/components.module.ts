@@ -10,6 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminCategoryComponent } from './admin-modal-dialog/admin-category/admin-category.component';
 import { AdminIngredientComponent } from './admin-modal-dialog/admin-ingredient/admin-ingredient.component';
+import { AdminItemComponentComponent } from './admin-item-component/admin-item-component.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AdminIngredientComponent } from './admin-modal-dialog/admin-ingredient/
     AdminProductComponent,
     AdminCategoryComponent,
     AdminIngredientComponent,
+    AdminItemComponentComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,11 @@ import { AdminIngredientComponent } from './admin-modal-dialog/admin-ingredient/
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [ModalDialogComponent, BasketComponent, AdminProductComponent],
+  exports: [
+    ModalDialogComponent,
+    BasketComponent,
+    AdminProductComponent,
+    AdminItemComponentComponent,
+  ],
 })
 export class ComponentsModule {}

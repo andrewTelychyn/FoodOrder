@@ -17,6 +17,7 @@ export class NavBarComponent {
   public username: string;
   public store$: Observable<MainState>;
   public isAdmin: boolean;
+  public isAdmimPage: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -24,13 +25,11 @@ export class NavBarComponent {
     private store: Store<{ main: MainState }>,
     public roleGuard: RoleGuardService
   ) {
-    this.username = accountService.user?.username || '';
+    this.username = this.accountService.user?.username || '';
     this.store$ = this.store.select('main');
-    this.isAdmin = roleGuard.checkRole('admin');
-  }
 
-  public isSelected(category: Category) {
-    return { 'tile-selected': category.value == this.chosenCategory?.value };
+    this.isAdmin = this.roleGuard.checkRole('admin');
+    this.isAdmimPage = this.router.url.split('/')[1] == 'admin';
   }
 
   public logout() {

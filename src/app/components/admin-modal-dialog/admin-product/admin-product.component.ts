@@ -1,14 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
-import { AdminService } from 'src/app/services/admin.service';
+import { take } from 'rxjs/operators';
 import { Product } from 'src/app/shared/models/product.model';
+import { isProductNew } from 'src/app/store/main.selectors';
 import {
-  changeProduct,
+  addNewProduct,
   deleteProduct,
+  updateProduct,
 } from 'src/app/store/product/product.actions';
 import { MainState } from 'src/app/store/shared/store.model';
 
@@ -30,8 +31,7 @@ export class AdminProductComponent implements OnInit {
     },
     private formBuilder: FormBuilder,
     private dialog: MatDialogRef<AdminProductComponent>,
-    private store: Store<{ main: MainState }>,
-    private adminService: AdminService
+    private store: Store<{ main: MainState }>
   ) {
     this.chosenProduct = this.data.product;
 
@@ -47,11 +47,6 @@ export class AdminProductComponent implements OnInit {
   }
 
   public submit() {
-    console.log(
-      this.form.controls.ingredients.value,
-      this.form.controls.categories.value
-    );
-
     if (this.form.invalid) return;
 
     let product: Product = {
@@ -64,30 +59,19 @@ export class AdminProductComponent implements OnInit {
     };
 
     this.store$
-      .pipe(
-        switchMap((store) => {
-          if (
-            store.products.products.findIndex((p) => p.id == product.id) >= 0
-          ) {
-            return this.adminService.updateProduct(product);
-          } else {
-            return this.adminService.saveNewProduct(product);
-          }
-        }),
-        take(1)
-      )
-      .subscribe((data) => {
-        this.store.dispatch(changeProduct({ product }));
-        this.dialog.close();
-      });
+      .pipe(select(isProductNew, this.chosenProduct.id), take(1))
+      .subscribe((bool) =>
+        bool
+          ? this.store.dispatch(addNewProduct({ product }))
+          : this.store.dispatch(updateProduct({ product }))
+      );
+
+    this.close();
   }
 
   public delete() {
     if (this.form.invalid) return;
 
-    this.adminService
-      .deleteProduct(this.chosenProduct.id)
-      .subscribe((data) => {});
     this.store.dispatch(deleteProduct({ id: this.chosenProduct.id }));
 
     this.close();

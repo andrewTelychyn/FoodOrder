@@ -1,14 +1,13 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { RoleGuardService } from 'src/app/services/auth/roleguard.service';
 import { BasketService } from 'src/app/services/basket.service';
 import { getProductIngredients } from 'src/app/store/main.selectors';
 import { MainState } from 'src/app/store/shared/store.model';
 import { BasketOrder } from '../../shared/models/basket.model';
-import { IngredientSet, Product } from '../../shared/models/product.model';
+import { Product } from '../../shared/models/product.model';
 
 @Component({
   selector: 'app-modal-dialog',
@@ -17,6 +16,7 @@ import { IngredientSet, Product } from '../../shared/models/product.model';
 })
 export class ModalDialogComponent {
   public basketOrder: BasketOrder | undefined;
+  public isAdmin: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -29,12 +29,15 @@ export class ModalDialogComponent {
     private basketService: BasketService,
     private roleGuard: RoleGuardService
   ) {
-    store
+    this.store
       .select('main')
       .pipe(select(getProductIngredients, data.product), take(1))
       .subscribe(
         (result) => (this.basketOrder = new BasketOrder(data.product, result))
       );
+
+    this.isAdmin = this.roleGuard.checkRole('admin');
+    console.log(this.isAdmin);
   }
 
   public decreaseAmount(chosenId: string) {
@@ -62,8 +65,7 @@ export class ModalDialogComponent {
   };
 
   public apply() {
-    if (this.basketOrder && this.roleGuard.checkRole('user'))
-      this.basketService.addProduct(this.basketOrder);
+    if (this.basketOrder) this.basketService.addProduct(this.basketOrder);
     this.data.unSelect();
     this.dialog.close();
   }

@@ -16,7 +16,7 @@
     <ul class="product-select">
       <li *ngFor="let opt of basketOrder?.options">
         <div class="product-select-info">
-          <div class="product-select-name">{{ opt.ingredient.optionName }}</div>
+          <div class="product-select-name">{{ opt.ingredient.name }}</div>
           <div class="product-select-cal">
             {{ opt.ingredient.optionCal }} Cal
           </div>
@@ -35,7 +35,7 @@
       </li>
     </ul>
     <mat-dialog-actions class="apply-button">
-      <button mat-button (click)="apply()">Apply</button>
+      <button [disabled]="isAdmin" mat-button (click)="apply()">Apply</button>
     </mat-dialog-actions>
   </div>
 </div>

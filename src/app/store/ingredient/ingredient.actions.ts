@@ -14,16 +14,50 @@ export const addIngredientsFail = createAction(
   props<{ error: string }>()
 );
 //
-export const removeIngredients = createAction(
-  '[Ingredient Component] RemoveIngredients'
-);
-
-export const changeIngredient = createAction(
-  '[Product Component] AddNewIngredient',
+//
+export const updateIngredient = createAction(
+  '[Ingredient Component] UpdateIngredient',
   props<{ ingredient: Ingredient }>()
 );
 
+export const updateIngredientSuccess = createAction(
+  '[Ingredient Component] UpdateIngredientSuccess',
+  props<{ ingredient: Ingredient }>()
+);
+
+export const updateIngredientFail = createAction(
+  '[Ingredient Component] UpdateIngredientFail',
+  props<{ error: string }>()
+);
+//
+//
+export const addNewIngredient = createAction(
+  '[Ingredient Component] AddNewIngredient',
+  props<{ ingredient: Ingredient }>()
+);
+
+export const addNewIngredientSuccess = createAction(
+  '[Ingredient Component] AddNewIngredientSuccess',
+  props<{ ingredient: Ingredient }>()
+);
+
+export const addNewIngredientFail = createAction(
+  '[Ingredient Component] AddNewIngredientFail',
+  props<{ error: string }>()
+);
+//
+//
 export const deleteIngredient = createAction(
-  '[Product Component] DeleteIngredient',
+  '[Ingredient Component] DeleteIngredient',
   props<{ id: string }>()
+);
+
+export const deleteIngredientSuccess = createAction(
+  '[Ingredient Component] DeleteIngredientSuccess',
+  props<{ id: string }>()
+);
+
+export const deleteIngredientFail = createAction(
+  '[Ingredient Component] DeleteIngredientFail',
+  props<{ error: string }>()
 );

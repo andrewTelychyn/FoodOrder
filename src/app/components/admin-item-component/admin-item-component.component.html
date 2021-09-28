@@ -1,0 +1,29 @@
+<!-- (click)="chooseProduct(product)" -->
+<div class="admin-item" (click)="func(item)">
+  <ng-container *ngIf="item.firstname">
+    <a routerLink="/admin/history/{{ item.id }}">{{ item.id }}</a>
+    <mat-grid-tile-footer
+      >{{ item.firstname }}&nbsp;
+      <span> {{ item.lastname }}</span></mat-grid-tile-footer
+    >
+  </ng-container>
+  <ng-container *ngIf="item.img">
+    <img [src]="item.img" alt="" />
+  </ng-container>
+  <ng-container *ngIf="item.icon">
+    <mat-icon aria-hidden="false" aria-label="drink icon">{{
+      item.icon
+    }}</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="item.optionCal">
+    <ul>
+      <li>
+        Cal: <span>{{ item.optionCal }}</span>
+      </li>
+    </ul>
+  </ng-container>
+  <mat-grid-tile-footer *ngIf="item.name"
+    >{{ item.name }}&nbsp;
+    <span *ngIf="item.cost"> {{ item.cost }}$</span>
+  </mat-grid-tile-footer>
+</div>

@@ -1,11 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as StoreActions from './product.actions';
 import { ProductsState } from '../shared/store.model';
-import { addOrUpdate } from '../shared/store.func';
-import { Product } from 'src/app/shared/models/product.model';
 
 const initialState: ProductsState = {
-  products: [],
+  items: [],
   error: '',
   loading: false,
 };
@@ -18,7 +16,7 @@ const _productReducer = createReducer(
     error: '',
   })),
   on(StoreActions.addProductsSuccess, (state: ProductsState, { products }) => ({
-    products,
+    items: products,
     loading: false,
     error: '',
   })),
@@ -27,16 +25,59 @@ const _productReducer = createReducer(
     loading: false,
     error,
   })),
-  on(StoreActions.removeProducts, (state) => ({ ...state, products: [] })),
-  on(StoreActions.changeProduct, (state: ProductsState, { product }) => ({
+  //
+  //
+  on(StoreActions.updateProduct, (state: ProductsState, { product }) => ({
     ...state,
-    products: addOrUpdate(state.products, product),
+    loading: false,
+    error: '',
   })),
+  on(
+    StoreActions.updateProductSuccess,
+    (state: ProductsState, { product }) => ({
+      ...state,
+      items: state.items.map((i) => (i.id == product.id ? product : i)),
+      loading: false,
+    })
+  ),
+  on(StoreActions.updateProductFail, (state: ProductsState, { error }) => ({
+    ...state,
+    error,
+  })),
+  //
+  //
+  on(StoreActions.addNewProduct, (state: ProductsState, { product }) => ({
+    ...state,
+    loading: true,
+    error: '',
+  })),
+  on(
+    StoreActions.addNewProductSuccess,
+    (state: ProductsState, { product }) => ({
+      ...state,
+      items: [...state.items, product],
+      loading: false,
+    })
+  ),
+  on(StoreActions.addNewProductFail, (state: ProductsState, { error }) => ({
+    ...state,
+    error,
+  })),
+  //
+  //
   on(StoreActions.deleteProduct, (state: ProductsState, { id }) => ({
     ...state,
-    products: state.products.filter((p) => p.id != id),
+    loading: true,
   })),
-  on(StoreActions.reset, (state) => initialState)
+  on(StoreActions.deleteProductSuccess, (state: ProductsState, { id }) => ({
+    items: state.items.filter((c) => c.id != id),
+    loading: false,
+  })),
+  on(StoreActions.deleteProductFail, (state: ProductsState, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
 );
 
 export function productReducer(
