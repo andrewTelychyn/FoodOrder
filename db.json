@@ -165,17 +165,16 @@
     },
     {
       "id": "desert2",
-      "categoryIds": [
-        "category3"
-      ],
+      "name": "Ice Cream",
+      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/IceCone.png?$Category_Desktop$",
+      "cost": 40,
       "ingredientIds": [
-        "ingredient7",
         "ingredient8",
         "ingredient9"
       ],
-      "name": "Ice Cream",
-      "cost": 40,
-      "img": "https://www.mcdonalds.com/is/image/content/dam/ua/nutrition/nfl-product/product/regular/IceCone.png?$Category_Desktop$"
+      "categoryIds": [
+        "category3"
+      ]
     },
     {
       "id": "desert3",

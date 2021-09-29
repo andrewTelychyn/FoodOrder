@@ -10,11 +10,8 @@ import { UserService } from '../user.service';
   providedIn: 'root',
 })
 export class AccountService {
-  public user: User | undefined;
-
   constructor(private http: HttpClient, private userService: UserService) {
     let value = localStorage.getItem('user');
-    if (value) this.user = JSON.parse(value);
   }
 
   login(username: string, password: string) {
@@ -29,8 +26,6 @@ export class AccountService {
 
         if (data[0].token) {
           this.userService.setUser(data[0]);
-
-          this.user = data[0];
         }
 
         return data;
@@ -39,12 +34,10 @@ export class AccountService {
   }
 
   logout() {
-    this.user = undefined;
     this.userService.clearUser();
   }
 
   register(user: User) {
-    this.user = user;
     this.userService.setUser(user);
     return this.http.post<User>(environment.API + `users`, user);
   }

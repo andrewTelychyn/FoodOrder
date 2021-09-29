@@ -1,31 +1,30 @@
-// export type ProductTypes = 'burger' | 'desert' | 'drink';
-
 export enum ProductTypes {
   burger = 'burger',
   desert = 'desert',
   drink = 'drink',
 }
 
-export interface MainType {
-  id: string;
-  name: string;
-}
-
-export interface Product extends MainType {
+export interface Product {
   type?: string;
   categoryIds: string[];
   ingredientIds: string[];
   cost: number;
   img: string;
+  id: string;
+  name: string;
 }
 
-export interface Category extends MainType {
+export interface Category {
   icon: string;
+  id: string;
+  name: string;
 }
 
-export interface Ingredient extends MainType {
+export interface Ingredient {
   optionCal: number;
   cost: number;
+  id: string;
+  name: string;
 }
 
 export interface IngredientSet {

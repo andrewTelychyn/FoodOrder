@@ -38,12 +38,13 @@
     list-style: none;
     padding: 0px 20px 0px 0px;
 
-    // & > li {
-    //   margin: 50px 0px;
-    // }
+    .open {
+      mat-icon {
+        transform: rotate(90deg);
+      }
+    }
 
     .basket-header {
-      // padding: 25px 25px 15px;
       padding: 15px 25px;
       background-color: #c6141b;
       color: white;
@@ -51,8 +52,10 @@
       max-width: 100%;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
       margin: 50px 0 25px;
+      user-select: none;
+      cursor: pointer;
 
       h3 {
         font-size: 25px;
@@ -64,6 +67,12 @@
         font-size: 15px;
         font-weight: 300;
         margin: 0px;
+      }
+
+      mat-icon {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
       }
     }
 

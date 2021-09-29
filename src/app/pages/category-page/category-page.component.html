@@ -1,7 +1,56 @@
 <div class="container">
   <app-nav-bar [chosenCategory]="chosenCategory"></app-nav-bar>
   <div class="main-content">
-    <h1>{{ chosenCategory?.name }}s</h1>
+    <div class="category-header">
+      <h1>{{ chosenCategory?.name }}s</h1>
+      <div class="search">
+        <mat-icon
+          class="order-icon"
+          *ngIf="!showOrder; else orderOptions"
+          (click)="openCloseOrder()"
+        >
+          reorder
+        </mat-icon>
+        <input *ngIf="showSearch" type="text" />
+        <mat-icon
+          class="search-icon"
+          (click)="openCloseSearch()"
+          [class.opened]="showSearch"
+        >
+          search
+        </mat-icon>
+        <ng-template #orderOptions>
+          <div class="order-wrapper">
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="orderOptions"
+              (mouseleave)="openCloseOrder()"
+              [(ngModel)]="chosenOrderType"
+            >
+              <mat-radio-button
+                *ngFor="let orderType of orderTypes | keyvalue"
+                [value]="orderType.key"
+                >{{ orderType.value }}</mat-radio-button
+              >
+            </mat-radio-group>
+            <!-- <div class="orderOptions">
+              <div
+                class="radio-group"
+                *ngFor="let orderType of orderTypes | keyvalue"
+              >
+                <input
+                  [id]="orderType.key"
+                  type="radio"
+                  name="orderTypeRadio"
+                  value=""
+                />
+                <label [for]="orderType.key">{{ orderType.value }}</label>
+              </div>
+            </div> -->
+          </div>
+        </ng-template>
+      </div>
+    </div>
     <mat-grid-list cols="3" rowHeight="400px" gutterSize="20px">
       <mat-grid-tile
         *ngFor="let prd of products"
@@ -9,7 +58,9 @@
         [class.tile-selected]="prd.id == chosenProduct?.id"
       >
         <img [src]="prd.img" alt="burger burger" />
-        <mat-grid-tile-footer> {{ prd.name }} </mat-grid-tile-footer>
+        <mat-grid-tile-footer>
+          {{ prd.name }} <span>{{ prd.cost }}$</span></mat-grid-tile-footer
+        >
       </mat-grid-tile>
     </mat-grid-list>
   </div>

@@ -4,6 +4,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { CategoryPageComponent } from './pages/category-page/category-page.component';
 import { HistoryPageComponent } from './pages/history-page/history-page.component';
 import { OrderPageComponent } from './pages/order-page/order-page.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
 import { AuthguardService as AuthGuard } from './services/auth/authguard.service';
 import { RoleGuardService as RoleGuard } from './services/auth/roleguard.service';
 
@@ -38,7 +39,12 @@ const routes: Routes = [
     component: OrderPageComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'user' },
-  }, //
+  },
+  {
+    path: 'user',
+    component: UserPageComponent,
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'admin',
   //   component: AdminPageComponent,

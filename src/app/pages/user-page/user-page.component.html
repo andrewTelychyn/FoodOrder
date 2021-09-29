@@ -1,0 +1,115 @@
+<div class="container">
+  <app-nav-bar></app-nav-bar>
+  <div class="user-content">
+    <h1>User Page</h1>
+    <form [formGroup]="mainForm" class="main-form">
+      <h2>Main Info</h2>
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" formControlName="firstname" class="form-control" />
+        <ng-container
+          *ngIf="submittedMain && mainForm.controls.firstname.errors"
+        >
+          <div
+            *ngIf="mainForm.controls.firstname.errors.required"
+            class="invalid-feedback"
+          >
+            The firstname is required
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastname" class="form-control" />
+        <ng-container
+          *ngIf="submittedMain && mainForm.controls.lastname.errors"
+        >
+          <div
+            *ngIf="mainForm.controls.lastname.errors.required"
+            class="invalid-feedback"
+          >
+            The lastname is required
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <label>User Name</label>
+        <input type="text" formControlName="username" class="form-control" />
+        <ng-container
+          *ngIf="submittedMain && mainForm.controls.username.errors"
+        >
+          <div
+            *ngIf="mainForm.controls.username.errors.required"
+            class="invalid-feedback"
+          >
+            The username is required
+          </div>
+        </ng-container>
+      </div>
+      <div class="button">
+        <button (click)="submitMain()">Submit</button>
+      </div>
+    </form>
+    <form [formGroup]="passwordForm" class="password-form">
+      <h2>Password</h2>
+      <div class="form-group">
+        <label>Old Password</label>
+        <input
+          type="password"
+          formControlName="oldPassword"
+          class="form-control"
+        />
+        <ng-container
+          *ngIf="submittedPassword && passwordForm.controls.oldPassword.errors"
+        >
+          <div
+            *ngIf="passwordForm.controls.oldPassword.errors.required"
+            class="invalid-feedback"
+          >
+            Old password is required
+          </div>
+          <div
+            *ngIf="passwordForm.controls.oldPassword.errors.minlength"
+            class="invalid-feedback"
+          >
+            Old password is too small
+          </div>
+          <div
+            *ngIf="passwordForm.controls.oldPassword.errors.different"
+            class="invalid-feedback"
+          >
+            Old password is different
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input
+          type="password"
+          formControlName="newPassword"
+          class="form-control"
+        />
+        <ng-container
+          *ngIf="submittedPassword && passwordForm.controls.newPassword.errors"
+        >
+          <div
+            *ngIf="passwordForm.controls.newPassword.errors.required"
+            class="invalid-feedback"
+          >
+            New password is required
+          </div>
+          <div
+            *ngIf="passwordForm.controls.newPassword.errors.minlength"
+            class="invalid-feedback"
+          >
+            New password is too small
+          </div>
+        </ng-container>
+      </div>
+      <div class="button">
+        <button (click)="submitPassword()">Submit</button>
+      </div>
+    </form>
+    <div class="logout-button" (click)="logout()">Logout</div>
+  </div>
+</div>

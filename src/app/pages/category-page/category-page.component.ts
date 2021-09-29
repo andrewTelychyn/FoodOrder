@@ -1,6 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  merge,
+  of,
+  from,
+} from 'rxjs';
 import { ModalDialogComponent } from '../../components/modal-dialog/modal-dialog.component';
 import { Category, Product } from '../../shared/models/product.model';
 import { Basket } from '../../shared/models/basket.model';
@@ -14,6 +21,8 @@ import {
 import { tap, map, switchMap, filter } from 'rxjs/operators';
 import { MainState } from 'src/app/store/shared/store.model';
 
+type OrderKey = 'bydefault' | 'fromcheap' | 'fromexpansive' | 'byname';
+
 @Component({
   selector: 'app-category-page',
   templateUrl: './category-page.component.html',
@@ -23,7 +32,19 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   public basket$: BehaviorSubject<Basket>;
   public store$: Observable<MainState>;
 
+  public showSearch: boolean = false;
+  public showOrder: boolean = false;
+  // public chosenOrderType: OrderKey = 'bydefault';
+  public chosenOrderType: Observable<OrderKey>;
+  public readonly orderTypes: { [key in OrderKey]: string } = {
+    bydefault: 'By default',
+    byname: 'By name',
+    fromcheap: 'From cheap',
+    fromexpansive: 'From expansive',
+  };
+
   public products: Product[] = [];
+  public originalProducts: BehaviorSubject<Product[]>;
   public chosenProduct: Product | undefined;
   public chosenCategory: Category | undefined;
   public allCategories: Category[] = [];
@@ -39,9 +60,42 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   ) {
     this.basket$ = this.basketService.basket$;
     this.store$ = this.store.select('main');
+
+    this.originalProducts = new BehaviorSubject<Product[]>([]);
+    this.chosenOrderType = new Observable<OrderKey>((s) => s.next('bydefault'));
+
+    from(this.chosenOrderType).subscribe((value) => console.log(value));
+
+    merge(this.chosenOrderType, this.originalProducts)
+      .pipe(
+        filter((val) => typeof val == 'string'),
+        switchMap((value) => {
+          switch (value) {
+            case 'byname':
+              return this.originalProducts.pipe(
+                map((array) => array.sort((a, b) => (a.name > b.name ? 1 : -1)))
+              );
+            case 'fromexpansive':
+              return this.originalProducts.pipe(
+                map((array) => array.sort((a, b) => (a.cost > b.cost ? 1 : -1)))
+              );
+            case 'fromcheap':
+              return this.originalProducts.pipe(
+                map((array) => array.sort((a, b) => (a.cost > b.cost ? -1 : 1)))
+              );
+            case 'bydefault':
+            default:
+              return this.originalProducts;
+          }
+        })
+      )
+      .subscribe((data) => {
+        this.products = data;
+        console.log(this.chosenOrderType);
+      });
   }
 
-  public selectProduct(prod: Product) {
+  public selectProduct(prod: Product): void {
     this.chosenProduct = prod;
 
     this.dialog.open(ModalDialogComponent, {
@@ -50,6 +104,14 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
         unSelect: () => (this.chosenProduct = undefined),
       },
     });
+  }
+
+  public openCloseSearch(): void {
+    this.showSearch = !this.showSearch;
+  }
+
+  public openCloseOrder(): void {
+    this.showOrder = !this.showOrder;
   }
 
   ngOnInit(): void {
@@ -76,7 +138,10 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
         map((c) => c.id),
         switchMap((id) => this.store$.pipe(select(getProductsByCategory, id)))
       )
-      .subscribe((data) => (this.products = data));
+      .subscribe((data) => {
+        this.originalProducts.next(data);
+        console.log(data);
+      });
   }
 
   ngOnDestroy() {

@@ -9,11 +9,15 @@
       *ngIf="items.length > 0"
     >
       <mat-grid-tile *ngFor="let item of items">
-        <app-admin-item-component [item]="item" [func]="chooseItem.bind(this)">
+        <app-admin-item-component
+          [item]="item"
+          [adminType]="typeId"
+          (clickEmitter)="clickHandler(item)"
+        >
         </app-admin-item-component>
       </mat-grid-tile>
     </mat-grid-list>
-    <button *ngIf="true" class="create-button" (click)="createNewItem()">
+    <button *ngIf="showButton" class="create-button" (click)="createNewItem()">
       Create New
     </button>
   </div>

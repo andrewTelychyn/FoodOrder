@@ -1,4 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  CommonAdmimItem,
+  CommotAdminUrlType,
+} from 'src/app/pages/admin-page/admin-page.component';
 
 @Component({
   selector: 'app-admin-item-component',
@@ -6,10 +10,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./admin-item-component.component.scss'],
 })
 export class AdminItemComponentComponent implements OnInit {
-  @Input() item: any;
-  @Input() func!: (item: any) => void;
+  @Input() item!: CommonAdmimItem;
+  @Input() adminType!: CommotAdminUrlType;
+  @Output() clickEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  public clickHandler(): void {
+    this.clickEmitter.emit();
+  }
 }

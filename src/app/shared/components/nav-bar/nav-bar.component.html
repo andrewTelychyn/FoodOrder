@@ -1,56 +1,62 @@
 <div class="side-menu">
   <div class="up-group">
-    <div class="user-info">
-      <h3>
+    <div class="user-info" [class.selected]="router.url == '/user'">
+      <!-- <h3>
         Hello, <span>{{ username }}!</span>
       </h3>
-      <button (click)="logout()">Logout</button>
+      <button (click)="logout()">Logout</button> -->
+      <a routerLink="/user">
+        <mat-icon aria-hidden="false" aria-label="drink icon">
+          account_circle
+        </mat-icon>
+        <mat-grid-tile-footer> {{ username }} </mat-grid-tile-footer>
+      </a>
     </div>
-    <mat-grid-list
-      cols="1"
-      rowHeight="120px"
-      *ngIf="isAdmimPage; else mainNavBar"
-    >
-      <mat-grid-tile [class.tile-selected]="router.url == '/admin/product'">
-        <a routerLink="/admin/product">
-          <mat-icon aria-hidden="false" aria-label="drink icon">
-            view_in_ar
-          </mat-icon>
-          <mat-grid-tile-footer> Products </mat-grid-tile-footer>
-        </a>
-      </mat-grid-tile>
-      <mat-grid-tile [class.tile-selected]="router.url == '/admin/ingredient'">
-        <a routerLink="/admin/ingredient">
-          <mat-icon aria-hidden="false" aria-label="drink icon">
-            menu_open
-          </mat-icon>
-          <mat-grid-tile-footer> Ingredients </mat-grid-tile-footer>
-        </a>
-      </mat-grid-tile>
-      <mat-grid-tile [class.tile-selected]="router.url == '/admin/category'">
-        <a routerLink="/admin/category">
-          <mat-icon aria-hidden="false" aria-label="drink icon">
-            category
-          </mat-icon>
-          <mat-grid-tile-footer> Categories </mat-grid-tile-footer>
-        </a>
-      </mat-grid-tile>
-      <mat-grid-tile [class.tile-selected]="router.url == '/admin/user'">
-        <a routerLink="/admin/user">
-          <mat-icon aria-hidden="false" aria-label="drink icon">
-            people
-          </mat-icon>
-          <mat-grid-tile-footer> Users </mat-grid-tile-footer>
-        </a>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <a routerLink="/menu/burger">
-          <mat-icon aria-hidden="false" aria-label="drink icon">
-            arrow_back
-          </mat-icon>
-          <mat-grid-tile-footer> Back </mat-grid-tile-footer>
-        </a>
-      </mat-grid-tile>
+    <mat-grid-list cols="1" rowHeight="120px">
+      <ng-container *ngIf="isAdmimPage; else mainNavBar">
+        <mat-grid-tile [class.tile-selected]="router.url == '/admin/product'">
+          <a routerLink="/admin/product">
+            <mat-icon aria-hidden="false" aria-label="drink icon">
+              view_in_ar
+            </mat-icon>
+            <mat-grid-tile-footer> Products </mat-grid-tile-footer>
+          </a>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class.tile-selected]="router.url == '/admin/ingredient'"
+        >
+          <a routerLink="/admin/ingredient">
+            <mat-icon aria-hidden="false" aria-label="drink icon">
+              menu_open
+            </mat-icon>
+            <mat-grid-tile-footer> Ingredients </mat-grid-tile-footer>
+          </a>
+        </mat-grid-tile>
+        <mat-grid-tile [class.tile-selected]="router.url == '/admin/category'">
+          <a routerLink="/admin/category">
+            <mat-icon aria-hidden="false" aria-label="drink icon">
+              category
+            </mat-icon>
+            <mat-grid-tile-footer> Categories </mat-grid-tile-footer>
+          </a>
+        </mat-grid-tile>
+        <mat-grid-tile [class.tile-selected]="router.url == '/admin/user'">
+          <a routerLink="/admin/user">
+            <mat-icon aria-hidden="false" aria-label="drink icon">
+              people
+            </mat-icon>
+            <mat-grid-tile-footer> Users </mat-grid-tile-footer>
+          </a>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <a routerLink="/menu/burger">
+            <mat-icon aria-hidden="false" aria-label="drink icon">
+              arrow_back
+            </mat-icon>
+            <mat-grid-tile-footer> Back </mat-grid-tile-footer>
+          </a>
+        </mat-grid-tile>
+      </ng-container>
     </mat-grid-list>
     <ng-template #mainNavBar>
       <mat-grid-list cols="1" rowHeight="120px" *ngIf="store$ | async as store">

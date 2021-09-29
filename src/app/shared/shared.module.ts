@@ -4,7 +4,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -13,13 +14,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatGridListModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatRadioModule,
+    FormsModule,
   ],
   declarations: [NavBarComponent],
   exports: [
+    CommonModule,
     NavBarComponent,
     MatIconModule,
     MatGridListModule,
     ReactiveFormsModule,
+    MatRadioModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

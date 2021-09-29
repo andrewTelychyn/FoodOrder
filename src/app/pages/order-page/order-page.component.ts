@@ -26,9 +26,11 @@ export class OrderPageComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.basket$ = this.basketService.basket$;
+    let user = this.userSerice.user.getValue();
+
     this.form = this.formBuilder.group({
-      firstName: [userSerice.user?.firstname, Validators.required],
-      lastName: [userSerice.user?.lastname, Validators.required],
+      firstName: [user?.firstname, Validators.required],
+      lastName: [user?.lastname, Validators.required],
       phone: ['', [Validators.minLength(8), Validators.required]],
       email: ['', [Validators.email, Validators.required]],
     });
@@ -62,7 +64,7 @@ export class OrderPageComponent implements OnInit {
     if (this.basket$.getValue().products.length == 0) return;
 
     let user: UserDTO = {
-      id: this.userSerice.user?.id!,
+      id: this.userSerice.user.getValue()?.id!,
       firstname: this.f.firstName.value,
       lastname: this.f.lastName.value,
       phone: this.f.phone.value,

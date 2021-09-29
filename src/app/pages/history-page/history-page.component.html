@@ -4,14 +4,24 @@
     <h1>User orders history</h1>
     <ul class="basket-list" *ngIf="baskets.length > 0; else noBaskets">
       <li *ngFor="let basket of baskets">
-        <div class="basket-header">
-          <h3>{{ basket.commonPrice }}$</h3>
+        <div
+          class="basket-header"
+          [class.open]="basket.toShow"
+          (click)="openClose(basket.basket.id)"
+        >
+          <h3>{{ basket.basket.commonPrice }}$</h3>
           <h4>
-            {{ basket.timestamp | date: "dd.LL.YYYY HH:mm " }}
+            {{ basket.basket.timestamp | date: "dd.LL.YYYY HH:mm " }}
           </h4>
+          <mat-icon> navigate_next </mat-icon>
         </div>
-        <mat-grid-list cols="3" rowHeight="220px" gutterSize="20px">
-          <mat-grid-tile *ngFor="let basketOrder of basket.basketOrders">
+        <mat-grid-list
+          cols="3"
+          rowHeight="220px"
+          gutterSize="20px"
+          *ngIf="basket.toShow"
+        >
+          <mat-grid-tile *ngFor="let basketOrder of basket.basket.basketOrders">
             <ul class="ingredient-list">
               <li *ngFor="let ingredient of basketOrder.ingredients">
                 <h4>

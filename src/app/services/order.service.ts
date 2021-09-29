@@ -59,11 +59,14 @@ export class OrderService {
   }
 
   private updateUser(basketId: string) {
-    this.userService.user?.ordersList.push(basketId);
+    let user = this.userService.user.getValue();
+    user?.ordersList.push(basketId);
+    this.userService.user.next(user);
+
     localStorage.setItem('user', JSON.stringify(this.userService.user));
 
     return this.http.put<User>(
-      environment.API + `users/${this.userService.user?.id}`,
+      environment.API + `users/${user?.id}`,
       this.userService.user
     );
   }

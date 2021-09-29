@@ -1,29 +1,61 @@
-<!-- (click)="chooseProduct(product)" -->
-<div class="admin-item" (click)="func(item)">
-  <ng-container *ngIf="item.firstname">
-    <a routerLink="/admin/history/{{ item.id }}">{{ item.id }}</a>
-    <mat-grid-tile-footer
-      >{{ item.firstname }}&nbsp;
-      <span> {{ item.lastname }}</span></mat-grid-tile-footer
-    >
+<div class="admin-item" (click)="clickHandler()" [ngSwitch]="adminType">
+  <ng-container
+    *ngSwitchCase="'product'"
+    [ngTemplateOutlet]="productRef"
+    [ngTemplateOutletContext]="{ $implicit: item }"
+  >
   </ng-container>
-  <ng-container *ngIf="item.img">
-    <img [src]="item.img" alt="" />
+  <ng-container
+    *ngSwitchCase="'user'"
+    [ngTemplateOutlet]="userRef"
+    [ngTemplateOutletContext]="{ $implicit: item }"
+  >
   </ng-container>
-  <ng-container *ngIf="item.icon">
-    <mat-icon aria-hidden="false" aria-label="drink icon">{{
-      item.icon
-    }}</mat-icon>
+  <ng-container
+    *ngSwitchCase="'category'"
+    [ngTemplateOutlet]="categoryRef"
+    [ngTemplateOutletContext]="{ $implicit: item }"
+  >
   </ng-container>
-  <ng-container *ngIf="item.optionCal">
-    <ul>
-      <li>
-        Cal: <span>{{ item.optionCal }}</span>
-      </li>
-    </ul>
+  <ng-container
+    *ngSwitchCase="'ingredient'"
+    [ngTemplateOutlet]="ingredientRef"
+    [ngTemplateOutletContext]="{ $implicit: item }"
+  >
   </ng-container>
-  <mat-grid-tile-footer *ngIf="item.name"
+</div>
+
+<ng-template #userRef let-item>
+  <a routerLink="/admin/history/{{ item.id }}">{{ item.id }}</a>
+  <mat-grid-tile-footer
+    >{{ item.firstname }}&nbsp;
+    <span> {{ item.lastname }}</span></mat-grid-tile-footer
+  >
+</ng-template>
+
+<ng-template #productRef let-item>
+  <img [src]="item.img" alt="" />
+  <mat-grid-tile-footer
+    >{{ item.name }}&nbsp;
+    <span> {{ item.cost }}$</span>
+  </mat-grid-tile-footer>
+</ng-template>
+
+<ng-template #ingredientRef let-item>
+  <ul>
+    <li>
+      Cal: <span>{{ item.optionCal }}</span>
+    </li>
+  </ul>
+  <mat-grid-tile-footer
     >{{ item.name }}&nbsp;
     <span *ngIf="item.cost"> {{ item.cost }}$</span>
   </mat-grid-tile-footer>
-</div>
+</ng-template>
+
+<ng-template #categoryRef let-item>
+  <mat-icon aria-hidden="false" aria-label="drink icon">{{
+    item.icon
+  }}</mat-icon>
+  <mat-grid-tile-footer>{{ item.name }}&nbsp; </mat-grid-tile-footer>
+</ng-template>

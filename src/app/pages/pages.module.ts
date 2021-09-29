@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { AppRoutingModule } from '../app-routing.module';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppRoutingModule } from '../app-routing.module';
     CategoryPageComponent,
     OrderPageComponent,
     HistoryPageComponent,
+    UserPageComponent,
   ],
   imports: [
     AppRoutingModule,

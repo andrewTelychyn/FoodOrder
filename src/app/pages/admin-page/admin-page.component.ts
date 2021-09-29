@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import {
   Category,
   Ingredient,
-  MainType,
   Product,
 } from 'src/app/shared/models/product.model';
 import { v4 as uuid } from 'uuid';
@@ -18,6 +17,9 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 import { UserDTO } from 'src/app/shared/models/user.model';
 import { AdminService } from 'src/app/services/admin.service';
 
+export type CommonAdmimItem = UserDTO | Category | Product | Ingredient;
+export type CommotAdminUrlType = 'category' | 'product' | 'user' | 'ingredient';
+
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
@@ -25,7 +27,8 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class AdminPageComponent {
   public store$: Observable<MainState>;
-  public users: UserDTO[] = [];
+  public showButton: boolean = true;
+  public typeId!: CommotAdminUrlType;
 
   public items: any[] = [];
 
@@ -47,18 +50,23 @@ export class AdminPageComponent {
     this.route.params
       .pipe(
         filter((i) => i.typeId),
+        tap((i) => (this.typeId = i.typeId)),
         switchMap((i) => {
-          switch (i.typeId) {
+          switch (i.typeId as CommotAdminUrlType) {
             case 'category':
             case 'ingredient':
             case 'product':
               return this.store$.pipe(
-                tap((store) => this.storeSelectHandler(store, i.typeId))
+                tap((store) => {
+                  this.storeSelectHandler(store, i.typeId);
+                  this.showButton = true;
+                })
               );
             case 'user':
               return this.adminService.getUsers().pipe(
                 tap((users) => {
                   this.items = users;
+                  this.showButton = false;
                 })
               );
             default:
@@ -75,18 +83,16 @@ export class AdminPageComponent {
     this.items = store[key]['items'];
   }
 
-  public chooseItem(item: any): void {
-    if ('img' in item) this.chooseProduct(item as Product);
-    if ('icon' in item) this.chooseCategory(item as Category);
-    if ('optionCal' in item) this.chooseIngredient(item as Ingredient);
+  public clickHandler(item: CommonAdmimItem): void {
+    if (this.typeId == 'product') this.chooseProduct(item as Product);
+    if (this.typeId == 'category') this.chooseCategory(item as Category);
+    if (this.typeId == 'ingredient') this.chooseIngredient(item as Ingredient);
   }
 
   public createNewItem(): void {
-    let item = this.items[0];
-
-    if ('img' in item) this.createNewProduct();
-    if ('icon' in item) this.createNewCategory();
-    if ('optionCal' in item) this.createNewIngredient();
+    if (this.typeId == 'product') this.createNewProduct();
+    if (this.typeId == 'category') this.createNewCategory();
+    if (this.typeId == 'ingredient') this.createNewIngredient();
   }
 
   private createNewProduct(): void {

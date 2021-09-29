@@ -11,7 +11,7 @@ export class BasketService {
 
   constructor(private userService: UserService) {
     this.basket$ = new BehaviorSubject<Basket>(
-      new Basket(userService.user?.id)
+      new Basket(userService.user.getValue()?.id)
     );
   }
 
@@ -44,6 +44,6 @@ export class BasketService {
   }
 
   public clearAll() {
-    this.basket$.next(new Basket(this.userService.user?.id));
+    this.basket$.next(new Basket(this.userService.user.getValue()?.id));
   }
 }
