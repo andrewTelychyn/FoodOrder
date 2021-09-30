@@ -40,7 +40,7 @@
 
     mat-grid-tile {
       cursor: pointer;
-      border: 1px solid black;
+      border: 1px solid #cebcbd;
 
       app-admin-item-component {
         width: 100%;
@@ -78,6 +78,7 @@
 
       mat-grid-tile-footer {
         background-color: #cebcbd;
+        opacity: 0.8;
         color: black;
 
         span {

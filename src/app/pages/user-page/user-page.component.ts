@@ -42,10 +42,18 @@ export class UserPageComponent implements OnInit {
 
     if (this.mainForm.invalid) return;
 
-    let user: User = Object.assign(this.userService.user.getValue(), {
-      firstname: this.mainForm.controls.firstname.value,
-      lastname: this.mainForm.controls.lastname.value,
-      username: this.mainForm.controls.username.value,
+    let oldUserData = this.userService.user.getValue();
+    if (
+      oldUserData?.firstname == this.mainForm.controls.firstname.value &&
+      oldUserData?.lastname == this.mainForm.controls.lastname.value &&
+      oldUserData?.username == this.mainForm.controls.username.value
+    )
+      return this.mainForm.controls.username.setErrors({ same: true });
+
+    let user: User = Object.assign(oldUserData, {
+      firstname: this.mainForm.controls.firstname.value.trim(),
+      lastname: this.mainForm.controls.lastname.value.trim(),
+      username: this.mainForm.controls.username.value.trim(),
     });
 
     this.userService.updateInfo(user).subscribe(() => {});
@@ -64,7 +72,7 @@ export class UserPageComponent implements OnInit {
       });
 
     let user: User = Object.assign(value, {
-      password: this.mainForm.controls.newPassword.value,
+      password: this.mainForm.controls.newPassword.value.trim(),
     });
 
     this.userService.updateInfo(user).subscribe(() => {});

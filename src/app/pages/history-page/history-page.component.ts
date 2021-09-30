@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { BasketDTO } from 'src/app/shared/models/basket.model';
@@ -30,25 +30,23 @@ export class HistoryPageComponent implements OnInit {
     if (this.router.url == '/history') {
       this.orderService
         .loadOrders(this.userService.user.getValue()?.id!)
+        .pipe(take(1))
         .subscribe((data) =>
           data
             .reverse()
-            .map(
-              (basket) =>
-                (this.basketsKeyMap[basket.id] = { toShow: false, basket })
-            )
+            .map((basket) => this.baskets.push({ toShow: false, basket }))
         );
     } else {
       this.route.params
         .pipe(
           filter((p) => p.userId),
-          switchMap((p) => this.orderService.loadOrders(p.userId))
+          switchMap((p) => this.orderService.loadOrders(p.userId)),
+          take(1)
         )
         .subscribe((data) => {
           data
             .reverse()
             .map((basket) => this.baskets.push({ toShow: false, basket }));
-          console.log(Object.values(this.baskets));
         });
     }
   }

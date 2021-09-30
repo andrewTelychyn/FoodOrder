@@ -6,6 +6,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { MatRadioModule } from '@angular/material/radio';
     ReactiveFormsModule,
     MatRadioModule,
     FormsModule,
+    FontAwesomeModule,
   ],
   declarations: [NavBarComponent],
   exports: [
@@ -26,6 +28,7 @@ import { MatRadioModule } from '@angular/material/radio';
     ReactiveFormsModule,
     MatRadioModule,
     FormsModule,
+    FontAwesomeModule,
   ],
 })
 export class SharedModule {}

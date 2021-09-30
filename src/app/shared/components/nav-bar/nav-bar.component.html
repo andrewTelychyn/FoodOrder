@@ -1,6 +1,6 @@
 <div class="side-menu">
-  <div class="up-group">
-    <div class="user-info" [class.selected]="router.url == '/user'">
+  <div class="up-group selected" [class.selected]="router.url == '/user'">
+    <div class="user-info" id="user-info">
       <!-- <h3>
         Hello, <span>{{ username }}!</span>
       </h3>
@@ -74,7 +74,6 @@
       </mat-grid-list>
     </ng-template>
   </div>
-
   <ul class="lower-bar">
     <li
       class="admin-page"

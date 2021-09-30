@@ -44,6 +44,12 @@
           >
             The username is required
           </div>
+          <div
+            *ngIf="mainForm.controls.username.errors.same"
+            class="invalid-feedback"
+          >
+            All data is the same
+          </div>
         </ng-container>
       </div>
       <div class="button">

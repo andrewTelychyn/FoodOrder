@@ -40,7 +40,6 @@ import { IngredientEffects } from './store/ingredient/ingredient.effects';
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    
   ],
   bootstrap: [AppComponent],
 })

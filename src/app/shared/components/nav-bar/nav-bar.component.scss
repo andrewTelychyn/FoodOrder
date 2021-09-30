@@ -10,13 +10,9 @@
   display: flex;
   flex-direction: column;
 
-  .up-group {
-    align-items: flex-start;
-    flex-grow: 0;
-
-    .selected {
+  .selected {
+    #user-info {
       background-color: #c6141b;
-
       a {
         mat-grid-tile-footer {
           background-color: #c6141b;
@@ -24,8 +20,12 @@
         }
       }
     }
+  }
+  .up-group {
+    align-items: flex-start;
+    flex-grow: 0;
 
-    div {
+    .user-info {
       max-width: 100%;
       height: 120px;
       background-color: #cebcbd;
@@ -145,6 +145,7 @@
         font-size: 17px;
         font-weight: 300;
         color: black;
+        text-transform: capitalize;
 
         mat-icon {
           height: 53px;

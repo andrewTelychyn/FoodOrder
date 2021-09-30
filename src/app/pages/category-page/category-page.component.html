@@ -5,49 +5,61 @@
       <h1>{{ chosenCategory?.name }}s</h1>
       <div class="search">
         <mat-icon
-          class="order-icon"
+          class="search-mat-icon"
           *ngIf="!showOrder; else orderOptions"
           (click)="openCloseOrder()"
         >
           reorder
         </mat-icon>
-        <input *ngIf="showSearch" type="text" />
+        <input *ngIf="showSearch" type="text" [formControl]="inputSearch" />
         <mat-icon
-          class="search-icon"
+          class="search-mat-icon"
           (click)="openCloseSearch()"
-          [class.opened]="showSearch"
+          [id]="showSearch ? 'opened' : ''"
         >
-          search
+          {{ !showSearch ? "search" : "close" }}
         </mat-icon>
         <ng-template #orderOptions>
-          <div class="order-wrapper">
-            <mat-radio-group
-              aria-labelledby="example-radio-group-label"
-              class="orderOptions"
-              (mouseleave)="openCloseOrder()"
-              [(ngModel)]="chosenOrderType"
+          <ul class="sort-options">
+            <!-- <li class="chosen" (click)="openCloseOrder()">
+              <mat-icon id="close-sort-button">close</mat-icon>
+            </li> -->
+            <li
+              [class.chosen]="(chosenOrderType$ | async) == 'bydefault'"
+              (click)="sortChange('bydefault')"
             >
-              <mat-radio-button
-                *ngFor="let orderType of orderTypes | keyvalue"
-                [value]="orderType.key"
-                >{{ orderType.value }}</mat-radio-button
-              >
-            </mat-radio-group>
-            <!-- <div class="orderOptions">
-              <div
-                class="radio-group"
-                *ngFor="let orderType of orderTypes | keyvalue"
-              >
-                <input
-                  [id]="orderType.key"
-                  type="radio"
-                  name="orderTypeRadio"
-                  value=""
-                />
-                <label [for]="orderType.key">{{ orderType.value }}</label>
-              </div>
-            </div> -->
-          </div>
+              Default <fa-icon></fa-icon>
+            </li>
+            <li
+              [class.chosen]="(chosenOrderType$ | async) == 'byname'"
+              (click)="sortChange('byname')"
+            >
+              Name:&nbsp;
+              <fa-icon
+                [icon]="
+                  sortTypes.byname.direction == 'up'
+                    ? faSortAlphaDown
+                    : faSortAlphaUp
+                "
+              ></fa-icon>
+            </li>
+            <li
+              [class.chosen]="(chosenOrderType$ | async) == 'byprice'"
+              (click)="sortChange('byprice')"
+            >
+              Price:&nbsp;
+              <fa-icon
+                [icon]="
+                  sortTypes.byprice.direction == 'up'
+                    ? faSortNumericDown
+                    : faSortNumericUp
+                "
+              ></fa-icon>
+            </li>
+          </ul>
+          <mat-icon class="search-mat-icon chosen" (click)="openCloseOrder()"
+            >close</mat-icon
+          >
         </ng-template>
       </div>
     </div>

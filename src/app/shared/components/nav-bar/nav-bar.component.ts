@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { from, Observable, of } from 'rxjs';
-import { AccountService } from 'src/app/services/auth/account.service';
+import { Observable } from 'rxjs';
 import { RoleGuardService } from 'src/app/services/auth/roleguard.service';
 import { UserService } from 'src/app/services/user.service';
-import { CategoriesState, MainState } from 'src/app/store/shared/store.model';
+import { MainState } from 'src/app/store/shared/store.model';
 import { Category } from '../../models/product.model';
 
 @Component({
