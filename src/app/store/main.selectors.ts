@@ -61,8 +61,3 @@ export const isIngredientNew = createSelector(
   (allIngredients: Ingredient[], id: string) =>
     allIngredients.findIndex((c) => c.id == id) < 0
 );
-
-// export const filterAdminTypes = createSelector(
-//   (state: MainState) => state,
-//   (state: MainState, data: {type: string, prod: })
-// )

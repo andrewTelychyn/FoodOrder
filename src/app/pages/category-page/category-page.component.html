@@ -25,34 +25,28 @@
               <mat-icon id="close-sort-button">close</mat-icon>
             </li> -->
             <li
-              [class.chosen]="(chosenOrderType$ | async) == 'bydefault'"
+              [class.chosen]="(chosenSortType$ | async) == 'bydefault'"
               (click)="sortChange('bydefault')"
             >
               Default <fa-icon></fa-icon>
             </li>
             <li
-              [class.chosen]="(chosenOrderType$ | async) == 'byname'"
+              [class.chosen]="(chosenSortType$ | async) == 'byname'"
               (click)="sortChange('byname')"
             >
               Name:&nbsp;
               <fa-icon
-                [icon]="
-                  sortTypes.byname.direction == 'up'
-                    ? faSortAlphaDown
-                    : faSortAlphaUp
-                "
+                [icon]="sortTypes.byname.isUp ? faSortAlphaDown : faSortAlphaUp"
               ></fa-icon>
             </li>
             <li
-              [class.chosen]="(chosenOrderType$ | async) == 'byprice'"
+              [class.chosen]="(chosenSortType$ | async) == 'byprice'"
               (click)="sortChange('byprice')"
             >
               Price:&nbsp;
               <fa-icon
                 [icon]="
-                  sortTypes.byprice.direction == 'up'
-                    ? faSortNumericDown
-                    : faSortNumericUp
+                  sortTypes.byprice.isUp ? faSortNumericDown : faSortNumericUp
                 "
               ></fa-icon>
             </li>

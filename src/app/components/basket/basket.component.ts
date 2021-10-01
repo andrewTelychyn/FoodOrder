@@ -9,15 +9,9 @@ import { Basket } from '../../shared/models/basket.model';
   styleUrls: ['./basket.component.scss'],
 })
 export class BasketComponent {
-  // @Input() basket: Basket;
   public basket$: BehaviorSubject<Basket>;
 
   constructor(private basketService: BasketService) {
-    // this.basket = new Basket();
-    this.basket$ = basketService.basket$;
-  }
-
-  public closeWindow() {
-    // this.basket.products = [];
+    this.basket$ = this.basketService.basket$;
   }
 }

@@ -37,7 +37,6 @@ export class ModalDialogComponent {
       );
 
     this.isAdmin = this.roleGuard.checkRole('admin');
-    console.log(this.isAdmin);
   }
 
   public decreaseAmount(chosenId: string) {

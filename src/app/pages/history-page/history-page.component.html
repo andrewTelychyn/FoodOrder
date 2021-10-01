@@ -31,11 +31,14 @@
             </ul>
             <mat-grid-tile-footer>
               <h2>
-                {{ basketOrder.name }} <span>{{ basketOrder.price }}$</span>
+                <span class="amount">{{ basketOrder.amount }}</span
+                >&nbsp;x
+                {{ basketOrder.name }}
+                <span class="price">{{ basketOrder.price }}$</span>&nbsp;
               </h2>
-              <ul class="footer-list">
+              <!-- <ul class="footer-list">
                 <li>Amount: {{ basketOrder.amount }}</li>
-              </ul>
+              </ul> -->
             </mat-grid-tile-footer>
           </mat-grid-tile>
         </mat-grid-list>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/models/user.model';
 
@@ -31,8 +32,19 @@ export class UserService {
     localStorage.removeItem('userId');
   }
 
-  public updateInfo(user: User): Observable<User> {
-    this.setUser(user);
-    return this.http.put<User>(environment.API + `users/${user.id}`, user);
+  public updateInfo(user: User, callback: (data: string) => void): void {
+    this.http
+      .put<User>(environment.API + `users/${user.id}`, user)
+      .pipe(take(1))
+      .subscribe(
+        () => {
+          this.setUser(user);
+          callback('Information is successfully updated!');
+        },
+        (error) => {
+          let message = error.message || 'Something went wrong';
+          callback(message);
+        }
+      );
   }
 }

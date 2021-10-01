@@ -2,16 +2,17 @@
   <app-nav-bar></app-nav-bar>
   <div class="user-content">
     <h1>User Page</h1>
-    <form [formGroup]="mainForm" class="main-form">
+    <div class="user-message" *ngIf="message">{{ message }}</div>
+    <form [formGroup]="mainInfoForm" class="main-form">
       <h2>Main Info</h2>
       <div class="form-group">
         <label>First Name</label>
         <input type="text" formControlName="firstname" class="form-control" />
         <ng-container
-          *ngIf="submittedMain && mainForm.controls.firstname.errors"
+          *ngIf="submittedMain && mainInfoForm.controls.firstname.errors"
         >
           <div
-            *ngIf="mainForm.controls.firstname.errors.required"
+            *ngIf="mainInfoForm.controls.firstname.errors.required"
             class="invalid-feedback"
           >
             The firstname is required
@@ -22,10 +23,10 @@
         <label>Last Name</label>
         <input type="text" formControlName="lastname" class="form-control" />
         <ng-container
-          *ngIf="submittedMain && mainForm.controls.lastname.errors"
+          *ngIf="submittedMain && mainInfoForm.controls.lastname.errors"
         >
           <div
-            *ngIf="mainForm.controls.lastname.errors.required"
+            *ngIf="mainInfoForm.controls.lastname.errors.required"
             class="invalid-feedback"
           >
             The lastname is required
@@ -36,24 +37,24 @@
         <label>User Name</label>
         <input type="text" formControlName="username" class="form-control" />
         <ng-container
-          *ngIf="submittedMain && mainForm.controls.username.errors"
+          *ngIf="submittedMain && mainInfoForm.controls.username.errors"
         >
           <div
-            *ngIf="mainForm.controls.username.errors.required"
+            *ngIf="mainInfoForm.controls.username.errors.required"
             class="invalid-feedback"
           >
             The username is required
           </div>
-          <div
-            *ngIf="mainForm.controls.username.errors.same"
-            class="invalid-feedback"
-          >
-            All data is the same
-          </div>
         </ng-container>
+        <div
+          *ngIf="submittedMain && mainInfoForm.errors?.same"
+          class="invalid-feedback"
+        >
+          All data is the same
+        </div>
       </div>
       <div class="button">
-        <button (click)="submitMain()">Submit</button>
+        <button (click)="submitMainInfo()">Submit</button>
       </div>
     </form>
     <form [formGroup]="passwordForm" class="password-form">
@@ -80,8 +81,9 @@
           >
             Old password is too small
           </div>
+
           <div
-            *ngIf="passwordForm.controls.oldPassword.errors.different"
+            *ngIf="submittedPassword && passwordForm.errors?.oldDifferent"
             class="invalid-feedback"
           >
             Old password is different
@@ -109,6 +111,38 @@
             class="invalid-feedback"
           >
             New password is too small
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <label>New Password Check</label>
+        <input
+          type="password"
+          formControlName="newPasswordCheck"
+          class="form-control"
+        />
+        <ng-container
+          *ngIf="
+            submittedPassword && passwordForm.controls.newPasswordCheck.errors
+          "
+        >
+          <div
+            *ngIf="passwordForm.controls.newPasswordCheck.errors.required"
+            class="invalid-feedback"
+          >
+            New password is required
+          </div>
+          <div
+            *ngIf="passwordForm.controls.newPasswordCheck.errors.minlength"
+            class="invalid-feedback"
+          >
+            New password is too small
+          </div>
+          <div
+            *ngIf="submittedPassword && passwordForm.errors?.newDifferent"
+            class="invalid-feedback"
+          >
+            Passwords are different
           </div>
         </ng-container>
       </div>

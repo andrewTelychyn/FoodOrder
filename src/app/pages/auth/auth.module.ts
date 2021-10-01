@@ -8,12 +8,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [LoginPageComponent, RegisterPageComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    // AppRoutingModule,
-    AuthRoutingModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, AuthRoutingModule],
   exports: [LoginPageComponent, RegisterPageComponent],
 })
 export class AuthModule {}

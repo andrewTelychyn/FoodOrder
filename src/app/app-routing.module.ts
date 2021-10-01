@@ -9,7 +9,6 @@ import { AuthguardService as AuthGuard } from './services/auth/authguard.service
 import { RoleGuardService as RoleGuard } from './services/auth/roleguard.service';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'menu/drink', pathMatch: 'full' }, //default value -> /login
   {
     path: 'account',
     loadChildren: () =>
@@ -45,11 +44,6 @@ const routes: Routes = [
     component: UserPageComponent,
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'admin',
-  //   component: AdminPageComponent,
-  //   canActivate: [RoleGuard],
-  // },
   {
     path: 'history',
     component: HistoryPageComponent,

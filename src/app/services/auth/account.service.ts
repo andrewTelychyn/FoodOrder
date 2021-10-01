@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { environment } from 'src/environments/environment';
-import { filter, map, tap, mergeMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
 @Injectable({
@@ -15,8 +14,6 @@ export class AccountService {
   }
 
   login(username: string, password: string) {
-    console.log(username);
-
     return this.http.get<User[]>(environment.API + 'users').pipe(
       map((data) => data.filter((item) => item.username === username)),
       map((data) => {

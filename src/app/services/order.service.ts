@@ -19,8 +19,6 @@ export class OrderService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
   public loadOrders(userId: string) {
-    // let userId = this.userService.user?.id;
-
     return this.http
       .get<BasketDTO[]>(environment.API + 'baskets')
       .pipe(

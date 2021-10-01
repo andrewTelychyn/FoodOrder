@@ -34,8 +34,6 @@ export class OrderPageComponent implements OnInit {
       phone: ['', [Validators.minLength(8), Validators.required]],
       email: ['', [Validators.email, Validators.required]],
     });
-
-    console.log(userSerice.user);
   }
 
   public get f() {

@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: row;
   font-family: "Roboto", sans-serif;
-  // margin-bottom: 150px;
 }
 
 .order-content {
@@ -14,9 +13,13 @@
   padding: 15px 0;
 
   h1 {
-    font-size: 37px;
-    font-weight: 700;
-    margin: 10px 0 5px;
+    margin: 0px;
+    padding: 25px 0px 0px;
+    font-size: 40px;
+    font-weight: 500;
+    color: rgb(52, 52, 52);
+    text-transform: uppercase;
+    letter-spacing: 2px;
   }
 
   h3 {
@@ -109,7 +112,6 @@
           display: flex;
           flex-direction: row;
           flex-grow: 0;
-          // padding-right: 15px;
 
           .current-choice {
             width: 65px;
@@ -179,7 +181,6 @@
       width: 220px;
       margin-right: 20px;
       padding: 20px 40px;
-      // background-color: #c6141b;
       border-radius: 25px;
       border: 3px solid #c6141b;
       position: relative;
@@ -203,7 +204,6 @@
         width: 70%;
 
         label {
-          // color: #c6141b;
           color: black;
           font-size: 18px;
           font-weight: 300;
@@ -236,6 +236,10 @@
 
     .order-total {
       margin-right: 50px;
+
+      h1 {
+        color: white;
+      }
 
       h2 {
         font-weight: 300;

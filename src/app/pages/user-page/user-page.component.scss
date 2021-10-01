@@ -14,16 +14,15 @@
     margin-right: 40px;
 
     h1 {
-      font-weight: 300;
-      font-size: 50px;
       padding: 25px 0px;
-      text-transform: capitalize;
+      font-size: 40px;
+      font-weight: 500;
+      color: rgb(52, 52, 52);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     h2 {
-      // width: 92%
-      // width: 564px;
-      // max-width: 620px;
       padding: 15px 25px;
       text-transform: uppercase;
       font-weight: 300;
@@ -32,10 +31,19 @@
       color: white;
     }
 
+    .user-message {
+      width: 90%;
+      background-color: #c6141b;
+      color: white;
+      font-weight: 300;
+      font-size: 15px;
+      margin: 10px 0px;
+      padding: 15px 25px;
+    }
+
     form {
       border-radius: 15px;
       margin: 20px 0 40px;
-      // padding: 15px 25px;
 
       .form-group {
         margin: 15px 25px 20px;
@@ -73,8 +81,9 @@
     }
 
     .main-form {
-      border: 5px solid #c6141b;
+      border: 4px solid #c6141b;
       border-top: 8px solid #c6141b;
+      border-right: 8px solid #c6141b;
 
       h2,
       button,
@@ -85,16 +94,12 @@
       .invalid-feedback {
         color: white;
       }
-
-      // h2 {
-      //   box-sizing: initial;
-      //   border-right: 10px solid #987576;
-      // }
     }
 
     .password-form {
-      border: 5px solid #cebcbd;
+      border: 4px solid #cebcbd;
       border-top: 8px solid #cebcbd;
+      border-right: 8px solid #cebcbd;
 
       h2,
       button,

@@ -27,9 +27,7 @@ import {
   faSortNumericDown,
 } from '@fortawesome/free-solid-svg-icons';
 
-// type OrderKey = 'bydefault' | 'fromcheap' | 'fromexpansive' | 'byname';
 type OrderKey = 'bydefault' | 'byprice' | 'byname';
-type Direction = 'up' | 'down';
 
 @Component({
   selector: 'app-category-page',
@@ -45,7 +43,7 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   public destroy$: Subject<boolean> = new Subject<boolean>();
   public store$: Observable<MainState>;
   public originalProducts$: BehaviorSubject<Product[]>;
-  public chosenOrderType$: BehaviorSubject<OrderKey>;
+  public chosenSortType$: BehaviorSubject<OrderKey>;
 
   public inputSearch = new FormControl('');
 
@@ -56,39 +54,33 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
     [key in OrderKey]: {
       name: string;
       sortFunction: (a: Product, b: Product) => number;
-      direction: Direction;
+      isUp: boolean;
     };
   } = {
     bydefault: {
       name: 'By default',
       sortFunction: (a, b) => 1,
-      direction: 'up',
+      isUp: true,
     },
     byname: {
       name: 'By name',
       sortFunction: function (a, b) {
         if (a.name == b.name) return 0;
-        if (
-          (a.name > b.name && this.direction == 'up') ||
-          (a.name < b.name && this.direction == 'down')
-        )
+        if ((a.name > b.name && this.isUp) || (a.name < b.name && !this.isUp))
           return 1;
         return -1;
       },
-      direction: 'up',
+      isUp: true,
     },
     byprice: {
       name: 'By price',
       sortFunction: function (a, b) {
         if (a.cost == b.cost) return 0;
-        if (
-          (a.cost > b.cost && this.direction == 'up') ||
-          (a.cost < b.cost && this.direction == 'down')
-        )
+        if ((a.cost > b.cost && this.isUp) || (a.cost < b.cost && !this.isUp))
           return 1;
         return -1;
       },
-      direction: 'up',
+      isUp: true,
     },
   };
 
@@ -105,7 +97,7 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
     this.store$ = this.store.select('main');
 
     this.originalProducts$ = new BehaviorSubject<Product[]>([]);
-    this.chosenOrderType$ = new BehaviorSubject<OrderKey>('bydefault');
+    this.chosenSortType$ = new BehaviorSubject<OrderKey>('bydefault');
   }
 
   public selectProduct(prod: Product): void {
@@ -129,16 +121,15 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   }
 
   public sortChange(type: string): void {
-    let value = this.chosenOrderType$.getValue();
+    let value = this.chosenSortType$.getValue();
 
     if (value !== type) {
-      this.sortTypes[value].direction = 'up';
+      this.sortTypes[value].isUp = true;
     } else {
-      this.sortTypes[type].direction =
-        this.sortTypes[type].direction == 'up' ? 'down' : 'up';
+      this.sortTypes[type].isUp = !this.sortTypes[type].isUp;
     }
 
-    this.chosenOrderType$.next(type as OrderKey);
+    this.chosenSortType$.next(type as OrderKey);
   }
 
   ngOnInit(): void {
@@ -174,38 +165,33 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
       debounceTime(500),
       map((value: string) => value.trim().toLowerCase()),
       distinctUntilChanged()
-      // tap((value) => console.log(value)),
-      // takeUntil(this.destroy$)
     );
 
-    merge(this.chosenOrderType$, this.originalProducts$, input$)
+    merge(this.chosenSortType$, this.originalProducts$, input$)
       .pipe(
-        switchMap((i) => this.chosenOrderType$),
+        switchMap((i) => this.chosenSortType$),
         switchMap((value) =>
           this.originalProducts$.pipe(
-            tap(
-              (array) =>
-                (this.products = [...array]
-                  .sort(
-                    this.sortTypes[value].sortFunction.bind(
-                      this.sortTypes[value]
-                    )
-                  )
-                  .filter((array) =>
-                    array.name.toLowerCase().includes(this.inputSearch.value)
-                  ))
+            map((array) =>
+              [...array]
+                .sort(
+                  this.sortTypes[value].sortFunction.bind(this.sortTypes[value])
+                )
+                .filter((item) =>
+                  item.name.toLowerCase().includes(this.inputSearch.value)
+                )
             )
           )
         ),
         takeUntil(this.destroy$)
       )
-      .subscribe(() => {});
+      .subscribe((array) => (this.products = array));
   }
 
   ngOnDestroy() {
     this.destroy$.next(false);
     this.destroy$.unsubscribe();
-    this.chosenOrderType$.unsubscribe();
+    this.chosenSortType$.unsubscribe();
     this.originalProducts$.unsubscribe();
   }
 }

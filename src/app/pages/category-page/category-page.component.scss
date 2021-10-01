@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: row;
   font-family: "Roboto", sans-serif;
-  // margin-bottom: 150px;
 }
 
 .mat-grid-tile-content {
@@ -23,15 +22,16 @@
     justify-content: space-between;
 
     h1 {
-      font-weight: 300;
-      font-size: 50px;
       padding: 25px 0px;
-      text-transform: capitalize;
+      font-size: 40px;
+      font-weight: 500;
+      color: rgb(52, 52, 52);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .search {
       margin-top: 15px;
-      // margin-right: 15px;
       display: flex;
       align-items: center;
       height: 50px;
@@ -67,7 +67,6 @@
 
         .chosen {
           background-color: #c6141b;
-          // border: none;
           color: white;
         }
 
@@ -96,34 +95,6 @@
 
           fa-icon {
             font-size: 16px;
-          }
-        }
-      }
-
-      .order-wrapper {
-        height: 50px;
-        margin-right: 15px;
-        z-index: 3;
-
-        .orderOptions {
-          width: 200px;
-          display: flex;
-          flex-direction: column;
-          background-color: #c6141b;
-          color: white;
-          border-radius: 25px;
-          padding: 10px 20px;
-
-          mat-radio-button {
-            margin: 5px 0;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 10px;
-
-            .mat-radio-label-content {
-              margin-left: 20px;
-            }
           }
         }
       }

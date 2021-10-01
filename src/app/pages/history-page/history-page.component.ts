@@ -11,13 +11,7 @@ import { BasketDTO } from 'src/app/shared/models/basket.model';
 })
 export class HistoryPageComponent implements OnInit {
   public chosenCategory = undefined;
-  // public baskets: BasketDTO[];
-
   public baskets: { basket: BasketDTO; toShow: boolean }[];
-
-  public basketsKeyMap: {
-    [id: string]: { basket: BasketDTO; toShow: boolean };
-  } = {};
 
   constructor(
     private userService: UserService,
