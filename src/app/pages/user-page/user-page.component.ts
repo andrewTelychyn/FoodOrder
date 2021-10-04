@@ -82,7 +82,7 @@ export class UserPageComponent {
     let value = this.userService.user.getValue();
 
     let user: User = Object.assign(value, {
-      password: this.mainInfoForm.controls.newPassword.value.trim(),
+      password: this.passwordForm.controls.newPassword.value.trim(),
     });
 
     this.userService.updateInfo(user, this.setMessage.bind(this));

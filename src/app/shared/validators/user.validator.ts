@@ -16,7 +16,7 @@ export function prevDataChangeValidator(prevUser: User): ValidatorFn {
 
 export function oldPasswordValidator(oldPassword: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    if (oldPassword != control.get('oldPassword')?.value)
+    if (oldPassword.trim() != control.get('oldPassword')?.value.trim())
       return { oldDifferent: true };
     return null;
   };
@@ -25,8 +25,8 @@ export function oldPasswordValidator(oldPassword: string): ValidatorFn {
 export function newPasswordValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (
-      control.get('newPasswordCheck')?.value !=
-      control.get('newPassword')?.value
+      control.get('newPasswordCheck')?.value.trim() !=
+      control.get('newPassword')?.value.trim()
     )
       return { newDifferent: true };
     return null;
